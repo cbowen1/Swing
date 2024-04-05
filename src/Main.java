@@ -1,6 +1,7 @@
-import View.View;
+import View.*;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,6 +19,7 @@ public class Main {
     }
 
     public static void createAndShowGUI() throws Exception{
-        new View();
+        //new View();
+        new CustomSplash();
     }
 }
