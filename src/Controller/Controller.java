@@ -28,6 +28,9 @@ public class Controller implements ActionListener {
         if(action.equals("Reset")) {
             model.setDataVector(Constants.DATA, Constants.TABLE_HEADER);
             searchTermTextField.setText("");
+
+            conn = createConnection("test");
+
         } else {
             String searchTerm = searchTermTextField.getText();
             if(searchTerm != null && !"".equals(searchTerm)) {
@@ -48,10 +51,12 @@ public class Controller implements ActionListener {
         }
     }
     public static Connection createConnection(String databaseName) {
-        String dbURL = "jdbc:mysql://localhost:1527/" + databaseName;
+        String dbURL = "jdbc:mysql://localhost:3306/" + databaseName;
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(dbURL);
+            String username = "cale";
+            String password = "Fh5@#250@!1cgI!";
+            conn = DriverManager.getConnection(dbURL, username, password);
         }catch (SQLException e) {
             e.printStackTrace();
         }
