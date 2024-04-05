@@ -1,8 +1,8 @@
-package Resources;
+package Constants;
 
 public class Constants {
     public static final Object[] TABLE_HEADER = {"Symbol", "Company Name", "Price", "Change",
-        "% Change", "Volume"};
+            "% Change", "Volume"};
     public static final Object[][] DATA = {
             {"BAC", "Bank of America", 15.98, .14, "+0.88%", 321515},
             {"ES", "Bank of ERIC", 15.98, .14, "+0.88%", 500},

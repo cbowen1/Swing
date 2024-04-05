@@ -1,6 +1,6 @@
 package Controller;
 
-import Resources.Constants;
+import Constants.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
