@@ -54,8 +54,8 @@ public class Controller implements ActionListener {
         String dbURL = "jdbc:mysql://localhost:3306/" + databaseName;
         Connection conn = null;
         try {
-            String username = "cale";
-            String password = "Fh5@#250@!1cgI!";
+            String username = "root";
+            String password = "INSERTHERE";
             conn = DriverManager.getConnection(dbURL, username, password);
         }catch (SQLException e) {
             e.printStackTrace();

@@ -1,3 +1,4 @@
+import Controller.CustomerDA;
 import View.*;
 
 import javax.swing.*;
@@ -19,7 +20,9 @@ public class Main {
     }
 
     public static void createAndShowGUI() throws Exception{
-        //new View();
-        new CustomSplash();
+        //new CustomSplash();
+        new CustomerUI();
+        //CustomerDA da = new CustomerDA();
+
     }
 }
