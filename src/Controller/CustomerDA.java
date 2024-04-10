@@ -48,6 +48,19 @@ public class CustomerDA {
         recordCursor = 0;
     }
 
+    public void setRecordCursorAtEnd() {
+        recordCursor = customerList.size()-1;
+    }
+
+    public Customer getCurrentCustomer() {
+        return customerList.get(recordCursor);
+    }
+
+    public Customer getNextCustomer() {
+        recordCursor = recordCursor >= customerList.size() -1 ? customerList.size()-1:recordCursor++;
+        return customerList.get(recordCursor);
+    }
+
     public void createConnection(String databaseName) {
         String dbURL = "jdbc:mysql://localhost:3306/" + databaseName;
         try {
