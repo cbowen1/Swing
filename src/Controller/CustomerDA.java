@@ -4,6 +4,7 @@ import Model.Customer;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class CustomerDA {
     private ArrayList<Customer> customerList;
@@ -51,7 +52,9 @@ public class CustomerDA {
         String dbURL = "jdbc:mysql://localhost:3306/" + databaseName;
         try {
             String username = "root";
-            String password = "INSERT_HERE";
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Please enter database password:");
+            String password = scan.nextLine();
             conn = DriverManager.getConnection(dbURL, username, password);
         }catch (SQLException e) {
             e.printStackTrace();
