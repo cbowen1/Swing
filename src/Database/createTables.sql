@@ -4,9 +4,13 @@ USE Eclipse_Collectibles;
 DROP TABLE IF EXISTS customer;
 CREATE TABLE customer (
     Customer_ID INT PRIMARY KEY,
-    Customer_Name VARCHAR(255),
+    Customer_fName VARCHAR(255),
+    Customer_lName VARCHAR(255),
     Email VARCHAR(255),
-    Address VARCHAR(255)
+    Street_Address VARCHAR(255),
+    City VARCHAR(255),
+    State VARCHAR(2),
+    ZipCode VARCHAR(5)
 );
 
 -- Drop and create `payment_method` table

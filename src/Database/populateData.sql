@@ -2,7 +2,7 @@ USE Eclipse_Collectibles;
 
 -- Inserting data into `customer`
 INSERT INTO customer VALUES 
-(1, 'John Doe', 'john.adam@email.com', '1234 Main St, Baltimore MD 21001');
+(1, 'John', 'Doe', 'john.adam@email.com', '1234 Main St', 'Baltimore', 'MD', '21001');
 
 -- Inserting data into `payment_method`
 INSERT INTO payment_method VALUES 
