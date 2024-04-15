@@ -4,6 +4,11 @@ public class Customer {
     private String customerID;
     private String customerName_first;
     private String customerName_last;
+    private String email;
+    private String street_address;
+    private String city;
+    private String state;
+    private String zip;
 
     public Customer(String customerID, String fName, String lName) {
         this.customerID = customerID;
