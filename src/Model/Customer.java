@@ -4,6 +4,7 @@ public class Customer {
     private String customerID;
     private String customerName_first;
     private String customerName_last;
+
     private String email;
     private String street_address;
     private String city;
@@ -27,4 +28,16 @@ public class Customer {
     public String getCustomerName_last() {
         return customerName_last;
     }
+    public String getEmail() {
+        return email;
+    }
+
+    public String getStreet_address() { return street_address; }
+
+    public String getCity() { return city; }
+
+    public String getState() { return state; }
+
+    public String getZip() { return zip; }
+
 }
