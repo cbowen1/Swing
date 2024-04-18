@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class CustomSplash {
     final BufferedImage logo = ImageIO.read(getClass().getResource("/images/logo_cropped.png"));
-
+    JFrame frame;
     public CustomSplash() throws IOException {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = screenSize.width/2;
@@ -21,13 +21,15 @@ public class CustomSplash {
         contButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new View();
+                new PrimaryFrame();
+                hide();
+
             }
         });
 
         JLabel picLabel = new JLabel(new ImageIcon(logo.getScaledInstance(logo.getWidth() /2, logo.getHeight()/2, Image.SCALE_DEFAULT)));
         contButton.setSize(25,25);
-        JFrame frame = new JFrame("Eclipse Breaks LLC.");
+        frame = new JFrame("Eclipse Breaks LLC.");
         //Set screen size to be 50% of the screen size
 
         frame.setPreferredSize(new Dimension(width, height));
@@ -42,5 +44,9 @@ public class CustomSplash {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    public void hide() {
+        this.frame.setVisible(false);
     }
 }

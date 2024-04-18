@@ -7,21 +7,18 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CustomerDA {
+    public ArrayList<Customer> getCustomerList() {
+        return customerList;
+    }
+
     private ArrayList<Customer> customerList;
     private int recordCursor;
     Connection conn;
-
 
     public CustomerDA() {
         setRecordCursorAtStart();
         createConnection("eclipse");
         populateCustomerList();
-
-        for(Customer c : customerList) {
-            System.out.println("WE CAN HAZ CUSTOMERS");
-            System.out.println(c.getCustomerID());
-            System.out.println(c.getCustomerName_first());
-        }
     }
 
     private void populateCustomerList() {

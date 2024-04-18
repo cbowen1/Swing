@@ -22,8 +22,8 @@ public class Main {
     }
 
     public static void createAndShowGUI() throws Exception{
-        //new CustomSplash();
-        new CustomerUI();
+        new CustomSplash();
+        //new CustomerUI();
         //CustomerDA da = new CustomerDA();
 
     }
