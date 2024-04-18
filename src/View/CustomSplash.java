@@ -1,5 +1,7 @@
 package View;
 
+import Database.DatabaseTools;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +15,7 @@ public class CustomSplash {
     final BufferedImage logo = ImageIO.read(getClass().getResource("/images/logo_cropped.png"));
     JFrame frame;
     public CustomSplash() throws IOException {
+        DatabaseTools db = new DatabaseTools();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = screenSize.width/2;
         int height = screenSize.height/2;

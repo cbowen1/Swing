@@ -13,6 +13,7 @@ public class CustomerUI {
     private JPanel custPanel;
     private JPanel viewPanel;
     private JPanel editPanel;
+    private JScrollPane customerScrollPane;
     private JTable customerTable;
     private JButton editButton;
     private JButton delButton;
@@ -31,14 +32,16 @@ public class CustomerUI {
         ArrayList<Customer> custList = customerDA.getCustomerList();
 
         DefaultTableModel tm = new DefaultTableModel();
-        tm.addColumn("customerName_first");
-        tm.addColumn("customerName_last");
+        tm.addColumn("ID");
+        tm.addColumn("First Name");
+        tm.addColumn("Last Name");
 
         customerTable.setModel(tm);
         for(Customer c: custList) {
-            Vector<String> rowObj = new Vector<>(2);
-            rowObj.add(0,c.getCustomerName_first());
-            rowObj.add(1,c.getCustomerName_last());
+            Vector<String> rowObj = new Vector<>(3);
+            rowObj.add(0, c.getCustomerID());
+            rowObj.add(1,c.getCustomerName_first());
+            rowObj.add(2,c.getCustomerName_last());
             tm.addRow(rowObj);
         }
 
@@ -59,7 +62,8 @@ public class CustomerUI {
         gbc.fill = GridBagConstraints.BOTH;
         custPanel.add(viewPanel, gbc);
         customerTable = new JTable();
-        viewPanel.add(customerTable, BorderLayout.CENTER);
+        customerScrollPane = new JScrollPane(customerTable);
+        viewPanel.add(customerScrollPane);
         editPanel = new JPanel();
         editPanel.setLayout(new GridBagLayout());
         editPanel.setBackground(new Color(-15076806));

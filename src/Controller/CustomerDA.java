@@ -1,5 +1,6 @@
 package Controller;
 
+import Database.DatabaseTools;
 import Model.Customer;
 
 import java.sql.*;
@@ -7,32 +8,36 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CustomerDA {
-    public ArrayList<Customer> getCustomerList() {
-        return customerList;
-    }
-
     private ArrayList<Customer> customerList;
     private int recordCursor;
-    Connection conn;
 
     public CustomerDA() {
         setRecordCursorAtStart();
-        createConnection("eclipse");
         populateCustomerList();
+    }
+
+    public ArrayList<Customer> getCustomerList() {
+        return customerList;
     }
 
     private void populateCustomerList() {
         customerList = new ArrayList<Customer>();
 
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM customer");
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM customer");
             ResultSet rs = ps.executeQuery();
 
             Customer cust;
             while(rs.next()) {
-                cust = new Customer(rs.getString("custId"),
-                        rs.getString("fName"),
-                        rs.getString("lName"));
+                cust = new Customer();
+                cust.setCustomerID(rs.getString("Customer_ID"));
+                cust.setCustomerName_first(rs.getString("Customer_fName"));
+                cust.setCustomerName_last(rs.getString("Customer_lName"));
+                cust.setEmail(rs.getString("email"));
+                cust.setStreet_address(rs.getString("street_address"));
+                cust.setCity(rs.getString("city"));
+                cust.setState(rs.getString("state"));
+                cust.setZip(rs.getString("zipCode"));
                 customerList.add(cust);
             }
 
@@ -56,18 +61,5 @@ public class CustomerDA {
     public Customer getNextCustomer() {
         recordCursor = recordCursor >= customerList.size() -1 ? customerList.size()-1:recordCursor++;
         return customerList.get(recordCursor);
-    }
-
-    public void createConnection(String databaseName) {
-        String dbURL = "jdbc:mysql://localhost:3306/" + databaseName;
-        try {
-            String username = "root";
-            Scanner scan = new Scanner(System.in);
-            System.out.println("Please enter database password:");
-            String password = scan.nextLine();
-            conn = DriverManager.getConnection(dbURL, username, password);
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
