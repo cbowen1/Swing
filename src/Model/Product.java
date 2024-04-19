@@ -7,8 +7,6 @@ public class Product {
     private double unitPrice;
     private int qty;
 
-
-
     public int getId() {
         return id;
     }

@@ -6,6 +6,8 @@ public class Product_Line {
     private String desc;
     private double unitPrice;
 
+    private int supplierId;
+
     public int getId() {
         return id;
     }
@@ -36,5 +38,13 @@ public class Product_Line {
 
     public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
     }
 }

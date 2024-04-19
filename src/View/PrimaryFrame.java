@@ -9,12 +9,14 @@ public class PrimaryFrame extends JFrame implements ActionListener {
     JFrame frame;
     JSplitPane splitPane;
     JPanel topPanel, leftPanel, rightPanel;
-    JButton btn1, btn2, btn3, btn4;
+    JButton btn1, btn2, btn3, btn4, btn5, btn6;
 
     CustomerUI customerPanel;
     OrderUI orderPanel;
     ProductUI productPanel;
     InventoryUI inventoryPanel;
+    ProductLineUI plPanel;
+    SupplierUI supplierPanel;
 
 
     public PrimaryFrame() {
@@ -22,6 +24,8 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         orderPanel = new OrderUI();
         productPanel = new ProductUI();
         inventoryPanel = new InventoryUI();
+        plPanel = new ProductLineUI();
+        supplierPanel = new SupplierUI();
 
         init();
     }
@@ -38,25 +42,30 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         leftPanel = new JPanel();
         rightPanel = new JPanel();
         topPanel = new JPanel();
-        btn1 = new JButton("Customer Management");
-        btn2 = new JButton("Order Management");
-        btn3 = new JButton("Supply Management");
-        btn4 = new JButton("Inventory Management");
-
+        btn1 = new JButton("Customers");
+        btn2 = new JButton("Orders");
+        btn3 = new JButton("Supplies");
+        btn4 = new JButton("Inventory");
+        btn5 = new JButton("Product Lines");
+        btn6 = new JButton("Suppliers");
 
         btn1.addActionListener(this);
         btn2.addActionListener(this);
         btn3.addActionListener(this);
         btn4.addActionListener(this);
+        btn5.addActionListener(this);
+        btn6.addActionListener(this);
 
         Dimension half = new Dimension((int)(screenSize.getWidth()/1.5),(int) (screenSize.getHeight()/1.5));
         topPanel.setPreferredSize(new Dimension(half.width, (int) half.getHeight()/8));
 
-        leftPanel.setLayout(new GridLayout(4,1));
+        leftPanel.setLayout(new GridLayout(6,1));
         leftPanel.add(btn1);
         leftPanel.add(btn2);
         leftPanel.add(btn4);
         leftPanel.add(btn3);
+        leftPanel.add(btn5);
+        leftPanel.add(btn6);
         splitPane.setLeftComponent(leftPanel);
         splitPane.setRightComponent(rightPanel);
         splitPane.setDividerLocation(150);
@@ -81,6 +90,10 @@ public class PrimaryFrame extends JFrame implements ActionListener {
             splitPane.setRightComponent(inventoryPanel.getRootComponent());
         } else if (e.getSource() == btn4) {
             splitPane.setRightComponent(productPanel.getRootComponent());
+        } else if (e.getSource() == btn5) {
+            splitPane.setRightComponent(plPanel.getRootComponent());
+        } else if (e.getSource() == btn6) {
+            splitPane.setRightComponent(supplierPanel.getRootComponent());
         }
         revalidate();
     }
