@@ -21,14 +21,13 @@ CREATE TABLE payment_method (
     Payment_Amount DECIMAL(10, 2)
 );
 
--- Drop and create `order` table
-DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order` (
+-- Drop and create `orders` table
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
     Order_ID INT PRIMARY KEY,
     Customer_ID INT,
     Payment_ID INT,
     Status VARCHAR(50),
-    Quantity INT,
     Order_Date DATE,
     FOREIGN KEY (Customer_ID) REFERENCES customer(Customer_ID),
     FOREIGN KEY (Payment_ID) REFERENCES payment_method(Payment_ID)
@@ -73,6 +72,15 @@ CREATE TABLE supplier (
     Address VARCHAR(255)
 );
 
+DROP TABLE IF EXISTS `order_details`;
+CREATE TABLE `order_details` (
+     Order_ID INT,
+     Product_ID INT,
+     Quantity INT,
+     FOREIGN KEY (Order_ID) REFERENCES orders(Order_ID),
+     FOREIGN KEY (Product_ID) REFERENCES product(Product_ID)
+);
+
 -- Drop and create `shipping` table
 DROP TABLE IF EXISTS shipping;
 CREATE TABLE shipping (
@@ -81,7 +89,7 @@ CREATE TABLE shipping (
     Shipping_Date DATE,
     Expected_Arrival_Date DATE,
     Tracking_Number VARCHAR(100),
-    FOREIGN KEY (Order_ID) REFERENCES `order`(Order_ID)
+    FOREIGN KEY (Order_ID) REFERENCES `orders`(Order_ID)
 );
 
 show tables;
