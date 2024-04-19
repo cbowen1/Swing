@@ -44,7 +44,8 @@ public class SupplierDA {
     public Supplier getSupplier(int id) {
         Supplier sup = new Supplier();
         try{
-            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM supplier where supplier_id = 1");
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM supplier where supplier_id = ?");
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 sup.setId(rs.getInt("Supplier_ID"));
