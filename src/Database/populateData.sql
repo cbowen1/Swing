@@ -38,9 +38,11 @@ INSERT INTO `orders` VALUES (2, 4, 2, 'Shipped', '2024-04-18');
 -- Inserting data into `product_line`
 INSERT INTO product_line VALUES (1, '2022 Super Break Football Edition 10-Box Case', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 849.95);
 INSERT INTO product_line VALUES (2, '2023 Panini Donruss Optic Football Hobby H2 Box', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 500.00);
+INSERT INTO product_line VALUES (3, '2024 Gold Rush Autographed Full-Size Authentic Football Helmet 4-Box Case', '1 autographed and authenticated full-size football helmet per box', 1024.95);
 
 -- Inserting data into `product`
 INSERT INTO product VALUES (1, 1, '2022 Super Break Football Edition Box', 89.95, 12);
+INSERT INTO product VALUES (2,3, '2024 Gold Rush Autographed Full-Size Helmet',499.95,7);
 
 -- Inserting data into `inventory`
 INSERT INTO inventory VALUES 
@@ -53,3 +55,6 @@ INSERT INTO supplier VALUES
 -- Inserting data into `shipping`
 INSERT INTO shipping VALUES 
 (1, 2, '2024-04-18', DATE_ADD(CURDATE(), INTERVAL 5 DAY), 'TRACK123');
+
+INSERT INTO order_details VALUES (1,1,2);
+INSERT INTO order_details VALUES (1,2,2)
