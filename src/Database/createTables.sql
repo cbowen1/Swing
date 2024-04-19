@@ -34,22 +34,24 @@ CREATE TABLE `order` (
     FOREIGN KEY (Payment_ID) REFERENCES payment_method(Payment_ID)
 );
 
+-- Drop and create `product_line` table
+DROP TABLE IF EXISTS product_line;
+CREATE TABLE product_line (
+      Product_LineID INT PRIMARY KEY,
+      Product_Line_Name VARCHAR(255),
+      Product_Description TEXT,
+      Unit_Price DECIMAL(10, 2)
+);
+
 -- Drop and create `product` table
 DROP TABLE IF EXISTS product;
 CREATE TABLE product (
     Product_ID INT PRIMARY KEY,
+    Product_Line_ID INT,
     Product_Name VARCHAR(255),
     Unit_Price DECIMAL(10, 2),
-    Product_Type VARCHAR(50)
-);
-
--- Drop and create `product_line` table
-DROP TABLE IF EXISTS product_line;
-CREATE TABLE product_line (
-    Product_LineID INT PRIMARY KEY,
-    Product_Line_Name VARCHAR(255),
-    Product_Description TEXT,
-    Unit_Price DECIMAL(10, 2)
+    Quantity INT,
+    FOREIGN KEY  (Product_Line_ID) References product_line(Product_LineID)
 );
 
 -- Drop and create `inventory` table

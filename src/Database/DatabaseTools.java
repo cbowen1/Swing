@@ -23,9 +23,9 @@ public class DatabaseTools {
         try {
             String username = "root";
             Scanner scan = new Scanner(System.in);
-            System.out.println("Please enter database password:");
-            String password = scan.nextLine();
-
+            //System.out.println("Please enter database password:");
+            //String password = scan.nextLine();
+            String password = "";
             conn = DriverManager.getConnection(dbURL, username, password);
         }catch (SQLException e) {
             e.printStackTrace();

@@ -35,13 +35,12 @@ INSERT INTO payment_method VALUES
 INSERT INTO `order` VALUES 
 (1, 1, 1, 'Processing', 2, CURDATE());
 
--- Inserting data into `product`
-INSERT INTO product VALUES 
-(1, 'Gadget', 49.99, 'Electronics');
-
 -- Inserting data into `product_line`
-INSERT INTO product_line VALUES 
-(1, 'Electronics', 'High-quality electronic gadgets', 49.99);
+INSERT INTO product_line VALUES (1, '2022 Super Break Football Edition 10-Box Case', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 849.95);
+INSERT INTO product_line VALUES (2, '2023 Panini Donruss Optic Football Hobby H2 Box', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 500.00);
+
+-- Inserting data into `product`
+INSERT INTO product VALUES (1, 1, '2022 Super Break Football Edition Box', 89.95, 12);
 
 -- Inserting data into `inventory`
 INSERT INTO inventory VALUES 

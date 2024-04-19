@@ -58,12 +58,13 @@ public class PrimaryFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        splitPane.remove(splitPane.getRightComponent());
+        if(splitPane.getRightComponent() != null) {
+            splitPane.remove(splitPane.getRightComponent());
+        }
         if(e.getSource() == btn1) {
             splitPane.setRightComponent(customerPanel.getRootComponent());
         } else if (e.getSource() == btn2) {
-            //OrderUI orderPanel = new OrderUI();
-            //splitPane.setRightComponent(orderPanel.getPanel());
+            //splitPane.setRightComponent(gui.getPanel());
             //revalidate();
         } else if (e.getSource() == btn3) {
             //inventory invPanel = new inventory();
