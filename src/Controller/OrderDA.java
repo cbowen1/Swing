@@ -23,7 +23,7 @@ public class OrderDA {
         orderList = new ArrayList<Order>();
 
         try {
-            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM order");
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM orders");
             ResultSet rs = ps.executeQuery();
 
             Order order;
@@ -33,7 +33,6 @@ public class OrderDA {
                 order.setCustomerID(rs.getInt("Customer_ID"));
                 order.setPaymentID(rs.getInt("Payment_ID"));
                 order.setStatus(rs.getString("Status"));
-                order.setQuantity(rs.getInt("Quantity"));
                 order.setOrder_date(rs.getDate("Order_Date"));
                 orderList.add(order);
             }

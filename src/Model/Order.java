@@ -7,7 +7,6 @@ public class Order {
     private int customerID;
     private int paymentID;
     private String status;
-    private int quantity;
     private Date order_date;
     public int getOrderID() {
         return orderID;
@@ -39,14 +38,6 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public Date getOrder_date() {

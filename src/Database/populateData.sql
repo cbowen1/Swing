@@ -31,26 +31,29 @@ INSERT INTO customer VALUES (25, 'Laird', 'Le Grice', 'llegriceo@stumbleupon.com
 INSERT INTO payment_method VALUES (1, 'Credit Card', 234.16);
 INSERT INTO payment_method VALUES (2, 'Paypal', 17.26);
 
+-- Inserting data into `supplier`
+INSERT INTO supplier VALUES (1, 'Amazon.com', NULL, NULL, NULL, 'www.amazon.com');
+INSERT INTO supplier VALUES (2, 'Steel City Collectibles', NULL, NULL, NULL, 'www.steelcitycollectibles.com');
+INSERT INTO supplier VALUES (3, 'Panini', NULL, NULL, NULL, 'www.paniniamerica.net');
+INSERT INTO supplier VALUES (4, 'Random Supply Co', '410-867-5309', 'randomPerson@randomsupplyco.com','123 Main St, Havre de Grace,MD', 'www.notawebsite.com');
+
 -- Inserting  data into `orders`
 INSERT INTO `orders` VALUES (1, 13, null, 'Processing', CURDATE());
 INSERT INTO `orders` VALUES (2, 4, 2, 'Shipped', '2024-04-18');
 
 -- Inserting data into `product_line`
-INSERT INTO product_line VALUES (1, '2022 Super Break Football Edition 10-Box Case', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 849.95);
-INSERT INTO product_line VALUES (2, '2023 Panini Donruss Optic Football Hobby H2 Box', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 500.00);
-INSERT INTO product_line VALUES (3, '2024 Gold Rush Autographed Full-Size Authentic Football Helmet 4-Box Case', '1 autographed and authenticated full-size football helmet per box', 1024.95);
+INSERT INTO product_line VALUES (1, '2022 Super Break Football Edition 10-Box Case', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 849.95,2);
+INSERT INTO product_line VALUES (2, '2023 Panini Donruss Optic Football Hobby H2 Box', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 500.00,3);
+INSERT INTO product_line VALUES (3, '2024 Gold Rush Autographed Full-Size Authentic Football Helmet 4-Box Case', '1 autographed and authenticated full-size football helmet per box', 1024.95,2);
 
 -- Inserting data into `product`
 INSERT INTO product VALUES (1, 1, '2022 Super Break Football Edition Box', 89.95, 12);
 INSERT INTO product VALUES (2,3, '2024 Gold Rush Autographed Full-Size Helmet',499.95,7);
 
 -- Inserting data into `inventory`
-INSERT INTO inventory VALUES 
-(1, 'Gadget', 100, 'Electronics');
-
--- Inserting data into `supplier`
-INSERT INTO supplier VALUES 
-(1, 'Gadget Supplier', '123-456-7890', 'supplier@email.com', '4567 Business Rd');
+INSERT INTO inventory VALUES (1, 'Penny Sleeves', 843, 1);
+INSERT INTO inventory VALUES (2, 'Top Loaders', 341,  4);
+INSERT INTO inventory VALUES (3, 'Bubble Mailers', 100, 4);
 
 -- Inserting data into `shipping`
 INSERT INTO shipping VALUES 

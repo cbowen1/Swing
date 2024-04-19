@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 public class OrderUI {
-    private JPanel custPanel;
+    private JPanel orderPanel;
     private JPanel viewPanel;
     private JPanel editPanel;
-    private JScrollPane customerScrollPane;
-    private JTable customerTable;
+    private JScrollPane orderScrollPane;
+    private JTable orderTable;
     private JButton editButton;
     private JButton delButton;
     private JButton addButton;
@@ -34,26 +34,28 @@ public class OrderUI {
         ArrayList<Order> orderList = orderDA.getOrderList();
 
         DefaultTableModel tm = new DefaultTableModel();
-        tm.addColumn("Order");
+        tm.addColumn("Order ID");
         tm.addColumn("Customer ID");
         tm.addColumn("Payment ID");
         tm.addColumn("Current Status");
-        tm.addColumn("Quantity");
+        tm.addColumn("Order Date");
 
-        customerTable.setModel(tm);
-        for(Customer c: custList) {
-            Vector<String> rowObj = new Vector<>(3);
-            rowObj.add(0, c.getCustomerID());
-            rowObj.add(1,c.getCustomerName_first());
-            rowObj.add(2,c.getCustomerName_last());
+        orderTable.setModel(tm);
+        for(Order o: orderList) {
+            Vector<Object> rowObj = new Vector<>(3);
+            rowObj.add(0, o.getOrderID());
+            rowObj.add(1, o.getCustomerID());
+            rowObj.add(2, o.getPaymentID());
+            rowObj.add(3, o.getStatus());
+            rowObj.add(4, o.getOrder_date());
             tm.addRow(rowObj);
         }
 
     }
 
     private void init() {
-        custPanel = new JPanel();
-        custPanel.setLayout(new GridBagLayout());
+        orderPanel = new JPanel();
+        orderPanel.setLayout(new GridBagLayout());
         viewPanel = new JPanel();
         viewPanel.setLayout(new BorderLayout(0, 0));
         viewPanel.setBackground(new Color(-887852));
@@ -64,11 +66,11 @@ public class OrderUI {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        custPanel.add(viewPanel, gbc);
-        customerTable = new JTable();
-        customerTable.setRowHeight(30);
-        customerScrollPane = new JScrollPane(customerTable);
-        viewPanel.add(customerScrollPane);
+        orderPanel.add(viewPanel, gbc);
+        orderTable = new JTable();
+        orderTable.setRowHeight(30);
+        orderScrollPane = new JScrollPane(orderTable);
+        viewPanel.add(orderScrollPane);
         editPanel = new JPanel();
         editPanel.setLayout(new GridBagLayout());
         editPanel.setBackground(new Color(-15076806));
@@ -78,7 +80,7 @@ public class OrderUI {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        custPanel.add(editPanel, gbc);
+        orderPanel.add(editPanel, gbc);
         delButton = new JButton();
         delButton.setText("Delete");
         gbc = new GridBagConstraints();
@@ -244,11 +246,11 @@ public class OrderUI {
     }
 
     public JComponent getRootComponent() {
-        return custPanel;
+        return orderPanel;
     }
 
     public JTable getCustomerTable() {
-        return customerTable;
+        return orderTable;
     }
 
 }

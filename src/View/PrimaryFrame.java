@@ -12,9 +12,11 @@ public class PrimaryFrame extends JFrame implements ActionListener {
     JButton btn1, btn2, btn3;
 
     CustomerUI customerPanel;
+    OrderUI orderPanel;
 
     public PrimaryFrame() {
         customerPanel = new CustomerUI();
+        orderPanel = new OrderUI();
         init();
     }
 
@@ -51,8 +53,8 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         frame.add(topPanel,BorderLayout.NORTH);
         frame.add(splitPane, BorderLayout.CENTER);
 
-        frame.setLocationRelativeTo(null);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -64,7 +66,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         if(e.getSource() == btn1) {
             splitPane.setRightComponent(customerPanel.getRootComponent());
         } else if (e.getSource() == btn2) {
-            //splitPane.setRightComponent(gui.getPanel());
+            splitPane.setRightComponent(orderPanel.getRootComponent());
             //revalidate();
         } else if (e.getSource() == btn3) {
             //inventory invPanel = new inventory();

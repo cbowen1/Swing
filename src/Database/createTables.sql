@@ -33,13 +33,26 @@ CREATE TABLE `orders` (
     FOREIGN KEY (Payment_ID) REFERENCES payment_method(Payment_ID)
 );
 
+-- Drop and create `supplier` table
+DROP TABLE IF EXISTS supplier;
+CREATE TABLE supplier (
+    Supplier_ID INT PRIMARY KEY,
+    Supplier_Name VARCHAR(255),
+    Phone VARCHAR(20),
+    Email VARCHAR(255),
+    Address VARCHAR(255),
+    Website VARCHAR(255)
+);
+
 -- Drop and create `product_line` table
 DROP TABLE IF EXISTS product_line;
 CREATE TABLE product_line (
-      Product_LineID INT PRIMARY KEY,
-      Product_Line_Name VARCHAR(255),
-      Product_Description TEXT,
-      Unit_Price DECIMAL(10, 2)
+    Product_LineID INT PRIMARY KEY,
+    Product_Line_Name VARCHAR(255),
+    Product_Description TEXT,
+    Unit_Price DECIMAL(10, 2),
+    Supplier_ID INT,
+    FOREIGN KEY (Supplier_ID) REFERENCES supplier(Supplier_ID)
 );
 
 -- Drop and create `product` table
@@ -50,7 +63,7 @@ CREATE TABLE product (
     Product_Name VARCHAR(255),
     Unit_Price DECIMAL(10, 2),
     Quantity INT,
-    FOREIGN KEY  (Product_Line_ID) References product_line(Product_LineID)
+    FOREIGN KEY (Product_Line_ID) REFERENCES product_line(Product_LineID)
 );
 
 -- Drop and create `inventory` table
@@ -59,17 +72,9 @@ CREATE TABLE inventory (
     Inventory_ID INT PRIMARY KEY,
     Inventory_Name VARCHAR(255),
     Quantity INT,
-    Inventory_Type VARCHAR(50)
-);
+    Supplier_ID INT,
+    FOREIGN KEY (Supplier_ID) REFERENCES supplier(Supplier_ID)
 
--- Drop and create `supplier` table
-DROP TABLE IF EXISTS supplier;
-CREATE TABLE supplier (
-    Supplier_ID INT PRIMARY KEY,
-    Supplier_Name VARCHAR(255),
-    Phone VARCHAR(20),
-    Email VARCHAR(255),
-    Address VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS `order_details`;
