@@ -8,6 +8,8 @@ import Model.Supplier;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -27,18 +29,23 @@ public class SupplierUI {
     private JTextField textField5;
     private JComboBox comboBox1;
     private JTextField textField6;
+    SupplierDA supDA;
 
 
     public SupplierUI() {
         init();
-        SupplierDA supDA = new SupplierDA();
+        supDA = new SupplierDA();
         ArrayList<Supplier> supList = supDA.getSupList();
 
-        DefaultTableModel tm = new DefaultTableModel();
+        DefaultTableModel tm = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         tm.addColumn("ID");
         tm.addColumn("Name");
         tm.addColumn("Website");
-
         supTable.setModel(tm);
         for(Supplier s: supList) {
             Vector<Object> rowObj = new Vector<>(3);
@@ -66,10 +73,56 @@ public class SupplierUI {
         supPanel.add(viewPanel, gbc);
         supTable = new JTable();
         supTable.setRowHeight(30);
+
+        supTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 2) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    System.out.println("Double click detected @ row " + row);
+                    System.out.println("SupplierID: " + target.getValueAt(row,0));
+                    moreInfo((int) target.getValueAt(row,0));
+                }
+            }
+        });
         supScrollPane = new JScrollPane(supTable);
         viewPanel.add(supScrollPane);
 
         initEditPanel();
+
+
+    }
+
+    private void moreInfo(int supplierID) {
+        Supplier sup = supDA.getSupplier(supplierID);
+        JFrame jFrame = new JFrame("Supplier Information");
+        jFrame.setLayout(new GridLayout(6,2));
+        JTextField txtSupplierId = new JTextField();
+        JTextField txtSupplierName = new JTextField();
+        JTextField txtSupplierAddress = new JTextField();
+        JTextField txtSupplierEmail = new JTextField();
+        JTextField txtSupplierPhone = new JTextField();
+        JTextField textProductIDSupplier = new JTextField();
+
+        jFrame.add(new JLabel("Supplier ID:"));
+        jFrame.add(txtSupplierId);
+        jFrame.add(new JLabel("Supplier Name:"));
+        jFrame.add(txtSupplierName);
+        jFrame.add(new JLabel("Address:"));
+        jFrame.add(txtSupplierAddress);
+        jFrame.add(new JLabel("Email:"));
+        jFrame.add(txtSupplierEmail);
+        jFrame.add(new JLabel("Phone:"));
+        jFrame.add(txtSupplierPhone);
+        jFrame.add(new JLabel("Product ID:"));
+        jFrame.add(textProductIDSupplier);
+
+
+        txtSupplierName.setText(sup.getName());
+        jFrame.pack();
+        jFrame.setLocationRelativeTo(null);
+        jFrame.setVisible(true);
 
 
     }

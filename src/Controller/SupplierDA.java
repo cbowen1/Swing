@@ -40,4 +40,24 @@ public class SupplierDA {
             e.printStackTrace();
         }
     }
+
+    public Supplier getSupplier(int id) {
+        Supplier sup = new Supplier();
+        try{
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM supplier where supplier_id = 1");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                sup.setId(rs.getInt("Supplier_ID"));
+                sup.setName(rs.getString("Supplier_Name"));
+                sup.setPhone(rs.getString("Phone"));
+                sup.setEmail(rs.getString("Email"));
+                sup.setAddress(rs.getString("Address"));
+                sup.setWebsite(rs.getString("Website"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sup;
+    }
 }
