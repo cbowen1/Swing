@@ -9,14 +9,20 @@ public class PrimaryFrame extends JFrame implements ActionListener {
     JFrame frame;
     JSplitPane splitPane;
     JPanel topPanel, leftPanel, rightPanel;
-    JButton btn1, btn2, btn3;
+    JButton btn1, btn2, btn3, btn4;
 
     CustomerUI customerPanel;
     OrderUI orderPanel;
+    ProductUI productPanel;
+    InventoryUI inventoryPanel;
+
 
     public PrimaryFrame() {
         customerPanel = new CustomerUI();
         orderPanel = new OrderUI();
+        productPanel = new ProductUI();
+        inventoryPanel = new InventoryUI();
+
         init();
     }
 
@@ -34,18 +40,22 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         topPanel = new JPanel();
         btn1 = new JButton("Customer Management");
         btn2 = new JButton("Order Management");
-        btn3 = new JButton("Inventory Management");
+        btn3 = new JButton("Supply Management");
+        btn4 = new JButton("Inventory Management");
+
 
         btn1.addActionListener(this);
         btn2.addActionListener(this);
         btn3.addActionListener(this);
+        btn4.addActionListener(this);
 
         Dimension half = new Dimension((int)(screenSize.getWidth()/1.5),(int) (screenSize.getHeight()/1.5));
         topPanel.setPreferredSize(new Dimension(half.width, (int) half.getHeight()/8));
 
-        leftPanel.setLayout(new GridLayout(3,1));
+        leftPanel.setLayout(new GridLayout(4,1));
         leftPanel.add(btn1);
         leftPanel.add(btn2);
+        leftPanel.add(btn4);
         leftPanel.add(btn3);
         splitPane.setLeftComponent(leftPanel);
         splitPane.setRightComponent(rightPanel);
@@ -67,10 +77,10 @@ public class PrimaryFrame extends JFrame implements ActionListener {
             splitPane.setRightComponent(customerPanel.getRootComponent());
         } else if (e.getSource() == btn2) {
             splitPane.setRightComponent(orderPanel.getRootComponent());
-            //revalidate();
         } else if (e.getSource() == btn3) {
-            //inventory invPanel = new inventory();
-            //splitPane.setRightComponent(invPanel.getPanel());
+            splitPane.setRightComponent(inventoryPanel.getRootComponent());
+        } else if (e.getSource() == btn4) {
+            splitPane.setRightComponent(productPanel.getRootComponent());
         }
         revalidate();
     }

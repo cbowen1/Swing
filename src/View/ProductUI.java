@@ -1,9 +1,7 @@
 package View;
 
-import Controller.CustomerDA;
-import Controller.OrderDA;
-import Model.Customer;
-import Model.Order;
+import Controller.ProductDA;
+import Model.Product;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -11,12 +9,12 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class OrderUI {
-    private JPanel orderPanel;
+public class ProductUI {
+    private JPanel prodPanel;
     private JPanel viewPanel;
     private JPanel editPanel;
-    private JScrollPane orderScrollPane;
-    private JTable orderTable;
+    private JScrollPane prodScrollPane;
+    private JTable prodTable;
     private JButton editButton;
     private JButton delButton;
     private JButton addButton;
@@ -28,34 +26,34 @@ public class OrderUI {
     private JComboBox comboBox1;
     private JTextField textField6;
 
-    public OrderUI() {
+    public ProductUI() {
         init();
-        OrderDA orderDA = new OrderDA();
-        ArrayList<Order> orderList = orderDA.getOrderList();
+        ProductDA productDA = new ProductDA();
+        ArrayList<Product> prodList = productDA.getOrderList();
 
         DefaultTableModel tm = new DefaultTableModel();
-        tm.addColumn("Order ID");
-        tm.addColumn("Customer ID");
-        tm.addColumn("Payment ID");
-        tm.addColumn("Current Status");
-        tm.addColumn("Order Date");
+        tm.addColumn("Product ID");
+        tm.addColumn("Line ID");
+        tm.addColumn("Product Name");
+        tm.addColumn("Unit Price");
+        tm.addColumn("Qty");
 
-        orderTable.setModel(tm);
-        for(Order o: orderList) {
-            Vector<Object> rowObj = new Vector<>(3);
-            rowObj.add(0, o.getOrderID());
-            rowObj.add(1, o.getCustomerID());
-            rowObj.add(2, o.getPaymentID());
-            rowObj.add(3, o.getStatus());
-            rowObj.add(4, o.getOrder_date());
+        prodTable.setModel(tm);
+        for(Product o: prodList) {
+            Vector<Object> rowObj = new Vector<>(5);
+            rowObj.add(0, o.getId());
+            rowObj.add(1, o.getProductLineId());
+            rowObj.add(2, o.getName());
+            rowObj.add(3, o.getUnitPrice());
+            rowObj.add(4, o.getQty());
             tm.addRow(rowObj);
         }
 
     }
 
     private void init() {
-        orderPanel = new JPanel();
-        orderPanel.setLayout(new GridBagLayout());
+        prodPanel = new JPanel();
+        prodPanel.setLayout(new GridBagLayout());
         viewPanel = new JPanel();
         viewPanel.setLayout(new BorderLayout(0, 0));
         viewPanel.setBackground(new Color(-887852));
@@ -66,11 +64,11 @@ public class OrderUI {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        orderPanel.add(viewPanel, gbc);
-        orderTable = new JTable();
-        orderTable.setRowHeight(30);
-        orderScrollPane = new JScrollPane(orderTable);
-        viewPanel.add(orderScrollPane);
+        prodPanel.add(viewPanel, gbc);
+        prodTable = new JTable();
+        prodTable.setRowHeight(30);
+        prodScrollPane = new JScrollPane(prodTable);
+        viewPanel.add(prodScrollPane);
         editPanel = new JPanel();
         editPanel.setLayout(new GridBagLayout());
         editPanel.setBackground(new Color(-15076806));
@@ -80,7 +78,7 @@ public class OrderUI {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        orderPanel.add(editPanel, gbc);
+        prodPanel.add(editPanel, gbc);
         delButton = new JButton();
         delButton.setText("Delete");
         gbc = new GridBagConstraints();
@@ -246,7 +244,11 @@ public class OrderUI {
     }
 
     public JComponent getRootComponent() {
-        return orderPanel;
+        return prodPanel;
+    }
+
+    public JTable getCustomerTable() {
+        return prodTable;
     }
 
 }

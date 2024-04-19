@@ -2,9 +2,12 @@ package Model;
 
 public class Product {
     private int id;
+    private int productLineId;
     private String name;
     private double unitPrice;
-    private String type;
+    private int qty;
+
+
 
     public int getId() {
         return id;
@@ -30,11 +33,19 @@ public class Product {
         this.unitPrice = unitPrice;
     }
 
-    public String getType() {
-        return type;
+    public int getProductLineId() {
+        return productLineId;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setProductLineId(int productLineId) {
+        this.productLineId = productLineId;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
     }
 }

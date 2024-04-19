@@ -26,6 +26,7 @@ public class CustomerUI {
     private JComboBox comboBox1;
     private JTextField textField6;
 
+
     public CustomerUI() {
         init();
         CustomerDA customerDA = new CustomerDA();
@@ -65,6 +66,14 @@ public class CustomerUI {
         customerTable.setRowHeight(30);
         customerScrollPane = new JScrollPane(customerTable);
         viewPanel.add(customerScrollPane);
+
+        initEditPanel();
+
+
+    }
+
+    private void initEditPanel() {
+        GridBagConstraints gbc;
         editPanel = new JPanel();
         editPanel.setLayout(new GridBagLayout());
         editPanel.setBackground(new Color(-15076806));
@@ -236,7 +245,6 @@ public class CustomerUI {
         gbc.gridy = 1;
         gbc.weightx = 1.0;
         editPanel.add(editButton, gbc);
-
     }
 
     public JComponent getRootComponent() {

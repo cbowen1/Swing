@@ -7,6 +7,7 @@ public class Supplier {
     private String phone;
     private String email;
     private String address;
+    private String website;
 
     public int getId() {
         return id;
@@ -46,5 +47,13 @@ public class Supplier {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 }

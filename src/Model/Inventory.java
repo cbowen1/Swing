@@ -4,7 +4,7 @@ public class Inventory {
     private int id;
     private String name;
     private int qty;
-    private String type;
+    private int supplierID;
 
     public int getId() {
         return id;
@@ -30,11 +30,11 @@ public class Inventory {
         this.qty = qty;
     }
 
-    public String getType() {
-        return type;
+    public int getSupplierID() {
+        return supplierID;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setSupplierID(int supplierID) {
+        this.supplierID = supplierID;
     }
 }
