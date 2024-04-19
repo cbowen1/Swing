@@ -62,6 +62,7 @@ public class CustomerUI {
         gbc.fill = GridBagConstraints.BOTH;
         custPanel.add(viewPanel, gbc);
         customerTable = new JTable();
+        customerTable.setRowHeight(30);
         customerScrollPane = new JScrollPane(customerTable);
         viewPanel.add(customerScrollPane);
         editPanel = new JPanel();
