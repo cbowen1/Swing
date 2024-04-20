@@ -5,6 +5,7 @@ import Model.Supplier;
 import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import jdk.dynalink.linker.LinkerServices;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -83,6 +84,21 @@ public class SupplierDA {
             ps.setString(5, sup.getAddress());
             ps.setString(6, sup.getWebsite());
             ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean removeSupplier(int id) {
+        try {
+            int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to Delete the supplier","Warning",JOptionPane.YES_NO_OPTION);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("DELETE FROM supplier where supplier_id = ?");
+                ps.setInt(1, id);
+                ps.executeUpdate();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;

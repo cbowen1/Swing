@@ -151,7 +151,7 @@ public class SupplierUI {
 
         save.addActionListener(e -> updateSupplier(txtSupplierID.getText(), txtSupplierName.getText(),txtSupplierWebsite.getText(),txtSupplierAddress.getText(),
                 txtSupplierEmail.getText(), txtSupplierPhone.getText()));
-        delete.addActionListener(e -> deleteSupplier());
+        delete.addActionListener(e -> deleteSupplier(txtSupplierID.getText()));
 
         buttonPanel.add(save);
         buttonPanel.add(delete);
@@ -184,8 +184,14 @@ public class SupplierUI {
         return true;
     }
 
-    private void deleteSupplier() {
-        System.out.print("Delete not implemented");
+    private void deleteSupplier(String id) {
+        if(!supDA.removeSupplier(Integer.valueOf(id))) {
+            JOptionPane.showMessageDialog(null, "ERROR! Supplier not added");
+        } else {
+            JOptionPane.showMessageDialog(null, "Success! Supplier removed successfully");
+            infoFrame.dispose();
+            table_update();
+        }
     }
 
     private void initEditPanel() {
