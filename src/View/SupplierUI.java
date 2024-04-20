@@ -38,6 +38,10 @@ public class SupplierUI {
     public SupplierUI() {
         init();
         supDA = new SupplierDA();
+        table_update();
+    }
+
+    public void table_update() {
         ArrayList<Supplier> supList = supDA.getSupList();
 
         DefaultTableModel tm = new DefaultTableModel() {
@@ -57,7 +61,6 @@ public class SupplierUI {
             rowObj.add(2, s.getWebsite());
             tm.addRow(rowObj);
         }
-
     }
 
     private void init() {
@@ -96,23 +99,24 @@ public class SupplierUI {
 
     }
 
-    private void moreInfo(int supplierID) {
+    private void moreInfo(Integer supplierID) {
         if(infoFrame != null) {
             infoFrame.dispose();
         }
-        Supplier sup = supDA.getSupplier(supplierID);
+
         infoFrame = new JFrame("Supplier Information");
-        infoFrame.setLayout(new GridLayout(6,2));
+        infoFrame.setLayout(new GridLayout(7,2));
         JTextField txtSupplierID = new JTextField();
         JTextField txtSupplierName = new JTextField();
         JTextField txtSupplierWebsite = new JTextField();
         JTextField txtSupplierAddress = new JTextField();
         JTextField txtSupplierEmail = new JTextField();
         JTextField txtSupplierPhone = new JTextField();
+        JLabel idLabel = new JLabel("ID:");
 
         txtSupplierAddress.setColumns(50);
 
-        infoFrame.add(new JLabel("ID:"));
+        infoFrame.add(idLabel);
         infoFrame.add(txtSupplierID);
         infoFrame.add(new JLabel("Name:"));
         infoFrame.add(txtSupplierName);
@@ -125,39 +129,63 @@ public class SupplierUI {
         infoFrame.add(new JLabel("Phone:"));
         infoFrame.add(txtSupplierPhone);
 
-        txtSupplierID.setText(Integer.toString(sup.getId()));
-        txtSupplierName.setText(sup.getName());
-        txtSupplierWebsite.setText(sup.getWebsite());
-        txtSupplierAddress.setText(sup.getAddress());
-        txtSupplierEmail.setText(sup.getEmail());
-        txtSupplierPhone.setText(sup.getPhone());
-
+        if(supplierID == null) {
+            //Hide the ID tags so the user doesn't have to enter ID in, that will be done by the DB
+            idLabel.setVisible(false);
+            txtSupplierID.setVisible(false);
+            txtSupplierID.setText(null);
+        } else {
+            Supplier sup = supDA.getSupplier(supplierID);
+            txtSupplierID.setText(Integer.toString(sup.getId()));
+            txtSupplierName.setText(sup.getName());
+            txtSupplierWebsite.setText(sup.getWebsite());
+            txtSupplierAddress.setText(sup.getAddress());
+            txtSupplierEmail.setText(sup.getEmail());
+            txtSupplierPhone.setText(sup.getPhone());
+        }
+        JPanel fillerPanel = new JPanel();
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1,2));
         JButton save = new JButton("Save");
         JButton delete = new JButton("Delete");
 
-        save.addActionListener(e -> updateSupplier());
+        save.addActionListener(e -> updateSupplier(txtSupplierID.getText(), txtSupplierName.getText(),txtSupplierWebsite.getText(),txtSupplierAddress.getText(),
+                txtSupplierEmail.getText(), txtSupplierPhone.getText()));
         delete.addActionListener(e -> deleteSupplier());
 
         buttonPanel.add(save);
         buttonPanel.add(delete);
 
-
+        infoFrame.add(fillerPanel);
+        infoFrame.add(buttonPanel);
         infoFrame.pack();
         infoFrame.setLocationRelativeTo(null);
         infoFrame.setVisible(true);
     }
 
+    private boolean updateSupplier(String ID, String name, String website, String address, String email, String phone) {
+        if(name == null) {
+            return false;
+        }
+        if(ID.isBlank()) {
+            System.out.println("Create new supplier");
+            Supplier supplier = new Supplier(name, website, address, email, phone);
+            if(!supDA.addSupplier(supplier)){
+                JOptionPane.showMessageDialog(null, "ERROR! Supplier not added");
+            }else {
+                JOptionPane.showMessageDialog(null, "Success! Supplier added successfully");
+                infoFrame.dispose();
+                table_update();
+
+            }
+        } else {
+            System.out.println("Update existing supplier");
+        }
+        return true;
+    }
+
     private void deleteSupplier() {
         System.out.print("Delete not implemented");
-    }
-
-    private void updateSupplier() {
-        System.out.println("Update not implemented");
-    }
-
-    private void addSupplier() {
-        System.out.println("Add supplier not implemented");
     }
 
     private void initEditPanel() {
@@ -174,7 +202,7 @@ public class SupplierUI {
 
         JButton newSupplier  = new JButton("New Supplier");
         newSupplier.setSize(25,25);
-        newSupplier.addActionListener(e -> addSupplier());
+        newSupplier.addActionListener(e -> moreInfo(null));
         editPanel.add(newSupplier);
     }
 

@@ -9,6 +9,15 @@ public class Supplier {
     private String address;
     private String website;
 
+    public Supplier() { };
+    public Supplier(String name, String website, String address, String email, String phone) {
+        this.name = name;
+        this.website = website;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+    }
+
     public int getId() {
         return id;
     }

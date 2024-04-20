@@ -2,6 +2,8 @@ package Controller;
 
 import Database.DatabaseTools;
 import Model.Supplier;
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
+import jdk.dynalink.linker.LinkerServices;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,10 +12,11 @@ public class SupplierDA {
     private ArrayList<Supplier> supList;
 
     public SupplierDA() {
-        populateOrderList();
+        //populateOrderList();
     }
 
     public ArrayList<Supplier> getSupList() {
+        populateOrderList();
         return supList;
     }
 
@@ -60,5 +63,30 @@ public class SupplierDA {
             e.printStackTrace();
         }
         return sup;
+    }
+
+    public boolean addSupplier(Supplier sup) {
+        try{
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("Select (max(supplier_id) + 1) as Supplier_ID from supplier");
+            ResultSet rs = ps.executeQuery();
+            int supID = 0;
+            while(rs.next()) {
+                supID = rs.getInt("Supplier_ID");
+            }
+            ps = DatabaseTools.GetConnection().prepareStatement(
+                    "INSERT INTO supplier(supplier_id,supplier_name,phone,email,address,website)values(?,?,?,?,?,?)"
+            );
+            ps.setString(1, String.valueOf(supID));
+            ps.setString(2, sup.getName());
+            ps.setString(3, sup.getPhone());
+            ps.setString(4, sup.getEmail());
+            ps.setString(5, sup.getAddress());
+            ps.setString(6, sup.getWebsite());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }
