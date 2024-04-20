@@ -20,17 +20,6 @@ public class SupplierUI {
     private JPanel editPanel;
     private JScrollPane supScrollPane;
     private JTable supTable;
-    private JButton editButton;
-    private JButton delButton;
-    private JButton addButton;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField5;
-    private JComboBox comboBox1;
-    private JTextField textField6;
-
     JFrame infoFrame;
     SupplierDA supDA;
 
@@ -41,7 +30,7 @@ public class SupplierUI {
         table_update();
     }
 
-    public void table_update() {
+    private void table_update() {
         ArrayList<Supplier> supList = supDA.getSupList();
 
         DefaultTableModel tm = new DefaultTableModel() {
@@ -95,8 +84,6 @@ public class SupplierUI {
         viewPanel.add(supScrollPane);
 
         initEditPanel();
-
-
     }
 
     private void moreInfo(Integer supplierID) {
@@ -170,12 +157,14 @@ public class SupplierUI {
         }
         Supplier supplier = new Supplier(name, website, address, email, phone);
         if(ID.isBlank()) {
+            //Supplier Creation
             if(!supDA.addSupplier(supplier)){
                 JOptionPane.showMessageDialog(null, "ERROR! Supplier not added");
             }else {
                 success("Success! Supplier added successfully");
             }
         } else {
+            //Supplier Update
             supplier.setId(Integer.valueOf(ID));
             if(!supDA.updateSupplier(supplier)) {
                 JOptionPane.showMessageDialog(null, "ERROR! Supplier not updated");

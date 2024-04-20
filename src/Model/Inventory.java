@@ -6,6 +6,13 @@ public class Inventory {
     private int qty;
     private int supplierID;
 
+    public Inventory() {}
+    public Inventory(String name, int qty, int supplierID) {
+        this.name = name;
+        this.qty = qty;
+        this.supplierID = supplierID;
+    }
+
     public int getId() {
         return id;
     }
