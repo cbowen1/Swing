@@ -105,4 +105,22 @@ public class SupplierDA {
         }
         return true;
     }
+
+    public boolean updateSupplier(Supplier sup) {
+        try{
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement(
+                    "UPDATE supplier set supplier_name = ?, phone = ?, email = ?, address = ?, website = ? where supplier_id = ?");
+            ps.setString(6, String.valueOf(sup.getId()));
+            ps.setString(1, sup.getName());
+            ps.setString(2, sup.getPhone());
+            ps.setString(3, sup.getEmail());
+            ps.setString(4, sup.getAddress());
+            ps.setString(5, sup.getWebsite());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

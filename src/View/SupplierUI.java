@@ -117,6 +117,7 @@ public class SupplierUI {
         txtSupplierAddress.setColumns(50);
 
         infoFrame.add(idLabel);
+        txtSupplierID.setEnabled(false);
         infoFrame.add(txtSupplierID);
         infoFrame.add(new JLabel("Name:"));
         infoFrame.add(txtSupplierName);
@@ -167,30 +168,35 @@ public class SupplierUI {
         if(name == null) {
             return false;
         }
+        Supplier supplier = new Supplier(name, website, address, email, phone);
         if(ID.isBlank()) {
-            System.out.println("Create new supplier");
-            Supplier supplier = new Supplier(name, website, address, email, phone);
             if(!supDA.addSupplier(supplier)){
                 JOptionPane.showMessageDialog(null, "ERROR! Supplier not added");
             }else {
-                JOptionPane.showMessageDialog(null, "Success! Supplier added successfully");
-                infoFrame.dispose();
-                table_update();
-
+                success("Success! Supplier added successfully");
             }
         } else {
-            System.out.println("Update existing supplier");
+            supplier.setId(Integer.valueOf(ID));
+            if(!supDA.updateSupplier(supplier)) {
+                JOptionPane.showMessageDialog(null, "ERROR! Supplier not updated");
+            } else {
+                success("Success! Supplier updated");
+            }
         }
         return true;
+    }
+
+    private void success(String message) {
+        JOptionPane.showMessageDialog(null, message);
+        infoFrame.dispose();
+        table_update();
     }
 
     private void deleteSupplier(String id) {
         if(!supDA.removeSupplier(Integer.valueOf(id))) {
             JOptionPane.showMessageDialog(null, "ERROR! Supplier not added");
         } else {
-            JOptionPane.showMessageDialog(null, "Success! Supplier removed successfully");
-            infoFrame.dispose();
-            table_update();
+            success("Success! Supplier removed successfully");
         }
     }
 
