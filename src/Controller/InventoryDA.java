@@ -73,4 +73,25 @@ public class InventoryDA {
         }
         return true;
     }
+
+    public boolean addInventory(Inventory inv) {
+        try{
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("Select (max(inventory_id) + 1) as Supplier_ID from inventory");
+            ResultSet rs = ps.executeQuery();
+            int newInvID = 0;
+            while(rs.next()) { newInvID = rs.getInt("Supplier_ID"); }
+            ps = DatabaseTools.GetConnection().prepareStatement(
+                    "INSERT INTO inventory(inventory_id,inventory_name,quantity,supplier_id)value(?,?,?,?)"
+            );
+            ps.setInt(1, newInvID);
+            ps.setString(2, inv.getName());
+            ps.setInt(3, inv.getQty());
+            ps.setInt(4, inv.getSupplierID());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

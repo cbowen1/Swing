@@ -204,6 +204,11 @@ public class InventoryUI {
         Inventory inv = new Inventory(name, qty, sup.getId());
         if(id.isBlank()) {
             //Create new inventory item
+            if(!inventoryDA.addInventory(inv)){
+                error("ERROR! Inventory not added");
+            } else {
+                success("Success! Supplier added successfully");
+            }
         } else {
             //Update existing inventory item
             inv.setId(Integer.valueOf(id));
