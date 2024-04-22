@@ -147,6 +147,7 @@ public class CustomerUI {
         save.addActionListener(e -> updateCustomer(txtCustID.getText(),txtCustFirst.getText(),txtCustLast.getText(), txtCustEmail.getText(),
                 txtCustStreet.getText(), txtCustCity.getText(),txtCustState.getText(), txtCustZip.getText()));
         delete.addActionListener(e -> deleteCustomer(txtCustID.getText()));
+
         buttonPanel.add(save);
         buttonPanel.add(delete);
 
@@ -155,6 +156,26 @@ public class CustomerUI {
         infoFrame.pack();
         infoFrame.setLocationRelativeTo(null);
         infoFrame.setVisible(true);
+    }
+
+    private boolean updateCustomer(String ID, String fName, String lName, String email, String street, String city, String state, String zip) {
+        try{
+            //Customer cust = new Customer(fName, lName, email, street)
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    private  boolean deleteCustomer(String id) {
+        try{
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     private void initEditPanel() {

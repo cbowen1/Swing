@@ -9,6 +9,7 @@ public class Customer {
     private String city;
     private String state;
     private String zip;
+    private Boolean isActive;
 
     public int getCustomerID() {
         return customerID;
@@ -72,6 +73,14 @@ public class Customer {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public Customer() { }
