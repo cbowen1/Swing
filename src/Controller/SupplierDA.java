@@ -2,8 +2,6 @@ package Controller;
 
 import Database.DatabaseTools;
 import Model.Supplier;
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
-import jdk.dynalink.linker.LinkerServices;
 
 import javax.swing.*;
 import java.sql.*;

@@ -1,7 +1,7 @@
 package Model;
 
 public class Customer {
-    private String customerID;
+    private int customerID;
     private String customerName_first;
     private String customerName_last;
     private String email;
@@ -10,11 +10,11 @@ public class Customer {
     private String state;
     private String zip;
 
-    public String getCustomerID() {
+    public int getCustomerID() {
         return customerID;
     }
 
-    public void setCustomerID(String customerID) {
+    public void setCustomerID(int customerID) {
         this.customerID = customerID;
     }
 
