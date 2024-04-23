@@ -24,7 +24,7 @@ public class CustomerDA {
         customerList = new ArrayList<Customer>();
 
         try {
-            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM customer");
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM customer WHERE isActive = TRUE");
             ResultSet rs = ps.executeQuery();
 
             Customer cust;
@@ -61,6 +61,7 @@ public class CustomerDA {
                 cust.setState(rs.getString("state"));
                 cust.setZip(rs.getString("zipcode"));
                 cust.setEmail(rs.getString("email"));
+                cust.setActive(rs.getBoolean("isActive"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -99,9 +100,10 @@ public class CustomerDA {
         try{
             int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to delete the customer", "Warning", JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION) {
-                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("DELETE FROM customer where customer_id = ?");
+                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE customer set isActive = FALSE where customer_id = ?");
                 ps.setInt(1, id);
-                ps.executeUpdate();            }
+                ps.executeUpdate();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;

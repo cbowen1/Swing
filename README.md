@@ -9,3 +9,4 @@ Things I'd like to add if given the time:
 -change ALL ID primaryKeys to AI
 -On number formatted (inventory) qtys, ensure cursor jumps to end
 -FIX naming of Inventory/Product -> Make it Supplies/Inventory
+-How to see customers that have been marked as 'inactive'

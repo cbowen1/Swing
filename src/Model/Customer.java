@@ -11,6 +11,16 @@ public class Customer {
     private String zip;
     private Boolean isActive;
 
+    public Customer(String fName, String lName, String email, String street, String city, String state, String zip) {
+        this.customerName_first = fName;
+        this.customerName_last = lName;
+        this.email = email;
+        this.street_address = street;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+    }
+
     public int getCustomerID() {
         return customerID;
     }

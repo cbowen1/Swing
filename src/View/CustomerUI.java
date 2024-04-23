@@ -82,8 +82,6 @@ public class CustomerUI {
         viewPanel.add(customerScrollPane);
 
         initEditPanel();
-
-
     }
 
     private void moreInfo(Integer customerID) {
@@ -92,7 +90,7 @@ public class CustomerUI {
         }
 
         infoFrame = new JFrame("Customer Information");
-        infoFrame.setLayout(new GridLayout(9,2));
+        infoFrame.setLayout(new GridLayout(10,2));
 
         JTextField txtCustID = new JTextField();
         JTextField txtCustFirst = new JTextField();
@@ -102,6 +100,7 @@ public class CustomerUI {
         JTextField txtCustCity = new JTextField();
         JTextField txtCustState = new JTextField();
         JTextField txtCustZip = new JTextField();
+        JTextField txtCustActive = new JTextField();
 
         JLabel idLabel = new JLabel("ID:");
         txtCustID.setEnabled(false);
@@ -123,6 +122,8 @@ public class CustomerUI {
         infoFrame.add(txtCustState);
         infoFrame.add(new JLabel("Zip:"));
         infoFrame.add(txtCustZip);
+        infoFrame.add(new JLabel("Active"));
+        infoFrame.add(txtCustActive);
 
         if(customerID == null) {
             //This is a new user
@@ -136,6 +137,7 @@ public class CustomerUI {
             txtCustStreet.setText(cust.getStreet_address());
             txtCustState.setText(cust.getState());
             txtCustZip.setText(cust.getZip());
+            txtCustActive.setText(cust.getActive().toString());
         }
 
         JPanel fillerPanel = new JPanel();
@@ -160,7 +162,23 @@ public class CustomerUI {
 
     private boolean updateCustomer(String ID, String fName, String lName, String email, String street, String city, String state, String zip) {
         try{
-            //Customer cust = new Customer(fName, lName, email, street)
+            Customer cust = new Customer(fName, lName, email, street, city, state, zip);
+            if(ID.isBlank()) {
+                //Customer creation
+                if(!customerDA.addCustomer(cust)) {
+                    JOptionPane.showMessageDialog(null, "ERROR! Customer could not be added");
+                } else {
+                    success("Succes! Customer added successfully");
+                }
+            } else {
+                //Customer update
+                cust.setCustomerID(Integer.valueOf(ID));
+                if(!customerDA.updateCustomer(cust)) {
+                    JOptionPane.showMessageDialog(null, "ERROR! Customer could not be updated");
+                } else {
+                    success("Success! Customer updated");
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -170,12 +188,22 @@ public class CustomerUI {
 
     private  boolean deleteCustomer(String id) {
         try{
-
+            if(!customerDA.removeCustomer(Integer.valueOf(id))) {
+                JOptionPane.showMessageDialog(null, "ERROR! Customer could not be deleted");
+            } else {
+                success("Success! Customer has successfully disabled");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
         return true;
+    }
+
+    private void success(String message) {
+        JOptionPane.showMessageDialog(null, message);
+        infoFrame.dispose();
+        table_update();
     }
 
     private void initEditPanel() {
