@@ -17,6 +17,8 @@ public class PrimaryFrame extends JFrame implements ActionListener {
     InventoryUI inventoryPanel;
     ProductLineUI plPanel;
     SupplierUI supplierPanel;
+    JLabel topLabel;
+
 
 
     public PrimaryFrame() {
@@ -45,7 +47,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         btn1 = new JButton("Customers");
         btn2 = new JButton("Orders");
         btn3 = new JButton("Supplies");
-        btn4 = new JButton("Inventory");
+        btn4 = new JButton("Products");
         btn5 = new JButton("Product Lines");
         btn6 = new JButton("Suppliers");
 
@@ -59,16 +61,22 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         Dimension half = new Dimension((int)(screenSize.getWidth()/1.5),(int) (screenSize.getHeight()/1.5));
         topPanel.setPreferredSize(new Dimension(half.width, (int) half.getHeight()/8));
 
+        topLabel = new JLabel("Please select an option on the left");
+        topPanel.add(topLabel);
+
         leftPanel.setLayout(new GridLayout(6,1));
-        leftPanel.add(btn1);
         leftPanel.add(btn2);
         leftPanel.add(btn4);
-        leftPanel.add(btn3);
         leftPanel.add(btn5);
+        leftPanel.add(btn3);
+        leftPanel.add(btn1);
         leftPanel.add(btn6);
         splitPane.setLeftComponent(leftPanel);
-        splitPane.setRightComponent(rightPanel);
-        splitPane.setDividerLocation(150);
+        //splitPane.setRightComponent(rightPanel);
+        splitPane.setRightComponent(orderPanel.getRootComponent());
+        topLabel.setText("Order Information");
+        //splitPane.setDividerLocation(150);
+        splitPane.repaint();
         frame.add(topPanel,BorderLayout.NORTH);
         frame.add(splitPane, BorderLayout.CENTER);
 
@@ -84,16 +92,22 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         }
         if(e.getSource() == btn1) {
             splitPane.setRightComponent(customerPanel.getRootComponent());
+            topLabel.setText("Customer Information");
         } else if (e.getSource() == btn2) {
             splitPane.setRightComponent(orderPanel.getRootComponent());
+            topLabel.setText("Order Information");
         } else if (e.getSource() == btn3) {
             splitPane.setRightComponent(inventoryPanel.getRootComponent());
+            topLabel.setText("Inventory Information");
         } else if (e.getSource() == btn4) {
             splitPane.setRightComponent(productPanel.getRootComponent());
+            topLabel.setText("Product Information");
         } else if (e.getSource() == btn5) {
             splitPane.setRightComponent(plPanel.getRootComponent());
+            topLabel.setText("Product Lines");
         } else if (e.getSource() == btn6) {
             splitPane.setRightComponent(supplierPanel.getRootComponent());
+            topLabel.setText("Supplier Information");
         }
         revalidate();
     }

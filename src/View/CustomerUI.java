@@ -138,6 +138,7 @@ public class CustomerUI {
             txtCustState.setText(cust.getState());
             txtCustZip.setText(cust.getZip());
             txtCustActive.setText(cust.getActive().toString());
+            txtCustActive.setEnabled(false);
         }
 
         JPanel fillerPanel = new JPanel();

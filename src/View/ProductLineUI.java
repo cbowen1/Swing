@@ -6,6 +6,8 @@ import Model.Product_Line;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -16,7 +18,6 @@ public class ProductLineUI {
     private JScrollPane plScrollPane;
     private JTable plTable;
     JFrame infoFrame;
-
     ProductLineDA plDA;
 
 
@@ -29,7 +30,12 @@ public class ProductLineUI {
     private void table_update() {
         ArrayList<Product_Line> plList = plDA.getProductLineList();
 
-        DefaultTableModel tm = new DefaultTableModel();
+        DefaultTableModel tm = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         tm.addColumn("ID");
         tm.addColumn("Name");
         tm.addColumn("Description");
@@ -42,8 +48,8 @@ public class ProductLineUI {
             rowObj.add(0, pl.getId());
             rowObj.add(1, pl.getName());
             rowObj.add(2, pl.getDesc());
-            rowObj.add(2, pl.getUnitPrice());
-            rowObj.add(2, pl.getSupplierId());
+            rowObj.add(3, pl.getUnitPrice());
+            rowObj.add(4, pl.getSupplierId());
             tm.addRow(rowObj);
         }
 
@@ -64,139 +70,53 @@ public class ProductLineUI {
         plPanel.add(viewPanel, gbc);
         plTable = new JTable();
         plTable.setRowHeight(30);
+
+        plTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 2) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    moreInfo((int) target.getValueAt(row,0));
+                }
+            }
+        });
+
         plScrollPane = new JScrollPane(plTable);
         viewPanel.add(plScrollPane);
 
         initEditPanel();
+    }
 
+    private void moreInfo(Integer plID) {
+        if(infoFrame != null) {
+            infoFrame.dispose();
+        }
 
+        infoFrame = new JFrame("Product Line Information");
+        infoFrame.setLayout(new GridLayout(4,2));
+
+        infoFrame.pack();
+        infoFrame.setLocationRelativeTo(null);
+        infoFrame.setVisible(true);
     }
 
     private void initEditPanel() {
         GridBagConstraints gbc;
         editPanel = new JPanel();
         editPanel.setLayout(new GridBagLayout());
-        editPanel.setBackground(new Color(-15076806));
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
+        gbc.weighty = .5;
         gbc.fill = GridBagConstraints.BOTH;
         plPanel.add(editPanel, gbc);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 2;
-        gbc.gridy = 1;
-        gbc.weightx = 1.0;
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 2;
-        gbc.weightx = 1.0;
-        final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridBagLayout());
-        panel1.setBackground(new Color(-2737422));
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 4;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        editPanel.add(panel1, gbc);
-        final JLabel label1 = new JLabel();
-        label1.setText("UserID");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        final JLabel label2 = new JLabel();
-        label2.setText("First");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc = new GridBagConstraints();
-        gbc.gridx = 5;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        final JLabel label4 = new JLabel();
-        label4.setText("Street");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.weightx = 1.0;
-        gbc.anchor = GridBagConstraints.EAST;
-        panel1.add(label4, gbc);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.gridwidth = 5;
-        gbc.weightx = 1.0;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        final JLabel label5 = new JLabel();
-        label5.setText("City");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.weightx = 1.0;
-        gbc.anchor = GridBagConstraints.EAST;
-        panel1.add(label5, gbc);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 4;
-        gbc.weightx = 1.0;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        final JLabel label6 = new JLabel();
-        label6.setText("State");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 2;
-        gbc.gridy = 4;
-        gbc.weightx = 1.0;
-        gbc.anchor = GridBagConstraints.EAST;
-        panel1.add(label6, gbc);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 3;
-        gbc.gridy = 4;
-        gbc.weightx = 1.0;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        final JLabel label7 = new JLabel();
-        label7.setText("Zip");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 4;
-        gbc.gridy = 4;
-        gbc.weightx = 1.0;
-        gbc.anchor = GridBagConstraints.EAST;
-        panel1.add(label7, gbc);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 5;
-        gbc.gridy = 4;
-        gbc.weightx = 1.0;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        final JPanel spacer1 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 3;
-        gbc.gridy = 1;
-        panel1.add(spacer1, gbc);
-        final JPanel spacer2 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 3;
-        gbc.gridy = 3;
-        panel1.add(spacer2, gbc);
-        final JPanel spacer3 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 6;
-        gbc.gridy = 2;
-        panel1.add(spacer3, gbc);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 3;
-        gbc.gridy = 1;
-        gbc.weightx = 1.0;
+
+        JButton newProdLine = new JButton("New Product Line");
+        newProdLine.setSize(25,25);
+        newProdLine.addActionListener(e -> moreInfo(null));
+        editPanel.add(newProdLine);
     }
 
     public JComponent getRootComponent() {

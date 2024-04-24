@@ -36,6 +36,8 @@ INSERT INTO supplier VALUES (1, 'Amazon.com', NULL, NULL, NULL, 'www.amazon.com'
 INSERT INTO supplier VALUES (2, 'Steel City Collectibles', NULL, NULL, NULL, 'www.steelcitycollectibles.com');
 INSERT INTO supplier VALUES (3, 'Panini', NULL, NULL, NULL, 'www.paniniamerica.net');
 INSERT INTO supplier VALUES (4, 'Random Supply Co', '410-867-5309', 'randomPerson@randomsupplyco.com','123 Main St, Havre de Grace,MD', 'www.notawebsite.com');
+INSERT INTO supplier VALUES (5, 'Dave & Adams Cardworld', NULL, NULL, NULL, NULL);
+INSERT INTO supplier VALUES (6, 'Blowout Cards', NULL, NULL, NULL, NULL);
 
 -- Inserting  data into `orders`
 INSERT INTO `orders` VALUES (1, 13, null, 'Processing', CURDATE());
