@@ -10,10 +10,11 @@ public class ProductDA {
     private ArrayList<Product> productList;
 
     public ProductDA() {
-        populateOrderList();
+        //populateOrderList();
     }
 
     public ArrayList<Product> getOrderList() {
+        populateOrderList();
         return productList;
     }
 
@@ -70,7 +71,8 @@ public class ProductDA {
     }
 
 
-    public void getProduct(int id) {
+    public Product getProduct(int id) {
         Product prod = new Product();
+        return prod;
     }
 }

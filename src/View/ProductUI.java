@@ -1,14 +1,19 @@
 package View;
 
 import Controller.ProductDA;
+import Controller.SupplierDA;
 import Model.Product;
+import Model.Supplier;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Vector;
 
 public class ProductUI {
@@ -23,6 +28,10 @@ public class ProductUI {
     public ProductUI() {
         init();
         productDA = new ProductDA();
+        table_update();
+    }
+
+    private void table_update() {
         ArrayList<Product> prodList = productDA.getOrderList();
 
         DefaultTableModel tm = new DefaultTableModel() {
@@ -47,7 +56,6 @@ public class ProductUI {
             rowObj.add(4, o.getQty());
             tm.addRow(rowObj);
         }
-
     }
 
     private void init() {
@@ -55,7 +63,6 @@ public class ProductUI {
         prodPanel.setLayout(new GridBagLayout());
         viewPanel = new JPanel();
         viewPanel.setLayout(new BorderLayout(0, 0));
-        viewPanel.setBackground(new Color(-887852));
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -90,13 +97,71 @@ public class ProductUI {
         }
 
         infoFrame = new JFrame("Product Information");
-        infoFrame.setLayout(new GridLayout(3,2));
+        infoFrame.setLayout(new GridLayout(6,2));
+
+        JTextField txtProdId = new JTextField();
+        JTextField txtProdName = new JTextField();
+
+        NumberFormat curFormat = NumberFormat.getCurrencyInstance(new Locale("en", "US"));
+        NumberFormatter curFormatter = new NumberFormatter(curFormat);
+
+        curFormatter.setMinimum(0.0);
+        curFormatter.setAllowsInvalid(false);
+
+        JFormattedTextField txtUnitPrice = new JFormattedTextField(curFormatter);
+
+        NumberFormat format = NumberFormat.getInstance();
+        NumberFormatter formatter = new NumberFormatter(format);
+
+        formatter.setValueClass(Integer.class);
+        formatter.setMinimum(0);
+        formatter.setMaximum(Integer.MAX_VALUE);
+        formatter.setAllowsInvalid(false);
+        JFormattedTextField txtQty = new JFormattedTextField(formatter);
+        JLabel idLabel = new JLabel("ID:");
+
+        infoFrame.add(idLabel);
+        infoFrame.add(txtProdId);
+        infoFrame.add(new JLabel("Name:"));
+        infoFrame.add(txtProdName);
+        infoFrame.add(new JLabel("Unit Price:"));
+        infoFrame.add(txtUnitPrice);
+        infoFrame.add(new JLabel("QTY:"));
+        infoFrame.add(txtQty);
+
+        SupplierDA supplierDA = new SupplierDA();
+        ArrayList<Supplier> supList = supplierDA.getSupList();
+        JComboBox<Supplier> optInventorySupplier = new JComboBox<>(supList.toArray(new Supplier[0]));
+        infoFrame.add(new JLabel("Supplier:"));
+        infoFrame.add(optInventorySupplier);
 
         if(productID == null) {
             //New Product Creation
+            System.out.println("New Product not implemented");
         } else {
+            Product prod = productDA.getProduct(productID);
             //Show existing product info
+
         }
+
+        JPanel fillerPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1,2));
+        JButton save = new JButton("Save");
+        JButton delete = new JButton("Delete");
+
+        //save.addActionListener(e -> updateProductLine(txtProdLineID.getText(), txtProdLineName.getText(),txtProdLineDesc.getText(),(double)txtProdLinePrice.getValue(),(Supplier) optSupplier.getSelectedItem()));
+        //delete.addActionListener(e -> deleteProductLine(txtProdLineID.getText()));
+
+        buttonPanel.add(save);
+        buttonPanel.add(delete);
+
+        infoFrame.add(fillerPanel);
+        infoFrame.add(buttonPanel);
+
+        infoFrame.pack();
+        infoFrame.setLocationRelativeTo(null);
+        infoFrame.setVisible(true);
     }
 
     private void initEditPanel() {
@@ -119,5 +184,17 @@ public class ProductUI {
 
     public JComponent getRootComponent() {
         return prodPanel;
+    }
+
+    private void setComboBoxBySupplier(JComboBox<Supplier> combo,ArrayList<Supplier> supList, int supplierID) {
+        if(supplierID == -1) {
+            return;
+        }
+        for(Supplier s : supList) {
+            if(s.getId() == supplierID) {
+                combo.setSelectedItem(s);
+                break;
+            }
+        }
     }
 }
