@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
@@ -8,6 +9,14 @@ public class Order {
     private int paymentID;
     private String status;
     private Date order_date;
+
+    private Customer customer;
+
+    private ArrayList<Product> productList;
+
+    public Order() {
+
+    }
     public int getOrderID() {
         return orderID;
     }
@@ -46,5 +55,25 @@ public class Order {
 
     public void setOrder_date(Date order_date) {
         this.order_date = order_date;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public ArrayList<Product> getProductList() {
+        return productList;
+    }
+
+    public void addProductToList(Product prod) {
+        if(productList == null) {
+            productList = new ArrayList<>();
+        }
+
+        productList.add(prod);
     }
 }

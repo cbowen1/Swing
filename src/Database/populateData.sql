@@ -67,3 +67,4 @@ INSERT INTO shipping VALUES
 
 INSERT INTO order_details VALUES (1,1,2);
 INSERT INTO order_details VALUES (1,2,2);
+INSERT INTO order_details VALUES (2,3,1);

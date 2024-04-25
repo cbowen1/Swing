@@ -4,6 +4,7 @@ import Controller.CustomerDA;
 import Controller.OrderDA;
 import Model.Customer;
 import Model.Order;
+import Model.Supplier;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -94,13 +95,90 @@ public class OrderUI {
         }
 
         infoFrame = new JFrame("Order Details");
-        infoFrame.setLayout(new GridLayout(5,2));
+        infoFrame.setLayout(new GridLayout(4,1));
+
+        JPanel dataPanel = new JPanel(new GridLayout(2,3));
+        JPanel custPanel = new JPanel(new GridLayout(2,3));
+        JPanel tablePanel = new JPanel(new GridLayout(1,1));
+        JPanel btnPanel = new JPanel(new GridLayout(1,3));
+
+        dataPanel.add(new JLabel("OrderID"));
+        dataPanel.add(new JLabel("Order Status"));
+        dataPanel.add(new JLabel("Order Date"));
+
+        custPanel.add(new JLabel("First: "));
+        custPanel.add(new JLabel("Last: "));
+        custPanel.add(new JLabel("Address: "));
+
+        JTextField custFirst = new JTextField();
+        JTextField custLast = new JTextField();
+        JTextField custAddress = new JTextField();
+
+        custPanel.add(custFirst);
+        custPanel.add(custLast);
+        custPanel.add(custAddress);
 
         JTextField txtOrderId = new JTextField();
-        JTextField txtCustomerId = new JTextField();
-        JTextField txtPaymentId = new JTextField();
-        JTextField txtStatus = new JTextField();
+        JTextField txtOrderStatus = new JTextField();
         JTextField txtOrderDate = new JTextField();
+        JTable detailTable = new JTable();
+
+        dataPanel.add(txtOrderId);
+        dataPanel.add(txtOrderStatus);
+        dataPanel.add(txtOrderDate);
+
+        tablePanel.add(detailTable);
+
+        if(orderID == null) {
+            //This is a new order
+            System.out.println("New order not implemented");
+        } else {
+            //Existing order, grab information
+            Order ord = orderDA.getOrder(orderID);
+        }
+
+        JPanel fillerPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1,2));
+        JButton save = new JButton("Save");
+        JButton delete = new JButton("Delete");
+
+        save.addActionListener(e -> updateOrder(txtOrderId.getText()));
+        delete.addActionListener(e -> deleteOrder(txtOrderId.getText()));
+
+        buttonPanel.add(save);
+        buttonPanel.add(delete);
+
+        btnPanel.add(fillerPanel);
+        btnPanel.add(buttonPanel);
+
+        infoFrame.add(dataPanel);
+        infoFrame.add(custPanel);
+        infoFrame.add(tablePanel);
+        infoFrame.add(btnPanel);
+
+        infoFrame.pack();
+        infoFrame.setLocationRelativeTo(null);
+        infoFrame.setVisible(true);
+
+    }
+
+    private void success(String message) {
+        JOptionPane.showMessageDialog(null, message);
+        infoFrame.dispose();
+        table_update();
+    }
+
+    private void error(String message) {
+        JOptionPane.showMessageDialog(null, message);
+    }
+
+    private void deleteOrder(String id) {
+        System.out.println("Delete order not implemented");
+    }
+
+    private void updateOrder(String id) {
+        System.out.println("Update order not implemented");
     }
 
     private void initEditPanel() {
