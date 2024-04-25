@@ -127,7 +127,6 @@ public class InventoryUI {
         formatter.setMinimum(0);
         formatter.setMaximum(Integer.MAX_VALUE);
         formatter.setAllowsInvalid(false);
-        formatter.setAllowsInvalid(false);
 
         JFormattedTextField txtInventoryQty = new JFormattedTextField(formatter);
 

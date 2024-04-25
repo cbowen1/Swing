@@ -1,14 +1,20 @@
 package View;
 
 import Controller.ProductLineDA;
+import Controller.SupplierDA;
+import Model.Inventory;
 import Model.Product_Line;
+import Model.Supplier;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Vector;
 
 public class ProductLineUI {
@@ -38,21 +44,16 @@ public class ProductLineUI {
         };
         tm.addColumn("ID");
         tm.addColumn("Name");
-        tm.addColumn("Description");
         tm.addColumn("Unit Price");
-        tm.addColumn("Supplier ID");
 
         plTable.setModel(tm);
         for(Product_Line pl: plList) {
-            Vector<Object> rowObj = new Vector<>(5);
+            Vector<Object> rowObj = new Vector<>(3);
             rowObj.add(0, pl.getId());
             rowObj.add(1, pl.getName());
-            rowObj.add(2, pl.getDesc());
-            rowObj.add(3, pl.getUnitPrice());
-            rowObj.add(4, pl.getSupplierId());
+            rowObj.add(2, pl.getUnitPrice());
             tm.addRow(rowObj);
         }
-
     }
 
     private void init() {
@@ -94,11 +95,107 @@ public class ProductLineUI {
         }
 
         infoFrame = new JFrame("Product Line Information");
-        infoFrame.setLayout(new GridLayout(4,2));
+        infoFrame.setLayout(new GridLayout(6,2));
+
+        JTextField txtProdLineID = new JTextField();
+        JTextField txtProdLineName = new JTextField();
+        JTextArea txtProdLineDesc = new JTextArea();
+
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("en", "US"));
+        NumberFormatter formatter = new NumberFormatter(format);
+
+        formatter.setMinimum(0.0);
+        formatter.setAllowsInvalid(false);
+
+        JFormattedTextField txtProdLinePrice = new JFormattedTextField(formatter);
+        txtProdLinePrice.setValue(0.00);
+
+        JLabel idLabel = new JLabel("ID:");
+        txtProdLineName.setColumns(50);
+
+        infoFrame.add(idLabel);
+        txtProdLineID.setEnabled(false);
+        infoFrame.add(txtProdLineID);
+        infoFrame.add(new JLabel("Name:"));
+        infoFrame.add(txtProdLineName);
+        infoFrame.add(new JLabel("Desc:"));
+        infoFrame.add(txtProdLineDesc);
+        infoFrame.add(new JLabel("Unit Price:"));
+        infoFrame.add(txtProdLinePrice);
+
+        SupplierDA supplierDA = new SupplierDA();
+        ArrayList<Supplier> supList = supplierDA.getSupList();
+        JComboBox<Supplier> optSupplier = new JComboBox<>(supList.toArray(new Supplier[0]));
+        infoFrame.add(new JLabel("Supplier:"));
+        infoFrame.add(optSupplier);
+
+        if(plID == null) {
+            System.out.println("Add product line not implemented");
+        } else {
+            //This is existing product line, fill information
+            Product_Line pl = plDA.getProdLine(plID);
+            txtProdLineID.setText(String.valueOf(pl.getId()));
+            txtProdLineName.setText(pl.getName());
+            txtProdLineDesc.setText(pl.getDesc());
+            txtProdLinePrice.setValue(pl.getUnitPrice());
+            setComboBoxBySupplier(optSupplier, supList, pl.getSupplierId());
+        }
+
+        JPanel fillerPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1,2));
+        JButton save = new JButton("Save");
+        JButton delete = new JButton("Delete");
+
+        save.addActionListener(e -> updateProductLine(txtProdLineID.getText(), txtProdLineName.getText(),txtProdLineDesc.getText(),(double)txtProdLinePrice.getValue(),(Supplier) optSupplier.getSelectedItem()));
+        delete.addActionListener(e -> deleteProductLine(txtProdLineID.getText()));
+
+        buttonPanel.add(save);
+        buttonPanel.add(delete);
+
+        infoFrame.add(fillerPanel);
+        infoFrame.add(buttonPanel);
 
         infoFrame.pack();
         infoFrame.setLocationRelativeTo(null);
         infoFrame.setVisible(true);
+    }
+
+    private void updateProductLine(String id, String name,String desc, double price, Supplier sup) {
+        if(name == null) {
+            return;
+        }
+        Product_Line pl = new Product_Line(name, desc, price, sup.getId());
+        if(id.isBlank()) {
+            //Create new product line
+            if(!plDA.addProductLine(pl)){
+                error("ERROR! Product Line not added");
+            } else {
+                success("Success! Product Line added successfully");
+            }
+        } else {
+            //Update existing product line
+            pl.setId(Integer.valueOf(id));
+            if(!plDA.updateProductLine(pl)) {
+                error("ERROR! Product line not updated");
+            } else {
+                success("Success! Product line updated");
+            }
+        }
+    }
+
+    private void deleteProductLine(String id) {
+        System.out.println("Delete not implemented");
+    }
+
+    private void success(String message) {
+        JOptionPane.showMessageDialog(null, message);
+        infoFrame.dispose();
+        table_update();
+    }
+
+    private void error(String message) {
+        JOptionPane.showMessageDialog(null, message);
     }
 
     private void initEditPanel() {
@@ -117,6 +214,18 @@ public class ProductLineUI {
         newProdLine.setSize(25,25);
         newProdLine.addActionListener(e -> moreInfo(null));
         editPanel.add(newProdLine);
+    }
+
+    private void setComboBoxBySupplier(JComboBox<Supplier> combo,ArrayList<Supplier> supList, int supplierID) {
+        if(supplierID == -1) {
+            return;
+        }
+        for(Supplier s : supList) {
+            if(s.getId() == supplierID) {
+                combo.setSelectedItem(s);
+                break;
+            }
+        }
     }
 
     public JComponent getRootComponent() {

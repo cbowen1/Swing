@@ -8,6 +8,15 @@ public class Product_Line {
 
     private int supplierId;
 
+    public Product_Line(String name, String desc, double price, int id) {
+        this.name = name;
+        this.desc = desc;
+        this.unitPrice =  price;
+        this.supplierId = id;
+    }
+
+    public Product_Line() {}
+
     public int getId() {
         return id;
     }

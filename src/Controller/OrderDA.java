@@ -11,11 +11,10 @@ public class OrderDA {
     private int recordCursor;
 
     public OrderDA() {
-        setRecordCursorAtStart();
-        populateOrderList();
     }
 
     public ArrayList<Order> getOrderList() {
+        populateOrderList();
         return orderList;
     }
 
@@ -40,15 +39,5 @@ public class OrderDA {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void setRecordCursorAtStart() {
-        recordCursor = 0;
-    }
-
-
-    public Order getNextOrder() {
-        recordCursor = recordCursor >= orderList.size() -1 ? orderList.size()-1:recordCursor++;
-        return orderList.get(recordCursor);
     }
 }
