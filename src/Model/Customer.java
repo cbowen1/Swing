@@ -93,6 +93,9 @@ public class Customer {
         isActive = active;
     }
 
+    public String getFullAddress() {
+        return street_address + "," + city + " " + state + " " + zip;
+    }
     public Customer() { }
 
 }

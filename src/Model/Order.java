@@ -9,10 +9,8 @@ public class Order {
     private int paymentID;
     private String status;
     private Date order_date;
-
     private Customer customer;
-
-    private ArrayList<Product> productList;
+    private ArrayList<OrderDetails> orderDetails;
 
     public Order() {
 
@@ -60,20 +58,13 @@ public class Order {
     public Customer getCustomer() {
         return customer;
     }
-
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-
-    public ArrayList<Product> getProductList() {
-        return productList;
+    public ArrayList<OrderDetails> getOrderDetails() {
+        return orderDetails;
     }
-
-    public void addProductToList(Product prod) {
-        if(productList == null) {
-            productList = new ArrayList<>();
-        }
-
-        productList.add(prod);
+    public void setOrderDetails(ArrayList<OrderDetails> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 }

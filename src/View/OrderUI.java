@@ -2,6 +2,7 @@ package View;
 
 import Controller.CustomerDA;
 import Controller.OrderDA;
+import Controller.ProductDA;
 import Model.Customer;
 import Model.Order;
 import Model.Supplier;
@@ -22,10 +23,14 @@ public class OrderUI {
     private JTable orderTable;
     JFrame infoFrame;
     OrderDA orderDA;
+    CustomerDA custDA;
+    ProductDA prodDA;
 
     public OrderUI() {
         init();
         orderDA = new OrderDA();
+        custDA = new CustomerDA();
+        prodDA = new ProductDA();
         table_update();
     }
 
@@ -122,12 +127,23 @@ public class OrderUI {
         JTextField txtOrderStatus = new JTextField();
         JTextField txtOrderDate = new JTextField();
         JTable detailTable = new JTable();
+        JScrollPane detailPane = new JScrollPane(detailTable);
 
         dataPanel.add(txtOrderId);
         dataPanel.add(txtOrderStatus);
         dataPanel.add(txtOrderDate);
 
-        tablePanel.add(detailTable);
+        tablePanel.add(detailPane);
+
+        DefaultTableModel dtm = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        dtm.addColumn("Item Name");
+        dtm.addColumn("Qty");
+        dtm.addColumn("Price");
 
         if(orderID == null) {
             //This is a new order
@@ -135,6 +151,20 @@ public class OrderUI {
         } else {
             //Existing order, grab information
             Order ord = orderDA.getOrder(orderID);
+            ord.setOrderDetails(orderDA.getOrderDetails(orderID));
+            //Grab better customer and product information from corresponding tables
+            ord.setCustomer(custDA.getCustomer(ord.getCustomerID()));
+
+            //Add order details to table
+
+            //Set values in UI
+            txtOrderId.setText(String.valueOf(ord.getOrderID()));
+            txtOrderStatus.setText(ord.getStatus());
+            txtOrderDate.setText(ord.getOrder_date().toString());
+
+            custFirst.setText(ord.getCustomer().getCustomerName_first());
+            custLast.setText(ord.getCustomer().getCustomerName_last());
+            custAddress.setText(ord.getCustomer().getFullAddress());
         }
 
         JPanel fillerPanel = new JPanel();
