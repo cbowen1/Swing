@@ -5,6 +5,7 @@ import Controller.OrderDA;
 import Controller.ProductDA;
 import Model.Customer;
 import Model.Order;
+import Model.OrderDetails;
 import Model.Supplier;
 
 import javax.swing.*;
@@ -100,7 +101,7 @@ public class OrderUI {
         }
 
         infoFrame = new JFrame("Order Details");
-        infoFrame.setLayout(new GridLayout(4,1));
+        infoFrame.setLayout(new GridBagLayout());
 
         JPanel dataPanel = new JPanel(new GridLayout(2,3));
         JPanel custPanel = new JPanel(new GridLayout(2,3));
@@ -156,6 +157,14 @@ public class OrderUI {
             ord.setCustomer(custDA.getCustomer(ord.getCustomerID()));
 
             //Add order details to table
+            detailTable.setModel(dtm);
+            for(OrderDetails o: ord.getOrderDetails()) {
+                Vector<Object> row = new Vector<>(3);
+                row.add(0,prodDA.getProductName(o.getProductID()));
+                row.add(1,o.getQty());
+                row.add(2,(o.getQty() * prodDA.getProductPrice(o.getProductID())));
+                dtm.addRow(row);
+            }
 
             //Set values in UI
             txtOrderId.setText(String.valueOf(ord.getOrderID()));
@@ -179,13 +188,20 @@ public class OrderUI {
         buttonPanel.add(save);
         buttonPanel.add(delete);
 
-        btnPanel.add(fillerPanel);
         btnPanel.add(buttonPanel);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
 
-        infoFrame.add(dataPanel);
-        infoFrame.add(custPanel);
-        infoFrame.add(tablePanel);
-        infoFrame.add(btnPanel);
+        infoFrame.add(dataPanel,gbc);
+        gbc.gridy++;
+        infoFrame.add(custPanel,gbc);
+        gbc.gridy++;
+        infoFrame.add(new JSeparator(JSeparator.HORIZONTAL),gbc);
+        gbc.gridy++;
+        infoFrame.add(tablePanel,gbc);
+        gbc.gridy++;
+        infoFrame.add(btnPanel,gbc);
 
         infoFrame.pack();
         infoFrame.setLocationRelativeTo(null);
