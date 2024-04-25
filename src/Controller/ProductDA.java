@@ -1,6 +1,7 @@
 package Controller;
 
 import Database.DatabaseTools;
+import Model.Inventory;
 import Model.Product;
 
 import java.sql.*;
@@ -73,6 +74,20 @@ public class ProductDA {
 
     public Product getProduct(int id) {
         Product prod = new Product();
+        try {
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM product where product_id = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                prod.setId(rs.getInt("product_id"));
+                prod.setProductLineId(rs.getInt("Product_line_id"));
+                prod.setName(rs.getString("product_name"));
+                prod.setUnitPrice(rs.getDouble("unit_price"));
+                prod.setQty(rs.getInt("quantity"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return prod;
     }
 }

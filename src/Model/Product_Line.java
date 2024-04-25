@@ -56,4 +56,9 @@ public class Product_Line {
     public void setSupplierId(int supplierId) {
         this.supplierId = supplierId;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

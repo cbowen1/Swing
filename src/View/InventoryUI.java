@@ -153,6 +153,7 @@ public class InventoryUI {
         if(inventoryID == null) {
             //This is a NEW inventory
             System.out.println("Add not implemented");
+            //TODO: New inventory
         } else {
             //This is existing inventory
             Inventory inv = inventoryDA.getInventory(inventoryID);
@@ -184,6 +185,7 @@ public class InventoryUI {
 
     private void deleteInventory(String id) {
         System.out.println("Delete not implemented");
+        //TODO: Delete
     }
 
     private void success(String message) {

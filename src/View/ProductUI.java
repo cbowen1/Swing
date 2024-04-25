@@ -1,8 +1,10 @@
 package View;
 
 import Controller.ProductDA;
+import Controller.ProductLineDA;
 import Controller.SupplierDA;
 import Model.Product;
+import Model.Product_Line;
 import Model.Supplier;
 
 import javax.swing.*;
@@ -24,10 +26,12 @@ public class ProductUI {
     private JTable prodTable;
     JFrame infoFrame;
     ProductDA productDA;
+    ProductLineDA prodLineDA;
 
     public ProductUI() {
         init();
         productDA = new ProductDA();
+        prodLineDA = new ProductLineDA();
         table_update();
     }
 
@@ -131,16 +135,24 @@ public class ProductUI {
 
         SupplierDA supplierDA = new SupplierDA();
         ArrayList<Supplier> supList = supplierDA.getSupList();
-        JComboBox<Supplier> optInventorySupplier = new JComboBox<>(supList.toArray(new Supplier[0]));
-        infoFrame.add(new JLabel("Supplier:"));
-        infoFrame.add(optInventorySupplier);
+        ArrayList<Product_Line> prodLineList = prodLineDA.getProductLineList();
+        JComboBox<Product_Line> prodLineComboBox = new JComboBox<>(prodLineList.toArray(new Product_Line[0]));
+        infoFrame.add(new JLabel("Product Line:"));
+        infoFrame.add(prodLineComboBox);
 
         if(productID == null) {
             //New Product Creation
+            //TODO: New Product
             System.out.println("New Product not implemented");
         } else {
+            txtProdId.setEnabled(false);
             Product prod = productDA.getProduct(productID);
             //Show existing product info
+            txtProdId.setText(String.valueOf(prod.getId()));
+            txtProdName.setText(prod.getName());
+            txtQty.setValue(prod.getQty());
+            txtUnitPrice.setValue(prod.getUnitPrice());
+            setComboBoxBySupplier(prodLineComboBox, prodLineList, prod.getProductLineId());
 
         }
 
@@ -150,6 +162,8 @@ public class ProductUI {
         JButton save = new JButton("Save");
         JButton delete = new JButton("Delete");
 
+        //TODO: save
+        //TODO: delete
         //save.addActionListener(e -> updateProductLine(txtProdLineID.getText(), txtProdLineName.getText(),txtProdLineDesc.getText(),(double)txtProdLinePrice.getValue(),(Supplier) optSupplier.getSelectedItem()));
         //delete.addActionListener(e -> deleteProductLine(txtProdLineID.getText()));
 
@@ -186,13 +200,13 @@ public class ProductUI {
         return prodPanel;
     }
 
-    private void setComboBoxBySupplier(JComboBox<Supplier> combo,ArrayList<Supplier> supList, int supplierID) {
-        if(supplierID == -1) {
+    private void setComboBoxBySupplier(JComboBox<Product_Line> combo,ArrayList<Product_Line> plList, int plID) {
+        if(plID == -1) {
             return;
         }
-        for(Supplier s : supList) {
-            if(s.getId() == supplierID) {
-                combo.setSelectedItem(s);
+        for(Product_Line pl : plList) {
+            if(pl.getId() == plID) {
+                combo.setSelectedItem(pl);
                 break;
             }
         }
