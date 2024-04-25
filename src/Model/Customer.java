@@ -98,4 +98,9 @@ public class Customer {
     }
     public Customer() { }
 
+    @Override
+    public String toString() {
+        return customerName_last + "," + customerName_first + ": " + email;
+    }
+
 }

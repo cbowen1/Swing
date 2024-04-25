@@ -3,17 +3,18 @@ package View;
 import Controller.CustomerDA;
 import Controller.OrderDA;
 import Controller.ProductDA;
-import Model.Customer;
-import Model.Order;
-import Model.OrderDetails;
-import Model.Supplier;
+import Model.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
 
 public class OrderUI {
@@ -26,6 +27,14 @@ public class OrderUI {
     OrderDA orderDA;
     CustomerDA custDA;
     ProductDA prodDA;
+
+    JPanel existCustPanel;
+    JPanel dropDownPanel;
+    JPanel newCustPanel;
+
+    private Boolean showDropdown = null;
+
+    boolean newCustomer = false;
 
     public OrderUI() {
         init();
@@ -104,25 +113,64 @@ public class OrderUI {
         infoFrame.setLayout(new GridBagLayout());
 
         JPanel dataPanel = new JPanel(new GridLayout(2,3));
-        JPanel custPanel = new JPanel(new GridLayout(2,3));
-        JPanel tablePanel = new JPanel(new GridLayout(1,1));
+        JPanel togglePanel = new JPanel(new GridLayout(1,1));
+        existCustPanel = new JPanel(new GridLayout(2,3));
+        newCustPanel = new JPanel(new GridLayout(4,4));
+        dropDownPanel = new JPanel(new GridLayout(1,1));
+        JPanel tablePanel = new JPanel(new GridBagLayout());
         JPanel btnPanel = new JPanel(new GridLayout(1,3));
 
-        dataPanel.add(new JLabel("OrderID"));
+        JLabel orderLabel = new JLabel("Order ID");
+        dataPanel.add(orderLabel);
         dataPanel.add(new JLabel("Order Status"));
         dataPanel.add(new JLabel("Order Date"));
 
-        custPanel.add(new JLabel("First: "));
-        custPanel.add(new JLabel("Last: "));
-        custPanel.add(new JLabel("Address: "));
 
         JTextField custFirst = new JTextField();
         JTextField custLast = new JTextField();
         JTextField custAddress = new JTextField();
 
-        custPanel.add(custFirst);
-        custPanel.add(custLast);
-        custPanel.add(custAddress);
+        JTextField newcustFirst = new JTextField();
+        JTextField newcustLast = new JTextField();
+        JTextField newcustAddress = new JTextField();
+        JTextField newcustEmail = new JTextField();
+
+        JComboBox<Customer> custCombobox;
+
+        JTextField street = new JTextField();
+        JTextField city = new JTextField();
+        JTextField state = new JTextField();
+        JTextField zip = new JTextField();
+        newcustFirst.setColumns(10);
+        newcustLast.setColumns(10);
+        newcustEmail.setColumns(25);
+
+        //Create the existing customer panel
+        existCustPanel.add(new JLabel("First: "));
+        existCustPanel.add(new JLabel("Last: "));
+        existCustPanel.add(new JLabel("Address: "));
+        existCustPanel.add(custFirst);
+        existCustPanel.add(custLast);
+        existCustPanel.add(custAddress);
+
+        //Create the new customer panel
+        newCustPanel.add(new JLabel("First: "));
+        newCustPanel.add(new JLabel("Last: "));
+        newCustPanel.add(new JLabel("E-Mail: "));
+        newCustPanel.add(new JLabel());
+        newCustPanel.add(newcustFirst);
+        newCustPanel.add(newcustLast);
+        newCustPanel.add(newcustEmail);
+        newCustPanel.add(new JLabel());
+        newCustPanel.add(new JLabel("Street: "));
+        newCustPanel.add(new JLabel("City: "));
+        newCustPanel.add(new JLabel("State: "));
+        newCustPanel.add(new JLabel("Zip: "));
+        newCustPanel.add(street);
+        newCustPanel.add(city);
+        newCustPanel.add(state);
+        //TODO: Make this only allow 2 characters
+        newCustPanel.add(zip);
 
         JTextField txtOrderId = new JTextField();
         JTextField txtOrderStatus = new JTextField();
@@ -133,8 +181,10 @@ public class OrderUI {
         dataPanel.add(txtOrderId);
         dataPanel.add(txtOrderStatus);
         dataPanel.add(txtOrderDate);
-
-        tablePanel.add(detailPane);
+        GridBagConstraints tableGBC = new GridBagConstraints();
+        tableGBC.gridx = 0;
+        tableGBC.gridy = 0;
+        tablePanel.add(detailPane, tableGBC);
 
         DefaultTableModel dtm = new DefaultTableModel() {
             @Override
@@ -146,9 +196,34 @@ public class OrderUI {
         dtm.addColumn("Qty");
         dtm.addColumn("Price");
 
+        //TODO: Make this swap between new/existing customer on toggle/button
         if(orderID == null) {
+            toggleDropdown();
+            if(showDropdown) {
+                CustomerDA customerDA = new CustomerDA();
+                ArrayList<Customer> custList = customerDA.getCustomerList();
+                custCombobox = new JComboBox<>(custList.toArray(new Customer[0]));
+                existCustPanel.add(custCombobox);
+            }
+            //JButton toggleUserCreation = new JButton("Toggle User");
+            //togglePanel.add(toggleUserCreation);
+            //toggleUserCreation.addActionListener(e -> toggleDropdown());
             //This is a new order
-            System.out.println("New order not implemented");
+            txtOrderId.setEnabled(false);
+            txtOrderStatus.setEnabled(false);
+            txtOrderDate.setEnabled(false);
+            txtOrderId.setText("NEW");
+            txtOrderStatus.setText("NEW");
+            LocalDate today = LocalDate.now();
+            DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            txtOrderDate.setText(today.format(f));
+            JButton addItem = new JButton("ADD ITEM");
+            JButton deleteItem = new JButton("REMOVE ITEM");
+            addItem.addActionListener(e -> showInventory());
+            tableGBC.gridy++;
+            tablePanel.add(addItem, tableGBC);
+            tableGBC.gridy++;
+            tablePanel.add(deleteItem, tableGBC);
         } else {
             //Existing order, grab information
             Order ord = orderDA.getOrder(orderID);
@@ -195,7 +270,10 @@ public class OrderUI {
 
         infoFrame.add(dataPanel,gbc);
         gbc.gridy++;
-        infoFrame.add(custPanel,gbc);
+        infoFrame.add(togglePanel,gbc);
+        gbc.gridy++;
+        infoFrame.add(existCustPanel,gbc);
+
         gbc.gridy++;
         infoFrame.add(new JSeparator(JSeparator.HORIZONTAL),gbc);
         gbc.gridy++;
@@ -206,7 +284,77 @@ public class OrderUI {
         infoFrame.pack();
         infoFrame.setLocationRelativeTo(null);
         infoFrame.setVisible(true);
+    }
 
+    private void showInventory() {
+        ProductDA productDA = new ProductDA();
+        ArrayList<Product> prodList = productDA.getOrderList();
+
+        JFrame itemList = new JFrame("Current Inventory");
+        JScrollPane scrollPane;
+        JTable itemListTable = new JTable();
+        itemListTable.setRowHeight(30);
+
+        DefaultTableModel tm2 = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tm2.addColumn("Product ID");
+        tm2.addColumn("Line ID");
+        tm2.addColumn("Product Name");
+        tm2.addColumn("Unit Price");
+        tm2.addColumn("Qty");
+
+        itemListTable.setModel(tm2);
+        for(Product o: prodList) {
+            Vector<Object> rowObj = new Vector<>(5);
+            rowObj.add(0, o.getId());
+            rowObj.add(1, o.getProductLineId());
+            rowObj.add(2, o.getName());
+            rowObj.add(3, o.getUnitPrice());
+            rowObj.add(4, o.getQty());
+            tm2.addRow(rowObj);
+        }
+
+
+        itemListTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 2) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    addItemToOrder((int)target.getValueAt(row,0));
+                }
+            }
+        });
+        scrollPane = new JScrollPane(itemListTable);
+        itemList.add(scrollPane);
+
+        itemList.pack();
+        infoFrame.setLocationRelativeTo(null);
+        itemList.setVisible(true);
+    }
+
+    private void addItemToOrder(int id) {
+        //TODO: Add item to order details table
+    }
+
+    private void toggleDropdown() {
+        if(showDropdown == null) {
+            existCustPanel.removeAll();
+            //Disable customer fields and show dropdown
+            showDropdown = true;
+        } else if(showDropdown == true) {
+            existCustPanel.removeAll();
+            //Hide dropdown and show new customer
+            existCustPanel.add(newCustPanel);
+            return;
+        } else {
+            //Show the dropdown
+            System.out.println("hide new cust, show dropdown");
+        }
     }
 
     private void success(String message) {

@@ -40,7 +40,7 @@ INSERT INTO supplier VALUES (5, 'Dave & Adams Cardworld', '716-626-0000', NULL, 
 INSERT INTO supplier VALUES (6, 'Blowout Cards', NULL, NULL, NULL, NULL);
 
 -- Inserting  data into `orders`
-INSERT INTO `orders` VALUES (1, 13, null, 'Processing', CURDATE());
+INSERT INTO `orders` VALUES (1, 13, null, 'Completed', '2024-03-14');
 INSERT INTO `orders` VALUES (2, 4, 2, 'Shipped', '2024-04-18');
 
 -- Inserting data into `product_line`
