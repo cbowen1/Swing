@@ -144,7 +144,7 @@ public class ProductUI {
             //New Product Creation
             //TODO: New Product
             txtProdId.setEnabled(false);
-            System.out.println("New Product not implemented");
+            txtUnitPrice.setValue(0.00);
         } else {
             txtProdId.setEnabled(false);
             Product prod = productDA.getProduct(productID);
@@ -163,9 +163,8 @@ public class ProductUI {
         JButton save = new JButton("Save");
         JButton delete = new JButton("Delete");
 
-        //TODO: save
         //TODO: delete
-        //save.addActionListener(e -> updateProductLine(txtProdLineID.getText(), txtProdLineName.getText(),txtProdLineDesc.getText(),(double)txtProdLinePrice.getValue(),(Supplier) optSupplier.getSelectedItem()));
+        save.addActionListener(e -> updateProduct(txtProdId.getText(), txtProdName.getText(),(double) txtUnitPrice.getValue(),(int)txtQty.getValue(), (Product_Line) prodLineComboBox.getSelectedItem()));
         //delete.addActionListener(e -> deleteProductLine(txtProdLineID.getText()));
 
         buttonPanel.add(save);
@@ -177,6 +176,17 @@ public class ProductUI {
         infoFrame.pack();
         infoFrame.setLocationRelativeTo(null);
         infoFrame.setVisible(true);
+    }
+
+    private boolean updateProduct(String id, String name, double price, int qty, Product_Line pl) {
+        if(id.isBlank()) {
+            //Create a product
+            System.out.println("New product not implemented");
+        } else {
+            //Update product
+            System.out.println("Update not implemented");
+        }
+        return true;
     }
 
     private void initEditPanel() {
