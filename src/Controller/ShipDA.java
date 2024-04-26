@@ -33,6 +33,7 @@ public class ShipDA {
                 shipData.setShipDate(rs.getDate("Shipping_Date"));
                 shipData.setEstDate(rs.getDate("Expected_Arrival_Date"));
                 shipData.setTracking(rs.getString("Tracking_Number"));
+                shipData.setDelivered(rs.getBoolean("Delivered"));
                 shipList.add(shipData);
             }
 
@@ -53,6 +54,25 @@ public class ShipDA {
             ps = DatabaseTools.GetConnection().prepareStatement("UPDATE orders set Status = ? where order_id = ?");
             ps.setString(1, "SHIPPED");
             ps.setInt(2, orderID);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public Boolean delivered(int id, int orderID) {
+        try {
+            //After tracking updated we need to update the order status to SHIPPED
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE orders set Status = ? where order_id = ?");
+            ps.setString(1, "COMPLETED");
+            ps.setInt(2, orderID);
+            ps.executeUpdate();
+
+            ps = DatabaseTools.GetConnection().prepareStatement("UPDATE shipping set delivered = true where shipping_id = ?");
+            ps.setInt(1, id);
             ps.executeUpdate();
 
         } catch (Exception e) {

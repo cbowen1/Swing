@@ -24,7 +24,7 @@ public class ShippingUI {
 
     int shippingID, orderId;
 
-    JButton addTracking;
+    JButton addTracking, orderDelivered;
 
     public ShippingUI() {
         init();
@@ -46,6 +46,7 @@ public class ShippingUI {
         tm.addColumn("Shipping Date");
         tm.addColumn("Expected Date");
         tm.addColumn("Tracking");
+        tm.addColumn("Delivered");
 
         shipTable.setModel(tm);
         for(ShippingData pl: plList) {
@@ -55,6 +56,7 @@ public class ShippingUI {
             rowObj.add(2, pl.getShipDate());
             rowObj.add(3, pl.getEstDate());
             rowObj.add(4, pl.getTracking());
+            rowObj.add(5, pl.getDelivered().toString());
             tm.addRow(rowObj);
         }
     }
@@ -86,8 +88,13 @@ public class ShippingUI {
                 orderId = (int) target.getValueAt(row, 1);
                 if(tracking == null) {
                     addTracking.setEnabled(true);
+                    orderDelivered.setEnabled(false);
                 } else {
                     addTracking.setEnabled(false);
+                    if((String) target.getValueAt(row,5) == "false") {
+                        orderDelivered.setEnabled(true);
+                    }
+
                 }
                 //moreInfo((int) target.getValueAt(row,0));
             }
@@ -117,6 +124,10 @@ public class ShippingUI {
 
         addTracking = new JButton("Add Tracking");
         addTracking.setEnabled(false);
+
+        orderDelivered = new JButton("Delivered");
+        orderDelivered.setEnabled(false);
+
         addTracking.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -129,7 +140,22 @@ public class ShippingUI {
             }
         });
 
+        orderDelivered.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //var name = javax.swing.JOptionPane.showInputDialog("Tracking Number:");
+                if(!sda.delivered(shippingID, orderId)) {
+                    error("ERROR! Delivery Status Updated");
+                } else {
+                    success("Success! Delivery Status Updated");
+                }
+            }
+        });
+
+
+
         editPanel.add(addTracking);
+        editPanel.add(orderDelivered);
     }
     private void success(String message) {
         JOptionPane.showMessageDialog(null, message);

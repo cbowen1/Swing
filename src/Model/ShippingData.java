@@ -8,6 +8,7 @@ public class ShippingData {
     private Date shipDate;
     private Date estDate;
     private String tracking;
+    private Boolean delivered;
 
     public int getId() {
         return id;
@@ -47,5 +48,13 @@ public class ShippingData {
 
     public void setTracking(String tracking) {
         this.tracking = tracking;
+    }
+
+    public Boolean getDelivered() {
+        return delivered;
+    }
+
+    public void setDelivered(Boolean delivered) {
+        this.delivered = delivered;
     }
 }

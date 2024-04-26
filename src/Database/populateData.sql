@@ -63,7 +63,7 @@ INSERT INTO inventory VALUES (3, 'Bubble Mailers', 100, 4);
 
 -- Inserting data into `shipping`
 INSERT INTO shipping VALUES 
-(1, 2, '2024-04-18', DATE_ADD(CURDATE(), INTERVAL 5 DAY), 'TRACK123');
+(1, 2, '2024-04-18', DATE_ADD(CURDATE(), INTERVAL 5 DAY), 'TRACK123', false);
 
 INSERT INTO order_details VALUES (1,1,2);
 INSERT INTO order_details VALUES (1,2,2);
