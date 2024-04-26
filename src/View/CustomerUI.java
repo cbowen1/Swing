@@ -27,7 +27,7 @@ public class CustomerUI {
         table_update();
     }
 
-    private void table_update() {
+    protected void table_update() {
         ArrayList<Customer> custList = customerDA.getCustomerList();
 
         DefaultTableModel tm = new DefaultTableModel() {

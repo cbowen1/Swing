@@ -30,7 +30,7 @@ public class SupplierUI {
         table_update();
     }
 
-    private void table_update() {
+    protected void table_update() {
         ArrayList<Supplier> supList = supDA.getSupList();
 
         DefaultTableModel tm = new DefaultTableModel() {

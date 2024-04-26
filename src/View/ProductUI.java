@@ -35,7 +35,7 @@ public class ProductUI {
         table_update();
     }
 
-    private void table_update() {
+    protected void table_update() {
         ArrayList<Product> prodList = productDA.getOrderList();
 
         DefaultTableModel tm = new DefaultTableModel() {

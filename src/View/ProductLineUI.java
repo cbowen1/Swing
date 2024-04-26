@@ -33,7 +33,7 @@ public class ProductLineUI {
         table_update();
     }
 
-    private void table_update() {
+    protected void table_update() {
         ArrayList<Product_Line> plList = plDA.getProductLineList();
 
         DefaultTableModel tm = new DefaultTableModel() {

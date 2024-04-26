@@ -9,7 +9,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
     JFrame frame;
     JSplitPane splitPane;
     JPanel topPanel, leftPanel, rightPanel;
-    JButton btn1, btn2, btn3, btn4, btn5, btn6;
+    JButton btn1, btn2, btn3, btn4, btn5, btn6, btn7;
 
     CustomerUI customerPanel;
     OrderUI orderPanel;
@@ -17,6 +17,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
     InventoryUI inventoryPanel;
     ProductLineUI plPanel;
     SupplierUI supplierPanel;
+    ShippingUI shippingPanel;
     JLabel topLabel;
 
 
@@ -28,6 +29,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         inventoryPanel = new InventoryUI();
         plPanel = new ProductLineUI();
         supplierPanel = new SupplierUI();
+        shippingPanel = new ShippingUI();
 
         init();
     }
@@ -50,6 +52,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         btn4 = new JButton("Products");
         btn5 = new JButton("Product Lines");
         btn6 = new JButton("Suppliers");
+        btn7 = new JButton("Shipping");
 
         btn1.addActionListener(this);
         btn2.addActionListener(this);
@@ -57,6 +60,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         btn4.addActionListener(this);
         btn5.addActionListener(this);
         btn6.addActionListener(this);
+        btn7.addActionListener(this);
 
         Dimension half = new Dimension((int)(screenSize.getWidth()/1.5),(int) (screenSize.getHeight()/1.5));
         topPanel.setPreferredSize(new Dimension(half.width, (int) half.getHeight()/8));
@@ -64,13 +68,14 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         topLabel = new JLabel("Please select an option on the left");
         topPanel.add(topLabel);
 
-        leftPanel.setLayout(new GridLayout(6,1));
+        leftPanel.setLayout(new GridLayout(7,1));
         leftPanel.add(btn2);
         leftPanel.add(btn4);
         leftPanel.add(btn5);
         leftPanel.add(btn3);
         leftPanel.add(btn1);
         leftPanel.add(btn6);
+        leftPanel.add(btn7);
         splitPane.setLeftComponent(leftPanel);
         //splitPane.setRightComponent(rightPanel);
         splitPane.setRightComponent(orderPanel.getRootComponent());
@@ -91,23 +96,33 @@ public class PrimaryFrame extends JFrame implements ActionListener {
             splitPane.remove(splitPane.getRightComponent());
         }
         if(e.getSource() == btn1) {
+            customerPanel.table_update();
             splitPane.setRightComponent(customerPanel.getRootComponent());
             topLabel.setText("Customer Information");
         } else if (e.getSource() == btn2) {
+            orderPanel.table_update();
             splitPane.setRightComponent(orderPanel.getRootComponent());
             topLabel.setText("Order Information");
         } else if (e.getSource() == btn3) {
+            inventoryPanel.table_update();
             splitPane.setRightComponent(inventoryPanel.getRootComponent());
             topLabel.setText("Inventory Information");
         } else if (e.getSource() == btn4) {
+            productPanel.table_update();
             splitPane.setRightComponent(productPanel.getRootComponent());
             topLabel.setText("Product Information");
         } else if (e.getSource() == btn5) {
+            plPanel.table_update();
             splitPane.setRightComponent(plPanel.getRootComponent());
             topLabel.setText("Product Lines");
         } else if (e.getSource() == btn6) {
+            supplierPanel.table_update();
             splitPane.setRightComponent(supplierPanel.getRootComponent());
             topLabel.setText("Supplier Information");
+        } else if (e.getSource() == btn7) {
+            shippingPanel.table_update();
+            splitPane.setRightComponent(shippingPanel.getRootComponent());
+            topLabel.setText("Shipping Information");
         }
         revalidate();
     }

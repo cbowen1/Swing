@@ -4,6 +4,13 @@ public class OrderDetails {
     private int productID;
     private int qty;
 
+    public OrderDetails(String id, int productID, int qty) {
+        this.productID = productID;
+        this.qty = qty;
+    }
+
+    public OrderDetails() {}
+
     public int getProductID() {
         return productID;
     }

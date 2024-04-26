@@ -4,11 +4,15 @@ import Database.DatabaseTools;
 import Model.Order;
 import Model.OrderDetails;
 import Model.Product;
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 
 import javax.xml.crypto.Data;
 import javax.xml.transform.Result;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class OrderDA {
     private ArrayList<Order> orderList;
@@ -83,5 +87,71 @@ public class OrderDA {
             e.printStackTrace();
         }
         return order;
+    }
+
+    public boolean addOrder(Order o, ArrayList<OrderDetails> od) {
+        //TODO: Most of these queries should be handled by TRIGGERS in the database to create rows
+        PreparedStatement ps;
+        int newOrderID = 0;
+        int shippingID = 0;
+        try{
+            ps = DatabaseTools.GetConnection().prepareStatement("Select (max(Order_ID) + 1) as Order_Id from orders");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) { newOrderID = rs.getInt("Order_Id"); }
+            ps = DatabaseTools.GetConnection().prepareStatement(
+                    "INSERT INTO orders(order_id,customer_id,payment_id,status,order_date)value(?,?,?,?,?)"
+            );
+            ps.setInt(1,newOrderID);
+            ps.setInt(2,o.getCustomerID());
+            ps.setString(3, null);
+            ps.setString(4, "NEW");
+            java.sql.Date dt = new Date(o.getOrder_date().getTime());
+            ps.setDate(5, dt);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        for(OrderDetails odt : od) {
+            try {
+                ps = DatabaseTools.GetConnection().prepareStatement(
+                        "INSERT INTO order_details(order_id,product_id,quantity)value(?,?,?)"
+                );
+                ps.setInt(1,newOrderID);
+                ps.setInt(2,odt.getProductID());
+                System.out.println("Creating order_detail of qty " + odt.getQty());
+                ps.setInt(3,odt.getQty());
+                ps.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        try{
+            ps = DatabaseTools.GetConnection().prepareStatement("Select (max(Shipping_ID) + 1) as shipping_id from shipping");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) { shippingID = rs.getInt("shipping_id"); }
+
+            ps = DatabaseTools.GetConnection().prepareStatement(
+                    "INSERT INTO shipping(shipping_id,order_id,shipping_date,expected_arrival_date,tracking_number)value(?,?,?,?,?)"
+            );
+            ps.setInt(1,shippingID);
+            ps.setInt(2,newOrderID);
+            Calendar calendar = Calendar.getInstance();
+            java.sql.Date sqlDate = new Date(calendar.getTime().getTime());
+            calendar.add(Calendar.DATE, 4);
+            java.sql.Date newDate = new Date(calendar.getTime().getTime());
+
+            ps.setDate(3, sqlDate);
+            ps.setDate(4, newDate);
+            ps.setString(5,null);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

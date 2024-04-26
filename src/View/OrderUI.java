@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -31,7 +32,9 @@ public class OrderUI {
     JPanel existCustPanel;
     JPanel dropDownPanel;
     JPanel newCustPanel;
-
+    DefaultTableModel dtm;
+    JTable detailTable;
+    ArrayList<OrderDetails> detailList;
     private Boolean showDropdown = null;
 
     boolean newCustomer = false;
@@ -44,7 +47,7 @@ public class OrderUI {
         table_update();
     }
 
-    private void table_update() {
+    protected void table_update() {
         ArrayList<Order> orderList = orderDA.getOrderList();
 
         DefaultTableModel tm = new DefaultTableModel() {
@@ -175,8 +178,10 @@ public class OrderUI {
         JTextField txtOrderId = new JTextField();
         JTextField txtOrderStatus = new JTextField();
         JTextField txtOrderDate = new JTextField();
-        JTable detailTable = new JTable();
+        detailTable = new JTable();
         JScrollPane detailPane = new JScrollPane(detailTable);
+
+
 
         dataPanel.add(txtOrderId);
         dataPanel.add(txtOrderStatus);
@@ -186,9 +191,12 @@ public class OrderUI {
         tableGBC.gridy = 0;
         tablePanel.add(detailPane, tableGBC);
 
-        DefaultTableModel dtm = new DefaultTableModel() {
+        dtm = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
+                if(column == 1) {
+                    return true;
+                }
                 return false;
             }
         };
@@ -204,11 +212,10 @@ public class OrderUI {
                 ArrayList<Customer> custList = customerDA.getCustomerList();
                 custCombobox = new JComboBox<>(custList.toArray(new Customer[0]));
                 existCustPanel.add(custCombobox);
+            } else {
+                custCombobox = null;
             }
-            //JButton toggleUserCreation = new JButton("Toggle User");
-            //togglePanel.add(toggleUserCreation);
-            //toggleUserCreation.addActionListener(e -> toggleDropdown());
-            //This is a new order
+
             txtOrderId.setEnabled(false);
             txtOrderStatus.setEnabled(false);
             txtOrderDate.setEnabled(false);
@@ -220,26 +227,22 @@ public class OrderUI {
             JButton addItem = new JButton("ADD ITEM");
             JButton deleteItem = new JButton("REMOVE ITEM");
             addItem.addActionListener(e -> showInventory());
+            deleteItem.addActionListener(e -> removeOrderDetail());
             tableGBC.gridy++;
             tablePanel.add(addItem, tableGBC);
             tableGBC.gridy++;
             tablePanel.add(deleteItem, tableGBC);
+            detailList = new ArrayList<>();
         } else {
+            custCombobox = null;
             //Existing order, grab information
             Order ord = orderDA.getOrder(orderID);
             ord.setOrderDetails(orderDA.getOrderDetails(orderID));
             //Grab better customer and product information from corresponding tables
             ord.setCustomer(custDA.getCustomer(ord.getCustomerID()));
 
+            drawDetailTable(ord.getOrderDetails());
             //Add order details to table
-            detailTable.setModel(dtm);
-            for(OrderDetails o: ord.getOrderDetails()) {
-                Vector<Object> row = new Vector<>(3);
-                row.add(0,prodDA.getProductName(o.getProductID()));
-                row.add(1,o.getQty());
-                row.add(2,(o.getQty() * prodDA.getProductPrice(o.getProductID())));
-                dtm.addRow(row);
-            }
 
             //Set values in UI
             txtOrderId.setText(String.valueOf(ord.getOrderID()));
@@ -257,7 +260,7 @@ public class OrderUI {
         JButton save = new JButton("Save");
         JButton delete = new JButton("Delete");
 
-        save.addActionListener(e -> updateOrder(txtOrderId.getText()));
+        save.addActionListener(e -> updateOrder(txtOrderId.getText(),(Customer) custCombobox.getSelectedItem(),txtOrderDate.getText()));
         delete.addActionListener(e -> deleteOrder(txtOrderId.getText()));
 
         buttonPanel.add(save);
@@ -286,10 +289,13 @@ public class OrderUI {
         infoFrame.setVisible(true);
     }
 
-    private void showInventory() {
-        ProductDA productDA = new ProductDA();
-        ArrayList<Product> prodList = productDA.getOrderList();
+    private void removeOrderDetail() {
+        System.out.println("Get currently selected ITEM_DETAIL, then delete. NOT IMPLEMENTED");
+    }
 
+    private void showInventory() {
+        prodDA = new ProductDA();
+        ArrayList<Product> prodList = prodDA.getOrderList();
         JFrame itemList = new JFrame("Current Inventory");
         JScrollPane scrollPane;
         JTable itemListTable = new JTable();
@@ -326,6 +332,10 @@ public class OrderUI {
                     JTable target = (JTable) e.getSource();
                     int row = target.getSelectedRow();
                     addItemToOrder((int)target.getValueAt(row,0));
+                    tm2.removeRow(row);
+                    if(tm2.getRowCount() == 0) {
+                        itemList.dispose();
+                    }
                 }
             }
         });
@@ -333,12 +343,32 @@ public class OrderUI {
         itemList.add(scrollPane);
 
         itemList.pack();
-        infoFrame.setLocationRelativeTo(null);
+        itemList.setLocationRelativeTo(null);
         itemList.setVisible(true);
     }
 
     private void addItemToOrder(int id) {
         //TODO: Add item to order details table
+        //Product prod = prodDA.getProduct(id);
+        OrderDetails o = new OrderDetails();
+        o.setProductID(id);
+        o.setQty(1);
+        detailList.add(o);
+        drawDetailTable(detailList);
+        //prodList.add(prod);
+    }
+
+    private void drawDetailTable(ArrayList<OrderDetails> ord){
+        detailTable.setModel(dtm);
+        //Clear the dtm and re-draw
+        dtm.setRowCount(0);
+        for(OrderDetails o: ord) {
+            Vector<Object> row = new Vector<>(3);
+            row.add(0,prodDA.getProductName(o.getProductID()));
+            row.add(1,o.getQty());
+            row.add(2,(o.getQty() * prodDA.getProductPrice(o.getProductID())));
+            dtm.addRow(row);
+        }
     }
 
     private void toggleDropdown() {
@@ -353,7 +383,6 @@ public class OrderUI {
             return;
         } else {
             //Show the dropdown
-            System.out.println("hide new cust, show dropdown");
         }
     }
 
@@ -371,8 +400,42 @@ public class OrderUI {
         System.out.println("Delete order not implemented");
     }
 
-    private void updateOrder(String id) {
-        System.out.println("Update order not implemented");
+    private void updateOrder(String id, Customer cust, String date) {
+        if (detailTable.isEditing())
+            detailTable.getCellEditor().stopCellEditing();
+        if(id.equals("NEW")) {
+            //Save the new order and order details
+            Order o = new Order();
+            o.setCustomerID(cust.getCustomerID());
+            o.setStatus("NEW");
+            Date dt = null;
+            try {
+                dt = new Date(String.valueOf(new SimpleDateFormat("yyyy-MM-dd").parse(date)));
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            o.setOrder_date(dt);
+            ArrayList<OrderDetails> updatedList = new ArrayList<>();
+            DefaultTableModel m = (DefaultTableModel) detailTable.getModel();
+            for (int i = 0; i < m.getRowCount(); i++) {
+                String qty = "1";
+                try{
+                    qty = (String) m.getValueAt(i, 1);
+                } catch (Exception e) {
+                    //Ignore, default to 1
+                }
+                updatedList.add(new OrderDetails(id,detailList.get(i).getProductID(),Integer.valueOf(qty)));
+            }
+
+            if(!orderDA.addOrder(o,updatedList)) {
+                error("ERROR! Order not created");
+            } else {
+                success("Success! New order created");
+            }
+
+        } else {
+            System.out.println("Update order not implemented");
+        }
     }
 
     private void initEditPanel() {
