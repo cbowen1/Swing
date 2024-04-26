@@ -143,6 +143,7 @@ public class ProductUI {
         if(productID == null) {
             //New Product Creation
             //TODO: New Product
+            txtProdId.setEnabled(false);
             System.out.println("New Product not implemented");
         } else {
             txtProdId.setEnabled(false);

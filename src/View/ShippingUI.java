@@ -152,8 +152,6 @@ public class ShippingUI {
             }
         });
 
-
-
         editPanel.add(addTracking);
         editPanel.add(orderDelivered);
     }

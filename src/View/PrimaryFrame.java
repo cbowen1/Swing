@@ -9,7 +9,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
     JFrame frame;
     JSplitPane splitPane;
     JPanel topPanel, leftPanel, rightPanel;
-    JButton btn1, btn2, btn3, btn4, btn5, btn6, btn7;
+    JButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8;
 
     CustomerUI customerPanel;
     OrderUI orderPanel;
@@ -18,6 +18,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
     ProductLineUI plPanel;
     SupplierUI supplierPanel;
     ShippingUI shippingPanel;
+    PaymentUI payPanel;
     JLabel topLabel;
 
 
@@ -30,6 +31,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         plPanel = new ProductLineUI();
         supplierPanel = new SupplierUI();
         shippingPanel = new ShippingUI();
+        payPanel = new PaymentUI();
 
         init();
     }
@@ -53,6 +55,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         btn5 = new JButton("Product Lines");
         btn6 = new JButton("Suppliers");
         btn7 = new JButton("Shipping");
+        btn8 = new JButton("Payments");
 
         btn1.addActionListener(this);
         btn2.addActionListener(this);
@@ -61,6 +64,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         btn5.addActionListener(this);
         btn6.addActionListener(this);
         btn7.addActionListener(this);
+        btn8.addActionListener(this);
 
         Dimension half = new Dimension((int)(screenSize.getWidth()/1.5),(int) (screenSize.getHeight()/1.5));
         topPanel.setPreferredSize(new Dimension(half.width, (int) half.getHeight()/8));
@@ -68,7 +72,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         topLabel = new JLabel("Please select an option on the left");
         topPanel.add(topLabel);
 
-        leftPanel.setLayout(new GridLayout(7,1));
+        leftPanel.setLayout(new GridLayout(8,1));
         leftPanel.add(btn2);
         leftPanel.add(btn4);
         leftPanel.add(btn5);
@@ -76,6 +80,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         leftPanel.add(btn1);
         leftPanel.add(btn6);
         leftPanel.add(btn7);
+        leftPanel.add(btn8);
         splitPane.setLeftComponent(leftPanel);
         //splitPane.setRightComponent(rightPanel);
         splitPane.setRightComponent(orderPanel.getRootComponent());
@@ -123,6 +128,10 @@ public class PrimaryFrame extends JFrame implements ActionListener {
             shippingPanel.table_update();
             splitPane.setRightComponent(shippingPanel.getRootComponent());
             topLabel.setText("Shipping Information");
+        } else if (e.getSource() == btn8) {
+            payPanel.table_update();
+            splitPane.setRightComponent(payPanel.getRootComponent());
+            topLabel.setText("Payment Information");
         }
         revalidate();
     }

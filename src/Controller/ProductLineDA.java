@@ -91,6 +91,7 @@ public class ProductLineDA {
             ps.setString(3, pl.getDesc());
             ps.setDouble(4, pl.getUnitPrice());
             ps.setInt(4, pl.getSupplierId());
+            ps.setInt(5,pl.getSupplierId());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

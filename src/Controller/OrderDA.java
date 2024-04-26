@@ -94,6 +94,24 @@ public class OrderDA {
         PreparedStatement ps;
         int newOrderID = 0;
         int shippingID = 0;
+        int paymentID = 0;
+
+        try{
+            ps = DatabaseTools.GetConnection().prepareStatement("Select (max(Payment_Id) + 1) as Payment_id from payment_method");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) { paymentID = rs.getInt("Payment_id"); }
+            ps = DatabaseTools.GetConnection().prepareStatement(
+                    "INSERT INTO Payment_Method(payment_id,payment_type,Payment_amount)value(?,?,?)"
+            );
+            ps.setInt(1,paymentID);
+            ps.setString(2,"Online Payment");
+            ps.setInt(3,0);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
         try{
             ps = DatabaseTools.GetConnection().prepareStatement("Select (max(Order_ID) + 1) as Order_Id from orders");
             ResultSet rs = ps.executeQuery();
@@ -103,7 +121,7 @@ public class OrderDA {
             );
             ps.setInt(1,newOrderID);
             ps.setInt(2,o.getCustomerID());
-            ps.setString(3, null);
+            ps.setInt(3, paymentID);
             ps.setString(4, "NEW");
             java.sql.Date dt = new Date(o.getOrder_date().getTime());
             ps.setDate(5, dt);
@@ -113,20 +131,32 @@ public class OrderDA {
             return false;
         }
 
+        double orderPrice = 0;
+        ProductDA pda = new ProductDA();
         for(OrderDetails odt : od) {
             try {
+                orderPrice += odt.getQty() * (pda.getProductPrice(odt.getProductID()));
                 ps = DatabaseTools.GetConnection().prepareStatement(
                         "INSERT INTO order_details(order_id,product_id,quantity)value(?,?,?)"
                 );
                 ps.setInt(1,newOrderID);
                 ps.setInt(2,odt.getProductID());
-                System.out.println("Creating order_detail of qty " + odt.getQty());
                 ps.setInt(3,odt.getQty());
                 ps.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
             }
+        }
+
+        try{
+            ps = DatabaseTools.GetConnection().prepareStatement("UPDATE payment_method set payment_amount = ? where payment_id = ?");
+            ps.setDouble(1,orderPrice);
+            ps.setInt(2,paymentID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
 
         try{
