@@ -1,6 +1,7 @@
 package Controller;
 
 import Database.DatabaseTools;
+import Model.Product;
 import Model.Product_Line;
 import View.ProductLineUI;
 

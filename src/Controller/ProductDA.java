@@ -90,4 +90,28 @@ public class ProductDA {
         }
         return prod;
     }
+
+    public boolean addProduct(Product prod) {
+        try{
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("Select (max(product_id) + 1) as Product_ID from product");
+            ResultSet rs = ps.executeQuery();
+            int supID = 0;
+            while(rs.next()) {
+                supID = rs.getInt("Product_id");
+            }
+            ps = DatabaseTools.GetConnection().prepareStatement(
+                    "INSERT INTO product(product_id,product_line_id,product_name,unit_price,quantity)values(?,?,?,?,?)"
+            );
+            ps.setInt(1, supID);
+            ps.setInt(2, prod.getProductLineId());
+            ps.setString(3, prod.getName());
+            ps.setDouble(4, prod.getUnitPrice());
+            ps.setInt(5, prod.getQty());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

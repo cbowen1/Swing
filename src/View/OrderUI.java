@@ -29,6 +29,8 @@ public class OrderUI {
     CustomerDA custDA;
     ProductDA prodDA;
 
+    Customer cust;
+
     JPanel existCustPanel;
     JPanel dropDownPanel;
     JPanel newCustPanel;
@@ -239,7 +241,9 @@ public class OrderUI {
             Order ord = orderDA.getOrder(orderID);
             ord.setOrderDetails(orderDA.getOrderDetails(orderID));
             //Grab better customer and product information from corresponding tables
-            ord.setCustomer(custDA.getCustomer(ord.getCustomerID()));
+            cust = new Customer();
+            cust = custDA.getCustomer(ord.getCustomerID());
+            ord.setCustomer(cust);
 
             drawDetailTable(ord.getOrderDetails());
             //Add order details to table
@@ -259,8 +263,11 @@ public class OrderUI {
         buttonPanel.setLayout(new GridLayout(1,2));
         JButton save = new JButton("Save");
         JButton delete = new JButton("Delete");
-
-        save.addActionListener(e -> updateOrder(txtOrderId.getText(),(Customer) custCombobox.getSelectedItem(),txtOrderDate.getText()));
+        if(custCombobox == null) {
+            save.addActionListener(e -> updateOrder(txtOrderId.getText(),cust,txtOrderDate.getText()));
+        } else {
+            save.addActionListener(e -> updateOrder(txtOrderId.getText(),(Customer) custCombobox.getSelectedItem(),txtOrderDate.getText()));
+        }
         delete.addActionListener(e -> deleteOrder(txtOrderId.getText()));
 
         buttonPanel.add(save);

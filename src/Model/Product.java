@@ -7,6 +7,15 @@ public class Product {
     private double unitPrice;
     private int qty;
 
+    public Product(String name, double price, int qty, int productLineId) {
+        this.name = name;
+        this.unitPrice = price;
+        this.qty = qty;
+        this.productLineId = productLineId;
+    }
+
+    public Product() {}
+
     public int getId() {
         return id;
     }

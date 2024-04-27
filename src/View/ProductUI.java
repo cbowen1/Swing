@@ -179,14 +179,25 @@ public class ProductUI {
     }
 
     private boolean updateProduct(String id, String name, double price, int qty, Product_Line pl) {
+        Product prod = new Product(name, price, qty, pl.getId());
         if(id.isBlank()) {
             //Create a product
-            System.out.println("New product not implemented");
+            if(!productDA.addProduct(prod)) {
+                JOptionPane.showMessageDialog(null, "ERROR! Product could not be added");
+            } else {
+                success("Succes! Product added successfully");
+            }
         } else {
             //Update product
             System.out.println("Update not implemented");
         }
         return true;
+    }
+
+    private void success(String message) {
+        JOptionPane.showMessageDialog(null, message);
+        infoFrame.dispose();
+        table_update();
     }
 
     private void initEditPanel() {
