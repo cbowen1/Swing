@@ -181,7 +181,7 @@ public class SupplierUI {
 
     private void deleteSupplier(String id) {
         if(!supDA.removeSupplier(Integer.valueOf(id))) {
-            JOptionPane.showMessageDialog(null, "ERROR! Supplier not added");
+            JOptionPane.showMessageDialog(null, "ERROR! Supplier not removed");
         } else {
             success("Success! Supplier removed successfully");
         }

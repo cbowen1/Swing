@@ -5,6 +5,7 @@ import Model.Product;
 import Model.Product_Line;
 import View.ProductLineUI;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -91,7 +92,6 @@ public class ProductLineDA {
             ps.setString(2, pl.getName());
             ps.setString(3, pl.getDesc());
             ps.setDouble(4, pl.getUnitPrice());
-            ps.setInt(4, pl.getSupplierId());
             ps.setInt(5,pl.getSupplierId());
             ps.executeUpdate();
         } catch (Exception e) {
@@ -100,4 +100,22 @@ public class ProductLineDA {
         }
         return true;
     }
+
+    public boolean removeProductLine(int id) {
+        try {
+            int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to Delete the productLine","Warning",JOptionPane.YES_NO_OPTION);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("DELETE FROM product_line where product_lineID = ?");
+                ps.setInt(1, id);
+                ps.executeUpdate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+
+
 }

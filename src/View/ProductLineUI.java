@@ -185,7 +185,11 @@ public class ProductLineUI {
     }
 
     private void deleteProductLine(String id) {
-        System.out.println("Delete not implemented");
+        if(!plDA.removeProductLine(Integer.valueOf(id))) {
+            JOptionPane.showMessageDialog(null, "ERROR! Product Line not removed");
+        } else {
+            success("Success! Product Line removed successfully");
+        }
     }
 
     private void success(String message) {
