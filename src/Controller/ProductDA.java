@@ -4,6 +4,7 @@ import Database.DatabaseTools;
 import Model.Inventory;
 import Model.Product;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -108,6 +109,37 @@ public class ProductDA {
             ps.setDouble(4, prod.getUnitPrice());
             ps.setInt(5, prod.getQty());
             ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateProduct(Product prod) {
+        try{
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement(
+                    "UPDATE product set product_name = ?, unit_price = ?, quantity = ? where product_id = ?");
+            ps.setString(1, prod.getName());
+            ps.setDouble(2, prod.getUnitPrice());
+            ps.setInt(3, prod.getQty());
+            ps.setInt(4, prod.getId());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean removeProduct(int id) {
+        try {
+            int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to delete the product","Warning",JOptionPane.YES_NO_OPTION);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("DELETE FROM product where product_id = ?");
+                ps.setInt(1, id);
+                ps.executeUpdate();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;

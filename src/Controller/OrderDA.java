@@ -143,6 +143,14 @@ public class OrderDA {
                 ps.setInt(2,odt.getProductID());
                 ps.setInt(3,odt.getQty());
                 ps.executeUpdate();
+
+                ps = DatabaseTools.GetConnection().prepareStatement(
+                        "UPDATE product set quantity = quantity - ? where product_id = ?"
+                );
+                ps.setInt(1,odt.getQty());
+                ps.setInt(2,odt.getProductID());
+                ps.executeUpdate();
+
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;

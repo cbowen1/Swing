@@ -165,7 +165,7 @@ public class ProductUI {
 
         //TODO: delete
         save.addActionListener(e -> updateProduct(txtProdId.getText(), txtProdName.getText(),(double) txtUnitPrice.getValue(),(int)txtQty.getValue(), (Product_Line) prodLineComboBox.getSelectedItem()));
-        //delete.addActionListener(e -> deleteProductLine(txtProdLineID.getText()));
+        delete.addActionListener(e -> deleteProduct(txtProdId.getText()));
 
         buttonPanel.add(save);
         buttonPanel.add(delete);
@@ -189,9 +189,22 @@ public class ProductUI {
             }
         } else {
             //Update product
-            System.out.println("Update not implemented");
+            prod.setId(Integer.valueOf(id));
+            if(!productDA.updateProduct(prod)) {
+                JOptionPane.showMessageDialog(null, "ERROR! Product could not be updated");
+            } else {
+                success("Succes! Product updated successfully");
+            }
         }
         return true;
+    }
+
+    private void deleteProduct(String id) {
+        if(!productDA.removeProduct(Integer.valueOf(id))) {
+            JOptionPane.showMessageDialog(null, "ERROR! Product not removed");
+        } else {
+            success("Success! Product removed successfully");
+        }
     }
 
     private void success(String message) {
