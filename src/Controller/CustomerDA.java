@@ -24,7 +24,7 @@ public class CustomerDA {
         customerList = new ArrayList<Customer>();
 
         try {
-            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM customer WHERE isActive = TRUE");
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM customer WHERE isActive = TRUE order by Customer_lName");
             ResultSet rs = ps.executeQuery();
 
             Customer cust;
