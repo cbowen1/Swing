@@ -18,17 +18,32 @@ public class DatabaseTools {
         return conn;
     }
 
-    public static void OpenConnection() {
-        String dbURL = "jdbc:mysql://localhost:3306/" + schemaName;
+    public static void TowsonConnection() {
+        String dbURL = "jdbc:mysql://triton.towson.edu:3360/cbowen3db";
         try {
-            String username = "root";
-            Scanner scan = new Scanner(System.in);
-            //System.out.println("Please enter database password:");
-            //String password = scan.nextLine();
+            String username = "cbowen3";
             String password = "";
             conn = DriverManager.getConnection(dbURL, username, password);
         }catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void OpenConnection() {
+        TowsonConnection();
+        if (conn == null) {
+            System.out.println("COULD NOT CONNECT TO TOWSON, using LocalDB");
+            String dbURL = "jdbc:mysql://localhost:3306/" + schemaName;
+            try {
+                String username = "root";
+                Scanner scan = new Scanner(System.in);
+                //System.out.println("Please enter database password:");
+                //String password = scan.nextLine();
+                String password = "";
+                conn = DriverManager.getConnection(dbURL, username, password);
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

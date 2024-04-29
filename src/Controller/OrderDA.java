@@ -102,7 +102,7 @@ public class OrderDA {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) { paymentID = rs.getInt("Payment_id"); }
             ps = DatabaseTools.GetConnection().prepareStatement(
-                    "INSERT INTO Payment_Method(payment_id,payment_type,Payment_amount, Payment_Status)value(?,?,?,?)"
+                    "INSERT INTO payment_method(payment_id,payment_type,Payment_amount, Payment_Status)value(?,?,?,?)"
             );
             ps.setInt(1,paymentID);
             ps.setString(2,"Online Payment");
