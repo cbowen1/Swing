@@ -261,15 +261,19 @@ public class OrderUI {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1,2));
         JButton save = new JButton("Save");
-        JButton delete = new JButton("Delete");
+        JButton delete = new JButton("Cancel Order");
+        JButton editOrderDetails = new JButton("Edit Order Details");
+
         if(custCombobox == null) {
             save.addActionListener(e -> updateOrder(txtOrderId.getText(),cust,txtOrderDate.getText()));
         } else {
             save.addActionListener(e -> updateOrder(txtOrderId.getText(),(Customer) custCombobox.getSelectedItem(),txtOrderDate.getText()));
         }
         delete.addActionListener(e -> deleteOrder(txtOrderId.getText()));
+        editOrderDetails.addActionListener(e -> editOrderItems(txtOrderId.getText()));
 
         buttonPanel.add(save);
+        buttonPanel.add(editOrderDetails);
         buttonPanel.add(delete);
 
         btnPanel.add(buttonPanel);
@@ -402,8 +406,18 @@ public class OrderUI {
         JOptionPane.showMessageDialog(null, message);
     }
 
+    private void editOrderItems(String id) {
+
+    }
+
     private void deleteOrder(String id) {
+        //TODO: Delete entire order, just set status to DELETED
         System.out.println("Delete order not implemented");
+        if(!orderDA.removeOrder(Integer.valueOf(id))) {
+            JOptionPane.showMessageDialog(null, "ERROR! Order not cancelled");
+        } else {
+            success("Success! Order successfully cancelled");
+        }
     }
 
     private void updateOrder(String id, Customer cust, String date) {

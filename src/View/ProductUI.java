@@ -162,7 +162,6 @@ public class ProductUI {
         JButton save = new JButton("Save");
         JButton delete = new JButton("Delete");
 
-        //TODO: delete
         save.addActionListener(e -> updateProduct(txtProdId.getText(), txtProdName.getText(),(double) txtUnitPrice.getValue(),(int)txtQty.getValue(), (Product_Line) prodLineComboBox.getSelectedItem()));
         delete.addActionListener(e -> deleteProduct(txtProdId.getText()));
 

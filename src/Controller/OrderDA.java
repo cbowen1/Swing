@@ -192,4 +192,12 @@ public class OrderDA {
         }
         return true;
     }
+
+    public boolean removeOrder(int id) {
+        //Set order to cancelled
+        //Update shipping status to cancelled
+        //Update payment to cancelled
+        //Update inventory to show new product
+        return true;
+    }
 }
