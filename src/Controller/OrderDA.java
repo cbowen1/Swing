@@ -102,11 +102,12 @@ public class OrderDA {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) { paymentID = rs.getInt("Payment_id"); }
             ps = DatabaseTools.GetConnection().prepareStatement(
-                    "INSERT INTO Payment_Method(payment_id,payment_type,Payment_amount)value(?,?,?)"
+                    "INSERT INTO Payment_Method(payment_id,payment_type,Payment_amount, Payment_Status)value(?,?,?,?)"
             );
             ps.setInt(1,paymentID);
             ps.setString(2,"Online Payment");
             ps.setInt(3,0);
+            ps.setString(4,"NEW");
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -204,18 +205,44 @@ public class OrderDA {
             //TODO: Find all showConfirmDialog and see how CANCEL returns, should NOT be success/error. but just return
             int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to cancel this order?","Warning",JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION){
-                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE order set STATUS = ? where order_id = ?");
+                Order ord = getOrder(id);
+                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE orders set STATUS = ? where order_id = ?");
                 ps.setString(1, "CANCELLED");
-                ps.setInt(2, id);
-                //ps.executeUpdate();
-
-                ps = DatabaseTools.GetConnection().prepareStatement("UPDATE shipping set isCancelled = ? where shipping_Id = ?");
-
-                ps.setBoolean(1, true);
                 ps.setInt(2, id);
                 ps.executeUpdate();
 
+                ps = DatabaseTools.GetConnection().prepareStatement("UPDATE shipping set isCancelled = ? where order_id = ?");
 
+                ps.setBoolean(1, true);
+                ps.setInt(2, ord.getOrderID());
+                ps.executeUpdate();
+
+
+                ps = DatabaseTools.GetConnection().prepareStatement("UPDATE payment_method set Payment_Status = ? where payment_id = ?");
+
+                ps.setString(1, "CANCELLED");
+                ps.setInt(2, ord.getPaymentID());
+                ps.executeUpdate();
+
+                //Update inventory by adding ORDER DETAILS back to items
+                ProductDA pda = new ProductDA();
+                ArrayList<OrderDetails> odt = getOrderDetails(id);
+
+                for(OrderDetails od : odt) {
+                    try {
+                        //orderPrice += odt.getQty() * (pda.getProductPrice(odt.getProductID()));
+                        ps = DatabaseTools.GetConnection().prepareStatement(
+                                "UPDATE product set quantity = quantity + ? where product_id = ?"
+                        );
+                        ps.setInt(1,od.getQty());
+                        ps.setInt(2,od.getProductID());
+                        ps.executeUpdate();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return false;
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

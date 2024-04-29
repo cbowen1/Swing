@@ -47,16 +47,18 @@ public class ShippingUI {
         tm.addColumn("Expected Date");
         tm.addColumn("Tracking");
         tm.addColumn("Delivered");
+        tm.addColumn("Cancelled");
 
         shipTable.setModel(tm);
         for(ShippingData pl: plList) {
-            Vector<Object> rowObj = new Vector<>(5);
+            Vector<Object> rowObj = new Vector<>(6);
             rowObj.add(0, pl.getId());
             rowObj.add(1, pl.getOderId());
             rowObj.add(2, pl.getShipDate());
             rowObj.add(3, pl.getEstDate());
             rowObj.add(4, pl.getTracking());
             rowObj.add(5, pl.getDelivered().toString());
+            rowObj.add(6, pl.getCancelled().toString());
             tm.addRow(rowObj);
         }
     }

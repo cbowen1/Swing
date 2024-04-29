@@ -411,8 +411,6 @@ public class OrderUI {
     }
 
     private void deleteOrder(String id) {
-        //TODO: Delete entire order, just set status to DELETED
-        System.out.println("Delete order not implemented");
         if(!orderDA.removeOrder(Integer.valueOf(id))) {
             JOptionPane.showMessageDialog(null, "ERROR! Order not cancelled");
         } else {

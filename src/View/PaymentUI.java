@@ -40,12 +40,14 @@ public class PaymentUI {
         tm.addColumn("ID");
         tm.addColumn("Payment Method");
         tm.addColumn("Payment Amount ");
+        tm.addColumn("Status");
         payTable.setModel(tm);
         for(PaymentMethod pm: plList) {
-            Vector<Object> rowObj = new Vector<>(3);
+            Vector<Object> rowObj = new Vector<>(4);
             rowObj.add(0, pm.getId());
             rowObj.add(1, pm.getType());
             rowObj.add(2, pm.getAmount());
+            rowObj.add(3, pm.getStatus());
             tm.addRow(rowObj);
         }
     }

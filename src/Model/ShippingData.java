@@ -9,6 +9,7 @@ public class ShippingData {
     private Date estDate;
     private String tracking;
     private Boolean delivered;
+    private Boolean isCancelled;
 
     public int getId() {
         return id;
@@ -56,5 +57,13 @@ public class ShippingData {
 
     public void setDelivered(Boolean delivered) {
         this.delivered = delivered;
+    }
+
+    public Boolean getCancelled() {
+        return isCancelled;
+    }
+
+    public void setCancelled(Boolean cancelled) {
+        isCancelled = cancelled;
     }
 }

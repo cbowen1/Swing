@@ -34,6 +34,7 @@ public class ShipDA {
                 shipData.setEstDate(rs.getDate("Expected_Arrival_Date"));
                 shipData.setTracking(rs.getString("Tracking_Number"));
                 shipData.setDelivered(rs.getBoolean("Delivered"));
+                shipData.setCancelled(rs.getBoolean("IsCancelled"));
                 shipList.add(shipData);
             }
 

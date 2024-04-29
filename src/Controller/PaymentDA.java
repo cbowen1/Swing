@@ -30,6 +30,7 @@ public class PaymentDA {
                 pay.setId(rs.getInt("Payment_id"));
                 pay.setType(rs.getString("Payment_type"));
                 pay.setAmount(rs.getDouble("payment_amount"));
+                pay.setStatus(rs.getString("payment_status"));
                 payList.add(pay);
             }
         } catch (Exception e) {
