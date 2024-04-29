@@ -206,7 +206,6 @@ public class OrderUI {
         dtm.addColumn("Qty");
         dtm.addColumn("Price");
 
-        //TODO: Make this swap between new/existing customer on toggle/button
         if(orderID == null) {
             toggleDropdown();
             if(showDropdown) {

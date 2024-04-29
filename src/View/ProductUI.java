@@ -142,7 +142,6 @@ public class ProductUI {
 
         if(productID == null) {
             //New Product Creation
-            //TODO: New Product
             txtProdId.setEnabled(false);
             txtUnitPrice.setValue(0.00);
         } else {
