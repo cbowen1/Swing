@@ -6,6 +6,7 @@ import Model.OrderDetails;
 import Model.Product;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
 
+import javax.swing.*;
 import javax.xml.crypto.Data;
 import javax.xml.transform.Result;
 import java.sql.*;
@@ -198,6 +199,28 @@ public class OrderDA {
         //Update shipping status to cancelled
         //Update payment to cancelled
         //Update inventory to show new product
+
+        try{
+            //TODO: Find all showConfirmDialog and see how CANCEL returns, should NOT be success/error. but just return
+            int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to cancel this order?","Warning",JOptionPane.YES_NO_OPTION);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE order set STATUS = ? where order_id = ?");
+                ps.setString(1, "CANCELLED");
+                ps.setInt(2, id);
+                //ps.executeUpdate();
+
+                ps = DatabaseTools.GetConnection().prepareStatement("UPDATE shipping set isCancelled = ? where shipping_Id = ?");
+
+                ps.setBoolean(1, true);
+                ps.setInt(2, id);
+                ps.executeUpdate();
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 }

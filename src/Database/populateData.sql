@@ -28,8 +28,8 @@ INSERT INTO customer VALUES (24, 'Humberto', 'Heigold', 'hheigoldn@symantec.com'
 INSERT INTO customer VALUES (25, 'Laird', 'Le Grice', 'llegriceo@stumbleupon.com', '19531 Melrose Crossing', 'Houston', 'TX', '77281', TRUE);
 
 -- Inserting data into `payment_method`
-INSERT INTO payment_method VALUES (1, 'Credit Card', 234.16);
-INSERT INTO payment_method VALUES (2, 'Paypal', 17.26);
+INSERT INTO payment_method VALUES (1, 'Credit Card', 234.16, "PAID");
+INSERT INTO payment_method VALUES (2, 'Paypal', 17.26, "PAID");
 
 -- Inserting data into `supplier`
 INSERT INTO supplier VALUES (1, 'Amazon.com', NULL, NULL, NULL, 'www.amazon.com');
@@ -63,7 +63,7 @@ INSERT INTO inventory VALUES (3, 'Bubble Mailers', 100, 4);
 
 -- Inserting data into `shipping`
 INSERT INTO shipping VALUES 
-(1, 2, '2024-04-18', DATE_ADD(CURDATE(), INTERVAL 5 DAY), 'TRACK123', false);
+(1, 2, '2024-04-18', DATE_ADD(CURDATE(), INTERVAL 5 DAY), 'TRACK123', false, false);
 
 INSERT INTO order_details VALUES (1,1,2);
 INSERT INTO order_details VALUES (1,2,2);

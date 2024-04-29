@@ -19,7 +19,8 @@ DROP TABLE IF EXISTS payment_method;
 CREATE TABLE payment_method (
     Payment_ID INT PRIMARY KEY,
     Payment_Type VARCHAR(50),
-    Payment_Amount DECIMAL(10, 2)
+    Payment_Amount DECIMAL(10, 2),
+    Payment_Status VARCHAR(50)
 );
 
 -- Drop and create `orders` table
@@ -96,6 +97,7 @@ CREATE TABLE shipping (
     Expected_Arrival_Date DATE,
     Tracking_Number VARCHAR(100),
     Delivered BOOLEAN default FALSE,
+    IsCancelled BOOLEAN default FALSE,
     FOREIGN KEY (Order_ID) REFERENCES `orders`(Order_ID)
 );
 
