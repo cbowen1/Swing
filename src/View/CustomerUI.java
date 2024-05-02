@@ -35,6 +35,15 @@ public class CustomerUI {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
+
+            @Override
+            public Class<?> getColumnClass(int col) {
+                Class retVal = Object.class;
+                if(getRowCount() > 0) {
+                    retVal = getValueAt(0, col).getClass();
+                }
+                return  retVal;
+            }
         };
         tm.addColumn("ID");
         tm.addColumn("First Name");
@@ -76,6 +85,9 @@ public class CustomerUI {
                 }
             }
         });
+
+        customerTable.setAutoCreateRowSorter(true);
+
         customerScrollPane = new JScrollPane(customerTable);
         viewPanel.add(customerScrollPane);
 

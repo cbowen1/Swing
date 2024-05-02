@@ -40,6 +40,15 @@ public class ShippingUI {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
+            @Override
+            public Class<?> getColumnClass(int col) {
+                Class retVal = Object.class;
+                if(getRowCount() > 0) {
+                    retVal = getValueAt(0, col).getClass();
+                }
+                return  retVal;
+            }
+
         };
         tm.addColumn("ID");
         tm.addColumn("Order Number");
@@ -78,7 +87,7 @@ public class ShippingUI {
         shipPanel.add(viewPanel, gbc);
         shipTable = new JTable();
         shipTable.setRowHeight(30);
-
+        shipTable.setAutoCreateRowSorter(true);
         shipTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

@@ -57,6 +57,14 @@ public class OrderUI {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
+            @Override
+            public Class<?> getColumnClass(int col) {
+                Class retVal = Object.class;
+                if(getRowCount() > 0) {
+                    retVal = getValueAt(0, col).getClass();
+                }
+                return  retVal;
+            }
         };
         tm.addColumn("Order ID");
         tm.addColumn("Customer ID");
@@ -102,6 +110,8 @@ public class OrderUI {
                 }
             }
         });
+
+        orderTable.setAutoCreateRowSorter(true);
 
         orderScrollPane = new JScrollPane(orderTable);
         viewPanel.add(orderScrollPane);
@@ -200,6 +210,14 @@ public class OrderUI {
                     return true;
                 }
                 return false;
+            }
+            @Override
+            public Class<?> getColumnClass(int col) {
+                Class retVal = Object.class;
+                if(getRowCount() > 0) {
+                    retVal = getValueAt(0, col).getClass();
+                }
+                return  retVal;
             }
         };
         dtm.addColumn("Item Name");
@@ -349,6 +367,8 @@ public class OrderUI {
                 }
             }
         });
+
+        itemListTable.setAutoCreateRowSorter(true);
         scrollPane = new JScrollPane(itemListTable);
         itemList.add(scrollPane);
 

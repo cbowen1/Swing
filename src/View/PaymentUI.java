@@ -36,6 +36,14 @@ public class PaymentUI {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
+            @Override
+            public Class<?> getColumnClass(int col) {
+                Class retVal = Object.class;
+                if(getRowCount() > 0) {
+                    retVal = getValueAt(0, col).getClass();
+                }
+                return  retVal;
+            }
         };
         tm.addColumn("ID");
         tm.addColumn("Payment Method");
@@ -68,6 +76,7 @@ public class PaymentUI {
         payTable = new JTable();
         payTable.setRowHeight(30);
 
+        payTable.setAutoCreateRowSorter(true);
         payTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

@@ -30,7 +30,7 @@ public class DatabaseTools {
     }
 
     public static void OpenConnection() {
-        TowsonConnection();
+        //TowsonConnection();
         if (conn == null) {
             System.out.println("COULD NOT CONNECT TO TOWSON, using LocalDB");
             String dbURL = "jdbc:mysql://localhost:3306/" + schemaName;

@@ -43,6 +43,15 @@ public class ProductUI {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
+
+            @Override
+            public Class<?> getColumnClass(int col) {
+                Class retVal = Object.class;
+                if(getRowCount() > 0) {
+                    retVal = getValueAt(0, col).getClass();
+                }
+                return  retVal;
+            }
         };
         tm.addColumn("Product ID");
         tm.addColumn("Line ID");
@@ -77,7 +86,7 @@ public class ProductUI {
         prodPanel.add(viewPanel, gbc);
         prodTable = new JTable();
         prodTable.setRowHeight(30);
-
+        prodTable.setAutoCreateRowSorter(true);
         prodTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

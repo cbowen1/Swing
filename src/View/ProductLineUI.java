@@ -41,6 +41,14 @@ public class ProductLineUI {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
+            @Override
+            public Class<?> getColumnClass(int col) {
+                Class retVal = Object.class;
+                if(getRowCount() > 0) {
+                    retVal = getValueAt(0, col).getClass();
+                }
+                return  retVal;
+            }
         };
         tm.addColumn("ID");
         tm.addColumn("Name");
@@ -72,6 +80,7 @@ public class ProductLineUI {
         plTable = new JTable();
         plTable.setRowHeight(30);
 
+        plTable.setAutoCreateRowSorter(true);
         plTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

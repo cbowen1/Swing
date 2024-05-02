@@ -1,5 +1,7 @@
 import Controller.CustomerDA;
 import View.*;
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +14,9 @@ public class Main {
             @Override
             public void run() {
                 try{
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    FlatLightLaf.setup();
+                    UIManager.setLookAndFeel(new FlatDarculaLaf());
+                    //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     createAndShowGUI();
                 } catch (Exception e) {
                     e.printStackTrace();
