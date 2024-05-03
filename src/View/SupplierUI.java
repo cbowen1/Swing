@@ -22,9 +22,10 @@ public class SupplierUI {
     private JTable supTable;
     JFrame infoFrame;
     SupplierDA supDA;
+    Component parent;
 
-
-    public SupplierUI() {
+    public SupplierUI(Component parent) {
+        this.parent = parent;
         init();
         supDA = new SupplierDA();
         table_update();
@@ -154,7 +155,7 @@ public class SupplierUI {
         infoFrame.add(fillerPanel);
         infoFrame.add(buttonPanel);
         infoFrame.pack();
-        infoFrame.setLocationRelativeTo(null);
+        infoFrame.setLocationRelativeTo(parent);
         infoFrame.setVisible(true);
     }
 

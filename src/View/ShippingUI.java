@@ -21,12 +21,13 @@ public class ShippingUI {
     private JScrollPane shipScrollPane;
     private JTable shipTable;
     ShipDA sda;
-
+    Component parent;
     int shippingID, orderId;
 
     JButton addTracking, orderDelivered;
 
-    public ShippingUI() {
+    public ShippingUI(Component parent) {
+        this.parent = parent;
         init();
         sda = new ShipDA();
         table_update();

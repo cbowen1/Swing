@@ -23,10 +23,11 @@ public class InventoryUI {
     private JScrollPane invScrollPane;
     private JTable invTable;
     JFrame infoFrame;
-
+    Component parent;
     InventoryDA inventoryDA;
 
-    public InventoryUI() {
+    public InventoryUI(Component parent) {
+        this.parent = parent;
         init();
         inventoryDA = new InventoryDA();
         table_update();
@@ -186,7 +187,7 @@ public class InventoryUI {
         infoFrame.add(buttonPanel);
 
         infoFrame.pack();
-        infoFrame.setLocationRelativeTo(null);
+        infoFrame.setLocationRelativeTo(parent);
         infoFrame.setVisible(true);
     }
 

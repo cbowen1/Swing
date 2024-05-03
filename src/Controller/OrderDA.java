@@ -52,7 +52,7 @@ public class OrderDA {
         orderList = new ArrayList<>();
 
         try {
-            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM orders");
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM orders order by Order_Date desc");
             ResultSet rs = ps.executeQuery();
 
             Order order;

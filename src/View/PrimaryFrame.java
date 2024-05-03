@@ -1,5 +1,7 @@
 package View;
 
+import com.sun.tools.javac.Main;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,24 +22,26 @@ public class PrimaryFrame extends JFrame implements ActionListener {
     ShippingUI shippingPanel;
     PaymentUI payPanel;
     JLabel topLabel;
+    Component parent;
 
 
-
-    public PrimaryFrame() {
-        customerPanel = new CustomerUI();
-        orderPanel = new OrderUI();
-        productPanel = new ProductUI();
-        inventoryPanel = new InventoryUI();
-        plPanel = new ProductLineUI();
-        supplierPanel = new SupplierUI();
-        shippingPanel = new ShippingUI();
-        payPanel = new PaymentUI();
-
+    public PrimaryFrame(Component c) {
+        parent = c;
+        frame = new JFrame("Eclipse Collectibles LLC");
+        customerPanel = new CustomerUI(frame.getGlassPane());
+        orderPanel = new OrderUI(frame.getGlassPane());
+        productPanel = new ProductUI(frame.getGlassPane());
+        inventoryPanel = new InventoryUI(frame.getGlassPane());
+        plPanel = new ProductLineUI(frame.getGlassPane());
+        supplierPanel = new SupplierUI(frame.getGlassPane());
+        shippingPanel = new ShippingUI(frame.getGlassPane());
+        payPanel = new PaymentUI(frame.getGlassPane());
         init();
+
     }
 
     private void init() {
-        frame = new JFrame("Eclipse Collectibles LLC");
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = screenSize.width/2;
         int height = screenSize.height/2;
@@ -91,7 +95,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         frame.add(splitPane, BorderLayout.CENTER);
 
         frame.pack();
-        frame.setLocationRelativeTo(null);
+        frame.setLocationRelativeTo(parent);
         frame.setVisible(true);
     }
 

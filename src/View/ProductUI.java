@@ -27,8 +27,10 @@ public class ProductUI {
     JFrame infoFrame;
     ProductDA productDA;
     ProductLineDA prodLineDA;
+    Component parent;
 
-    public ProductUI() {
+    public ProductUI(Component parent) {
+        this.parent = parent;
         init();
         productDA = new ProductDA();
         prodLineDA = new ProductLineDA();
@@ -181,7 +183,7 @@ public class ProductUI {
         infoFrame.add(buttonPanel);
 
         infoFrame.pack();
-        infoFrame.setLocationRelativeTo(null);
+        infoFrame.setLocationRelativeTo(parent);
         infoFrame.setVisible(true);
     }
 

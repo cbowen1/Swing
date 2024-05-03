@@ -17,11 +17,12 @@ public class CustomerUI {
     private JPanel editPanel;
     private JScrollPane customerScrollPane;
     private JTable customerTable;
-
+    Component parent;
     JFrame infoFrame;
     CustomerDA customerDA;
 
-    public CustomerUI() {
+    public CustomerUI(Component parent) {
+        this.parent = parent;
         init();
         customerDA = new CustomerDA();
         table_update();
@@ -137,6 +138,7 @@ public class CustomerUI {
 
         if(customerID == null) {
             //This is a new user
+            txtCustActive.setEnabled(false);
         } else {
             //Get the current user and fill information in
             Customer cust = customerDA.getCustomer(customerID);
@@ -167,7 +169,7 @@ public class CustomerUI {
         infoFrame.add(fillerPanel);
         infoFrame.add(buttonPanel);
         infoFrame.pack();
-        infoFrame.setLocationRelativeTo(null);
+        infoFrame.setLocationRelativeTo(parent);
         infoFrame.setVisible(true);
     }
 

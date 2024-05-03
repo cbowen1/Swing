@@ -22,7 +22,10 @@ public class PaymentUI {
     private JTable payTable;
     PaymentDA pda;
 
-    public PaymentUI() {
+    Component parent;
+
+    public PaymentUI(Component parent) {
+        this.parent = parent;
         init();
         pda = new PaymentDA();
         table_update();

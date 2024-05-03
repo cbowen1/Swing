@@ -25,9 +25,10 @@ public class ProductLineUI {
     private JTable plTable;
     JFrame infoFrame;
     ProductLineDA plDA;
+    Component parent;
 
-
-    public ProductLineUI() {
+    public ProductLineUI(Component parent) {
+        this.parent = parent;
         init();
         plDA = new ProductLineDA();
         table_update();
@@ -166,7 +167,7 @@ public class ProductLineUI {
         infoFrame.add(buttonPanel);
 
         infoFrame.pack();
-        infoFrame.setLocationRelativeTo(null);
+        infoFrame.setLocationRelativeTo(parent);
         infoFrame.setVisible(true);
     }
 

@@ -10,6 +10,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
+import java.beans.PropertyChangeEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -28,9 +31,8 @@ public class OrderUI {
     OrderDA orderDA;
     CustomerDA custDA;
     ProductDA prodDA;
-
+    Component parent;
     Customer cust;
-
     JPanel existCustPanel;
     JPanel dropDownPanel;
     JPanel newCustPanel;
@@ -38,11 +40,12 @@ public class OrderUI {
     JTable detailTable;
     ArrayList<OrderDetails> detailList;
     private Boolean showDropdown = null;
-
     boolean newCustomer = false;
 
-    public OrderUI() {
+    public OrderUI(Component parent) {
+        this.parent = parent;
         init();
+
         orderDA = new OrderDA();
         custDA = new CustomerDA();
         prodDA = new ProductDA();
@@ -125,6 +128,8 @@ public class OrderUI {
         }
 
         infoFrame = new JFrame("Order Details");
+        infoFrame.setMinimumSize(new Dimension(800,600));
+        infoFrame.setResizable(false);
         infoFrame.setLayout(new GridBagLayout());
 
         JPanel dataPanel = new JPanel(new GridLayout(2,3));
@@ -192,8 +197,6 @@ public class OrderUI {
         JTextField txtOrderDate = new JTextField();
         detailTable = new JTable();
         JScrollPane detailPane = new JScrollPane(detailTable);
-
-
 
         dataPanel.add(txtOrderId);
         dataPanel.add(txtOrderStatus);
@@ -285,7 +288,8 @@ public class OrderUI {
         if(custCombobox == null) {
             save.addActionListener(e -> updateOrder(txtOrderId.getText(),cust,txtOrderDate.getText()));
         } else {
-            save.addActionListener(e -> updateOrder(txtOrderId.getText(),(Customer) custCombobox.getSelectedItem(),txtOrderDate.getText()));
+            save.setVisible(false);
+            //save.addActionListener(e -> updateOrder(txtOrderId.getText(),(Customer) custCombobox.getSelectedItem(),txtOrderDate.getText()));
         }
         delete.addActionListener(e -> deleteOrder(txtOrderId.getText()));
         editOrderDetails.addActionListener(e -> editOrderItems(txtOrderId.getText()));
@@ -311,10 +315,19 @@ public class OrderUI {
         infoFrame.add(tablePanel,gbc);
         gbc.gridy++;
         infoFrame.add(btnPanel,gbc);
-
+        detailPane.setMinimumSize(new Dimension(450,430));
         infoFrame.pack();
-        infoFrame.setLocationRelativeTo(null);
+        infoFrame.setLocationRelativeTo(parent);
         infoFrame.setVisible(true);
+        infoFrame.addPropertyChangeListener(e -> propChange());
+        System.out.println("CURRENTSIZE: " + detailPane.getSize().toString());
+    }
+
+    public void propChange() {
+        System.out.println("Property changed");
+        infoFrame.pack();
+        infoFrame.repaint();
+
     }
 
     private void removeOrderDetail() {

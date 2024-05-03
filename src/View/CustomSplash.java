@@ -24,7 +24,7 @@ public class CustomSplash {
         contButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PrimaryFrame();
+                new PrimaryFrame(frame.getGlassPane());
                 hide();
 
             }
