@@ -20,6 +20,7 @@ public class CustomSplash {
         int width = screenSize.width/2;
         int height = screenSize.height/2;
 
+
         JButton contButton = new JButton("OK");
         contButton.addActionListener(new ActionListener() {
             @Override
@@ -43,9 +44,12 @@ public class CustomSplash {
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
         frame.getContentPane().setBackground(Color.WHITE);
+
+        frame.setMinimumSize(new Dimension(1000,500));
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
+        System.out.println(frame.getGlassPane().getSize().toString());
         frame.setVisible(true);
     }
 
