@@ -49,7 +49,6 @@ public class CustomSplash {
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        System.out.println(frame.getGlassPane().getSize().toString());
         frame.setVisible(true);
     }
 

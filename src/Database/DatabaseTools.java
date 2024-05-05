@@ -1,5 +1,6 @@
 package Database;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -37,12 +38,15 @@ public class DatabaseTools {
             try {
                 Scanner scan = new Scanner(System.in);
                 System.out.println("Please enter your username:");
-                String username = "root";
-                username = scan.nextLine();
-                System.out.println("Please enter your password:");
-                String password = scan.nextLine();
-                //String username = "root";
-                //String password = "";
+                var username = javax.swing.JOptionPane.showInputDialog("Please enter your username:");
+                //root
+
+                JPasswordField pf = new JPasswordField();
+                int okCxl = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                String password = null;
+                if (okCxl == JOptionPane.OK_OPTION) {
+                    password = new String(pf.getPassword());
+                }
                 conn = DriverManager.getConnection(dbURL, username, password);
             }catch (SQLException e) {
                 e.printStackTrace();
