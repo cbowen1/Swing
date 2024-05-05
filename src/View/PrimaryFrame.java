@@ -2,12 +2,16 @@ package View;
 
 import com.sun.tools.javac.Main;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class PrimaryFrame extends JFrame implements ActionListener {
+    BufferedImage icon;
     JFrame frame;
     JSplitPane splitPane;
     JPanel topPanel, leftPanel, rightPanel;
@@ -26,6 +30,11 @@ public class PrimaryFrame extends JFrame implements ActionListener {
 
 
     public PrimaryFrame(Component c) {
+        try {
+            icon = ImageIO.read(getClass().getResource("/images/eclipse_icon.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         parent = c;
         frame = new JFrame("Eclipse Collectibles LLC");
         customerPanel = new CustomerUI(frame.getGlassPane());
@@ -36,6 +45,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         supplierPanel = new SupplierUI(frame.getGlassPane());
         shippingPanel = new ShippingUI(frame.getGlassPane());
         payPanel = new PaymentUI(frame.getGlassPane());
+        frame.setIconImage(icon);
         init();
 
     }

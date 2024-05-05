@@ -13,6 +13,7 @@ import java.io.IOException;
 
 public class CustomSplash {
     final BufferedImage logo = ImageIO.read(getClass().getResource("/images/logo_cropped.png"));
+    final BufferedImage icon = ImageIO.read(getClass().getResource("/images/eclipse_icon.png"));
     JFrame frame;
     public CustomSplash() throws IOException {
         DatabaseTools db = new DatabaseTools();
@@ -37,6 +38,7 @@ public class CustomSplash {
         //Set screen size to be 50% of the screen size
 
         frame.setPreferredSize(new Dimension(width, height));
+        frame.setIconImage(icon);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(contButton, BorderLayout.CENTER);
