@@ -11,7 +11,8 @@ CREATE TABLE customer (
     City VARCHAR(255),
     State VARCHAR(2),
     ZipCode VARCHAR(5),
-    IsActive BOOLEAN DEFAULT TRUE
+    IsActive BOOLEAN DEFAULT TRUE,
+    FavoriteTeam VARCHAR(255)
 );
 
 -- Drop and create `payment_method` table

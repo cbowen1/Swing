@@ -246,10 +246,12 @@ public class OrderUI {
             LocalDate today = LocalDate.now();
             DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             txtOrderDate.setText(today.format(f));
-            JButton addItem = new JButton("ADD ITEM");
-            JButton deleteItem = new JButton("REMOVE ITEM");
+            JButton addItem = new JButton("ADD Item");
+            JButton deleteItem = new JButton("REMOVE Item");
             addItem.addActionListener(e -> showInventory());
             deleteItem.addActionListener(e -> removeOrderDetail());
+
+            deleteItem.setVisible(false);
             tableGBC.gridy++;
             tablePanel.add(addItem, tableGBC);
             tableGBC.gridy++;

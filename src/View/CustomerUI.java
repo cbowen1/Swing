@@ -101,7 +101,7 @@ public class CustomerUI {
         }
 
         infoFrame = new JFrame("Customer Information");
-        infoFrame.setLayout(new GridLayout(10,2));
+        infoFrame.setLayout(new GridLayout(11,2));
 
         JTextField txtCustID = new JTextField();
         JTextField txtCustFirst = new JTextField();
@@ -112,6 +112,7 @@ public class CustomerUI {
         JTextField txtCustState = new JTextField();
         JTextField txtCustZip = new JTextField();
         JTextField txtCustActive = new JTextField();
+        JTextField txtTeam = new JTextField();
 
         JLabel idLabel = new JLabel("ID:");
         txtCustID.setEnabled(false);
@@ -133,6 +134,8 @@ public class CustomerUI {
         infoFrame.add(txtCustState);
         infoFrame.add(new JLabel("Zip:"));
         infoFrame.add(txtCustZip);
+        infoFrame.add(new JLabel("Favorite Team:"));
+        infoFrame.add(txtTeam);
         infoFrame.add(new JLabel("Active"));
         infoFrame.add(txtCustActive);
 
@@ -150,6 +153,7 @@ public class CustomerUI {
             txtCustState.setText(cust.getState());
             txtCustZip.setText(cust.getZip());
             txtCustActive.setText(cust.getActive().toString());
+            txtTeam.setText(cust.getFavoriteTeam());
             txtCustActive.setEnabled(false);
         }
 
@@ -160,7 +164,7 @@ public class CustomerUI {
         JButton delete = new JButton("Delete");
 
         save.addActionListener(e -> updateCustomer(txtCustID.getText(),txtCustFirst.getText(),txtCustLast.getText(), txtCustEmail.getText(),
-                txtCustStreet.getText(), txtCustCity.getText(),txtCustState.getText(), txtCustZip.getText()));
+                txtCustStreet.getText(), txtCustCity.getText(),txtCustState.getText(), txtCustZip.getText(), txtTeam.getText()));
         delete.addActionListener(e -> deleteCustomer(txtCustID.getText()));
 
         buttonPanel.add(save);
@@ -173,9 +177,9 @@ public class CustomerUI {
         infoFrame.setVisible(true);
     }
 
-    private boolean updateCustomer(String ID, String fName, String lName, String email, String street, String city, String state, String zip) {
+    private boolean updateCustomer(String ID, String fName, String lName, String email, String street, String city, String state, String zip, String team) {
         try{
-            Customer cust = new Customer(fName, lName, email, street, city, state, zip);
+            Customer cust = new Customer(fName, lName, email, street, city, state, zip, team);
             if(ID.isBlank()) {
                 //Customer creation
                 if(!customerDA.addCustomer(cust)) {

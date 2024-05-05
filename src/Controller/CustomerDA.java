@@ -38,6 +38,7 @@ public class CustomerDA {
                 cust.setCity(rs.getString("city"));
                 cust.setState(rs.getString("state"));
                 cust.setZip(rs.getString("zipCode"));
+                cust.setFavoriteTeam(rs.getString("favoriteTeam"));
                 customerList.add(cust);
             }
 
@@ -62,6 +63,7 @@ public class CustomerDA {
                 cust.setZip(rs.getString("zipcode"));
                 cust.setEmail(rs.getString("email"));
                 cust.setActive(rs.getBoolean("isActive"));
+                cust.setFavoriteTeam(rs.getString("favoriteTeam"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,7 +80,7 @@ public class CustomerDA {
                 custId = rs.getInt("Customer_ID");
             }
             ps = DatabaseTools.GetConnection().prepareStatement(
-              "INSERT INTO customer(Customer_ID,Customer_fName,Customer_lName,email,street_address,city,state,zipCode)values(?,?,?,?,?,?,?,?) "
+              "INSERT INTO customer(Customer_ID,Customer_fName,Customer_lName,email,street_address,city,state,zipCode,favoriteTeam)values(?,?,?,?,?,?,?,?,?) "
             );
             ps.setInt(1, custId);
             ps.setString(2, cust.getCustomerName_first());
@@ -88,6 +90,7 @@ public class CustomerDA {
             ps.setString(6, cust.getCity());
             ps.setString(7, cust.getState());
             ps.setString(8, cust.getZip());
+            ps.setString(9, cust.getFavoriteTeam());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,9 +117,9 @@ public class CustomerDA {
     public boolean updateCustomer(Customer cust) {
         try{
             PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement(
-                    "UPDATE customer set Customer_fName=?, Customer_lName=?,email=?,street_address=?,city=?,state=?,zipCode=? where Customer_ID = ?"
+                    "UPDATE customer set Customer_fName=?, Customer_lName=?,email=?,street_address=?,city=?,state=?,zipCode=?,favoriteTeam=? where Customer_ID = ?"
             );
-            ps.setInt(8, cust.getCustomerID());
+            ps.setInt(9, cust.getCustomerID());
             ps.setString(1, cust.getCustomerName_first());
             ps.setString(2, cust.getCustomerName_last());
             ps.setString(3, cust.getEmail());
@@ -124,6 +127,7 @@ public class CustomerDA {
             ps.setString(5, cust.getCity());
             ps.setString(6, cust.getState());
             ps.setString(7, cust.getZip());
+            ps.setString(8, cust.getFavoriteTeam());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

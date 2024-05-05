@@ -11,7 +11,9 @@ public class Customer {
     private String zip;
     private Boolean isActive;
 
-    public Customer(String fName, String lName, String email, String street, String city, String state, String zip) {
+    private String favoriteTeam;
+
+    public Customer(String fName, String lName, String email, String street, String city, String state, String zip, String team) {
         this.customerName_first = fName;
         this.customerName_last = lName;
         this.email = email;
@@ -19,6 +21,7 @@ public class Customer {
         this.city = city;
         this.state = state;
         this.zip = zip;
+        this.favoriteTeam = team;
     }
 
     public int getCustomerID() {
@@ -91,6 +94,14 @@ public class Customer {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public String getFavoriteTeam() {
+        return favoriteTeam;
+    }
+
+    public void setFavoriteTeam(String favoriteTeam) {
+        this.favoriteTeam = favoriteTeam;
     }
 
     public String getFullAddress() {

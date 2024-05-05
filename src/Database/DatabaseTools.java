@@ -37,7 +37,6 @@ public class DatabaseTools {
             String dbURL = "jdbc:mysql://localhost:3306/" + schemaName;
             try {
                 Scanner scan = new Scanner(System.in);
-                System.out.println("Please enter your username:");
                 var username = javax.swing.JOptionPane.showInputDialog("Please enter your username:");
                 //root
 

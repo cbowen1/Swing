@@ -140,7 +140,6 @@ public class ProductLineUI {
         infoFrame.add(optSupplier);
 
         if(plID == null) {
-            System.out.println("Add product line not implemented");
         } else {
             //This is existing product line, fill information
             Product_Line pl = plDA.getProdLine(plID);
