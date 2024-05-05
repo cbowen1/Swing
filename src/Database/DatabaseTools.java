@@ -35,8 +35,14 @@ public class DatabaseTools {
             System.out.println("COULD NOT CONNECT TO TOWSON, using LocalDB");
             String dbURL = "jdbc:mysql://localhost:3306/" + schemaName;
             try {
+                Scanner scan = new Scanner(System.in);
+                System.out.println("Please enter your username:");
                 String username = "root";
-                String password = "";
+                username = scan.nextLine();
+                System.out.println("Please enter your password:");
+                String password = scan.nextLine();
+                //String username = "root";
+                //String password = "";
                 conn = DriverManager.getConnection(dbURL, username, password);
             }catch (SQLException e) {
                 e.printStackTrace();

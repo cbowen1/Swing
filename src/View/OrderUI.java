@@ -288,8 +288,8 @@ public class OrderUI {
         if(custCombobox == null) {
             save.addActionListener(e -> updateOrder(txtOrderId.getText(),cust,txtOrderDate.getText()));
         } else {
-            save.setVisible(false);
-            //save.addActionListener(e -> updateOrder(txtOrderId.getText(),(Customer) custCombobox.getSelectedItem(),txtOrderDate.getText()));
+            //save.setVisible(false);
+            save.addActionListener(e -> updateOrder(txtOrderId.getText(),(Customer) custCombobox.getSelectedItem(),txtOrderDate.getText()));
         }
         delete.addActionListener(e -> deleteOrder(txtOrderId.getText()));
         editOrderDetails.addActionListener(e -> editOrderItems(txtOrderId.getText()));
@@ -320,11 +320,9 @@ public class OrderUI {
         infoFrame.setLocationRelativeTo(parent);
         infoFrame.setVisible(true);
         infoFrame.addPropertyChangeListener(e -> propChange());
-        System.out.println("CURRENTSIZE: " + detailPane.getSize().toString());
     }
 
     public void propChange() {
-        System.out.println("Property changed");
         infoFrame.pack();
         infoFrame.repaint();
 
