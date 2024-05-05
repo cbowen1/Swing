@@ -21,7 +21,7 @@ public class CustomSplash {
         int height = screenSize.height/2;
 
 
-        JButton contButton = new JButton("OK");
+        JButton contButton = new JButton("Login");
         contButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
