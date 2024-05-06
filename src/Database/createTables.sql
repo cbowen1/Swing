@@ -66,7 +66,7 @@ CREATE TABLE product (
     Product_Name VARCHAR(255),
     Unit_Price DECIMAL(10, 2),
     Quantity INT,
-    Weight DECIMAL(2,2),
+    Weight DECIMAL(5,2),
     FOREIGN KEY (Product_Line_ID) REFERENCES product_line(Product_LineID)
 );
 
@@ -98,7 +98,7 @@ CREATE TABLE shipping (
     Shipping_Date DATE,
     Expected_Arrival_Date DATE,
     Tracking_Number VARCHAR(100),
-    OrderWeight DECIMAL(3,2),
+    OrderWeight DECIMAL(5,2),
     Delivered BOOLEAN default FALSE,
     IsCancelled BOOLEAN default FALSE,
     FOREIGN KEY (Order_ID) REFERENCES `orders`(Order_ID)
