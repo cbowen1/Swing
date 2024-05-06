@@ -39,7 +39,7 @@ public class OrderUI {
     DefaultTableModel dtm;
     JTable detailTable;
     ArrayList<OrderDetails> detailList;
-    private Boolean showDropdown = null;
+    private Boolean showDropdown = true;
     boolean newCustomer = false;
 
     public OrderUI(Component parent) {
@@ -166,13 +166,14 @@ public class OrderUI {
         newcustEmail.setColumns(25);
 
         //Create the existing customer panel
+        /*
         existCustPanel.add(new JLabel("First: "));
         existCustPanel.add(new JLabel("Last: "));
         existCustPanel.add(new JLabel("Address: "));
         existCustPanel.add(custFirst);
         existCustPanel.add(custLast);
         existCustPanel.add(custAddress);
-
+*/
         //Create the new customer panel
         newCustPanel.add(new JLabel("First: "));
         newCustPanel.add(new JLabel("Last: "));
@@ -228,15 +229,19 @@ public class OrderUI {
         dtm.addColumn("Price");
 
         if(orderID == null) {
+            /*
             toggleDropdown();
             if(showDropdown) {
-                CustomerDA customerDA = new CustomerDA();
-                ArrayList<Customer> custList = customerDA.getCustomerList();
-                custCombobox = new JComboBox<>(custList.toArray(new Customer[0]));
-                existCustPanel.add(custCombobox);
+
             } else {
                 custCombobox = null;
             }
+*/
+            existCustPanel.removeAll();
+            CustomerDA customerDA = new CustomerDA();
+            ArrayList<Customer> custList = customerDA.getCustomerList();
+            custCombobox = new JComboBox<>(custList.toArray(new Customer[0]));
+            existCustPanel.add(custCombobox);
 
             txtOrderId.setEnabled(false);
             txtOrderStatus.setEnabled(false);
@@ -420,9 +425,10 @@ public class OrderUI {
             //Disable customer fields and show dropdown
             showDropdown = true;
         } else if(showDropdown == true) {
-            existCustPanel.removeAll();
+            //existCustPanel.removeAll();
             //Hide dropdown and show new customer
-            existCustPanel.add(newCustPanel);
+            //existCustPanel.add(newCustPanel);
+
             return;
         } else {
             //Show the dropdown
@@ -430,13 +436,13 @@ public class OrderUI {
     }
 
     private void success(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(this.getRootComponent(), message);
         infoFrame.dispose();
         table_update();
     }
 
     private void error(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(this.getRootComponent(), message);
     }
 
     private void editOrderItems(String id) {
@@ -445,7 +451,7 @@ public class OrderUI {
 
     private void deleteOrder(String id) {
         if(!orderDA.removeOrder(Integer.valueOf(id))) {
-            JOptionPane.showMessageDialog(null, "ERROR! Order not cancelled");
+            JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Order not cancelled");
         } else {
             success("Success! Order successfully cancelled");
         }

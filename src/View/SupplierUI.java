@@ -167,7 +167,7 @@ public class SupplierUI {
         if(ID.isBlank()) {
             //Supplier Creation
             if(!supDA.addSupplier(supplier)){
-                JOptionPane.showMessageDialog(null, "ERROR! Supplier not added");
+                JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Supplier not added");
             }else {
                 success("Success! Supplier added successfully");
             }
@@ -175,7 +175,7 @@ public class SupplierUI {
             //Supplier Update
             supplier.setId(Integer.valueOf(ID));
             if(!supDA.updateSupplier(supplier)) {
-                JOptionPane.showMessageDialog(null, "ERROR! Supplier not updated");
+                JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Supplier not updated");
             } else {
                 success("Success! Supplier updated");
             }
@@ -184,14 +184,14 @@ public class SupplierUI {
     }
 
     private void success(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(this.getRootComponent(), message);
         infoFrame.dispose();
         table_update();
     }
 
     private void deleteSupplier(String id) {
         if(!supDA.removeSupplier(Integer.valueOf(id))) {
-            JOptionPane.showMessageDialog(null, "ERROR! Supplier not removed");
+            JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Supplier not removed");
         } else {
             success("Success! Supplier removed successfully");
         }

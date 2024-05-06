@@ -203,7 +203,7 @@ public class ProductUI {
         if(id.isBlank()) {
             //Create a product
             if(!productDA.addProduct(prod)) {
-                JOptionPane.showMessageDialog(null, "ERROR! Product could not be added");
+                JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Product could not be added");
             } else {
                 success("Succes! Product added successfully");
             }
@@ -211,7 +211,7 @@ public class ProductUI {
             //Update product
             prod.setId(Integer.valueOf(id));
             if(!productDA.updateProduct(prod)) {
-                JOptionPane.showMessageDialog(null, "ERROR! Product could not be updated");
+                JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Product could not be updated");
             } else {
                 success("Succes! Product updated successfully");
             }
@@ -221,14 +221,14 @@ public class ProductUI {
 
     private void deleteProduct(String id) {
         if(!productDA.removeProduct(Integer.valueOf(id))) {
-            JOptionPane.showMessageDialog(null, "ERROR! Product not removed");
+            JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Product not removed");
         } else {
             success("Success! Product removed successfully");
         }
     }
 
     private void success(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(this.getRootComponent(), message);
         infoFrame.dispose();
         table_update();
     }

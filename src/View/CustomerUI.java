@@ -183,7 +183,7 @@ public class CustomerUI {
             if(ID.isBlank()) {
                 //Customer creation
                 if(!customerDA.addCustomer(cust)) {
-                    JOptionPane.showMessageDialog(null, "ERROR! Customer could not be added");
+                    JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Customer could not be added");
                 } else {
                     success("Succes! Customer added successfully");
                 }
@@ -191,7 +191,7 @@ public class CustomerUI {
                 //Customer update
                 cust.setCustomerID(Integer.valueOf(ID));
                 if(!customerDA.updateCustomer(cust)) {
-                    JOptionPane.showMessageDialog(null, "ERROR! Customer could not be updated");
+                    JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Customer could not be updated");
                 } else {
                     success("Success! Customer updated");
                 }
@@ -206,7 +206,7 @@ public class CustomerUI {
     private  boolean deleteCustomer(String id) {
         try{
             if(!customerDA.removeCustomer(Integer.valueOf(id))) {
-                JOptionPane.showMessageDialog(null, "ERROR! Customer could not be deleted");
+                JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Customer could not be deleted");
             } else {
                 success("Success! Customer has successfully disabled");
             }
@@ -218,7 +218,7 @@ public class CustomerUI {
     }
 
     private void success(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(this.getRootComponent(), message);
         infoFrame.dispose();
         table_update();
     }

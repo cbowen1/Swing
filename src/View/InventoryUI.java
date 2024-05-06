@@ -140,7 +140,7 @@ public class InventoryUI {
 
         JFormattedTextField txtInventoryQty = new JFormattedTextField(formatter);
 
-        //JOptionPane.showMessageDialog(null, txtInventoryQty);
+        //JOptionPane.showMessageDialog(this.getRootComponent(), txtInventoryQty);
 
         JLabel idLabel = new JLabel("ID");
 
@@ -193,20 +193,20 @@ public class InventoryUI {
 
     private void deleteInventory(String id) {
         if(!inventoryDA.removeInventory(Integer.valueOf(id))) {
-            JOptionPane.showMessageDialog(null, "ERROR! Inventory not removed");
+            JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Inventory not removed");
         } else {
             success("Success! Inventory removed successfully");
         }
     }
 
     private void success(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(this.getRootComponent(), message);
         infoFrame.dispose();
         table_update();
     }
 
     private void error(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(this.getRootComponent(), message);
     }
 
     private void updateInventory(String id, String name, int qty, Supplier sup) {

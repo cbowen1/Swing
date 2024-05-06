@@ -195,20 +195,20 @@ public class ProductLineUI {
 
     private void deleteProductLine(String id) {
         if(!plDA.removeProductLine(Integer.valueOf(id))) {
-            JOptionPane.showMessageDialog(null, "ERROR! Product Line not removed");
+            JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Product Line not removed");
         } else {
             success("Success! Product Line removed successfully");
         }
     }
 
     private void success(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(this.getRootComponent(), message);
         infoFrame.dispose();
         table_update();
     }
 
     private void error(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(this.getRootComponent(), message);
     }
 
     private void initEditPanel() {

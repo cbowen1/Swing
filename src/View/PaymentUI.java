@@ -111,12 +111,12 @@ public class PaymentUI {
     }
 
     private void success(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(this.getRootComponent(), message);
         table_update();
     }
 
     private void error(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(this.getRootComponent(), message);
     }
 
     public JComponent getRootComponent() {

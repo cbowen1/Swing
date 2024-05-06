@@ -105,7 +105,7 @@ public class ShippingUI {
                     orderDelivered.setEnabled(false);
                 } else {
                     addTracking.setEnabled(false);
-                    if((String) target.getValueAt(row,5) == "false") {
+                    if((String) target.getValueAt(row,6) == "false") {
                         orderDelivered.setEnabled(true);
                     }
 
@@ -170,12 +170,12 @@ public class ShippingUI {
         editPanel.add(orderDelivered);
     }
     private void success(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(this.getRootComponent(), message);
         table_update();
     }
 
     private void error(String message) {
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(this.getRootComponent(), message);
     }
 
 
