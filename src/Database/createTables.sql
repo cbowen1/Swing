@@ -66,6 +66,7 @@ CREATE TABLE product (
     Product_Name VARCHAR(255),
     Unit_Price DECIMAL(10, 2),
     Quantity INT,
+    Weight DECIMAL(2,2),
     FOREIGN KEY (Product_Line_ID) REFERENCES product_line(Product_LineID)
 );
 

@@ -112,7 +112,7 @@ public class ProductUI {
         }
 
         infoFrame = new JFrame("Product Information");
-        infoFrame.setLayout(new GridLayout(6,2));
+        infoFrame.setLayout(new GridLayout(7,2));
 
         JTextField txtProdId = new JTextField();
         JTextField txtProdName = new JTextField();
@@ -127,12 +127,20 @@ public class ProductUI {
 
         NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);
+        NumberFormatter decimal = new NumberFormatter(format);
 
         formatter.setValueClass(Integer.class);
         formatter.setMinimum(0);
         formatter.setMaximum(Integer.MAX_VALUE);
         formatter.setAllowsInvalid(false);
+
+        decimal.setValueClass(Double.class);
+        decimal.setMinimum(0.1);
+        decimal.setMaximum(Double.MAX_VALUE);
+        decimal.setAllowsInvalid(false);
+
         JFormattedTextField txtQty = new JFormattedTextField(formatter);
+        JFormattedTextField txtWeight = new JFormattedTextField(decimal);
         JLabel idLabel = new JLabel("ID:");
 
         infoFrame.add(idLabel);
@@ -143,6 +151,8 @@ public class ProductUI {
         infoFrame.add(txtUnitPrice);
         infoFrame.add(new JLabel("QTY:"));
         infoFrame.add(txtQty);
+        infoFrame.add(new JLabel("Weight (lbs):"));
+        infoFrame.add(txtWeight);
 
         SupplierDA supplierDA = new SupplierDA();
         ArrayList<Supplier> supList = supplierDA.getSupList();
@@ -162,6 +172,7 @@ public class ProductUI {
             txtProdId.setText(String.valueOf(prod.getId()));
             txtProdName.setText(prod.getName());
             txtQty.setValue(prod.getQty());
+            txtWeight.setValue(prod.getWeight());
             txtUnitPrice.setValue(prod.getUnitPrice());
             setComboBoxBySupplier(prodLineComboBox, prodLineList, prod.getProductLineId());
 
@@ -173,7 +184,7 @@ public class ProductUI {
         JButton save = new JButton("Save");
         JButton delete = new JButton("Delete");
 
-        save.addActionListener(e -> updateProduct(txtProdId.getText(), txtProdName.getText(),(double) txtUnitPrice.getValue(),(int)txtQty.getValue(), (Product_Line) prodLineComboBox.getSelectedItem()));
+        save.addActionListener(e -> updateProduct(txtProdId.getText(), txtProdName.getText(),(double) txtUnitPrice.getValue(),(int)txtQty.getValue(), (Product_Line) prodLineComboBox.getSelectedItem(), (double) txtWeight.getValue()));
         delete.addActionListener(e -> deleteProduct(txtProdId.getText()));
 
         buttonPanel.add(save);
@@ -187,8 +198,8 @@ public class ProductUI {
         infoFrame.setVisible(true);
     }
 
-    private boolean updateProduct(String id, String name, double price, int qty, Product_Line pl) {
-        Product prod = new Product(name, price, qty, pl.getId());
+    private boolean updateProduct(String id, String name, double price, int qty, Product_Line pl, Double weight) {
+        Product prod = new Product(name, price, qty, pl.getId(), weight);
         if(id.isBlank()) {
             //Create a product
             if(!productDA.addProduct(prod)) {

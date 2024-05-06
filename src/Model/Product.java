@@ -6,12 +6,14 @@ public class Product {
     private String name;
     private double unitPrice;
     private int qty;
+    private double weight;
 
-    public Product(String name, double price, int qty, int productLineId) {
+    public Product(String name, double price, int qty, int productLineId, double weight) {
         this.name = name;
         this.unitPrice = price;
         this.qty = qty;
         this.productLineId = productLineId;
+        this.weight = weight;
     }
 
     public Product() {}
@@ -54,5 +56,13 @@ public class Product {
 
     public void setQty(int qty) {
         this.qty = qty;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 }

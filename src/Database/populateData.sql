@@ -52,9 +52,9 @@ INSERT INTO product_line VALUES (5, '2023 Panini Obsidian Football FOTL Hobby 12
 INSERT INTO product_line VALUES (6, '2024 Sage High Series Football Hobby 16-Box Case', NULL, 1849.95, 5);
 
 -- Inserting data into `product`
-INSERT INTO product VALUES (1, 1, '2022 Super Break Football Edition Box', 89.95, 121);
-INSERT INTO product VALUES (2, 3, '2024 Gold Rush Autographed Full-Size Helmet',499.95,27);
-INSERT INTO product VALUES (3, 6, '2024 Sage High Series Football Hobby Box', 119.95, 16);
+INSERT INTO product VALUES (1, 1, '2022 Super Break Football Edition Box', 89.95, 121, 1.25);
+INSERT INTO product VALUES (2, 3, '2024 Gold Rush Autographed Full-Size Helmet',499.95,27, 6.4);
+INSERT INTO product VALUES (3, 6, '2024 Sage High Series Football Hobby Box', 119.95, 16, .75);
 
 -- Inserting data into `inventory`
 INSERT INTO inventory VALUES (1, 'Penny Sleeves', 843, 1);

@@ -35,6 +35,7 @@ public class ProductDA {
                 pro.setName(rs.getString("Product_Name"));
                 pro.setUnitPrice(rs.getDouble("Unit_Price"));
                 pro.setQty(rs.getInt("Quantity"));
+                pro.setWeight(rs.getDouble("Weight"));
                 productList.add(pro);
             }
 
@@ -85,6 +86,7 @@ public class ProductDA {
                 prod.setName(rs.getString("product_name"));
                 prod.setUnitPrice(rs.getDouble("unit_price"));
                 prod.setQty(rs.getInt("quantity"));
+                prod.setWeight(rs.getDouble("weight"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,13 +103,14 @@ public class ProductDA {
                 supID = rs.getInt("Product_id");
             }
             ps = DatabaseTools.GetConnection().prepareStatement(
-                    "INSERT INTO product(product_id,product_line_id,product_name,unit_price,quantity)values(?,?,?,?,?)"
+                    "INSERT INTO product(product_id,product_line_id,product_name,unit_price,quantity,weight)values(?,?,?,?,?,?)"
             );
             ps.setInt(1, supID);
             ps.setInt(2, prod.getProductLineId());
             ps.setString(3, prod.getName());
             ps.setDouble(4, prod.getUnitPrice());
             ps.setInt(5, prod.getQty());
+            ps.setDouble(6, prod.getWeight());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,11 +122,12 @@ public class ProductDA {
     public boolean updateProduct(Product prod) {
         try{
             PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement(
-                    "UPDATE product set product_name = ?, unit_price = ?, quantity = ? where product_id = ?");
+                    "UPDATE product set product_name = ?, unit_price = ?, quantity = ?, weight = ? where product_id = ?");
             ps.setString(1, prod.getName());
             ps.setDouble(2, prod.getUnitPrice());
             ps.setInt(3, prod.getQty());
-            ps.setInt(4, prod.getId());
+            ps.setDouble(4, prod.getWeight());
+            ps.setInt(5, prod.getId());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
