@@ -134,9 +134,11 @@ public class OrderDA {
         }
 
         double orderPrice = 0;
+        double orderWeight = 0;
         ProductDA pda = new ProductDA();
         for(OrderDetails odt : od) {
             try {
+                orderWeight += odt.getQty() * (pda.getProductWeight(odt.getProductID()));
                 orderPrice += odt.getQty() * (pda.getProductPrice(odt.getProductID()));
                 ps = DatabaseTools.GetConnection().prepareStatement(
                         "INSERT INTO order_details(order_id,product_id,quantity)value(?,?,?)"
@@ -175,7 +177,7 @@ public class OrderDA {
             while(rs.next()) { shippingID = rs.getInt("shipping_id"); }
 
             ps = DatabaseTools.GetConnection().prepareStatement(
-                    "INSERT INTO shipping(shipping_id,order_id,shipping_date,expected_arrival_date,tracking_number)value(?,?,?,?,?)"
+                    "INSERT INTO shipping(shipping_id,order_id,shipping_date,expected_arrival_date,tracking_number, weight)value(?,?,?,?,?,?)"
             );
             ps.setInt(1,shippingID);
             ps.setInt(2,newOrderID);
@@ -187,6 +189,7 @@ public class OrderDA {
             ps.setDate(3, sqlDate);
             ps.setDate(4, newDate);
             ps.setString(5,null);
+            ps.setDouble(6, orderWeight);
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

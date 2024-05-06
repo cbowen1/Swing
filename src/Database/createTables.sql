@@ -98,6 +98,7 @@ CREATE TABLE shipping (
     Shipping_Date DATE,
     Expected_Arrival_Date DATE,
     Tracking_Number VARCHAR(100),
+    OrderWeight DECIMAL(3,2),
     Delivered BOOLEAN default FALSE,
     IsCancelled BOOLEAN default FALSE,
     FOREIGN KEY (Order_ID) REFERENCES `orders`(Order_ID)

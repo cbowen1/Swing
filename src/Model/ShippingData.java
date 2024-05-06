@@ -8,6 +8,7 @@ public class ShippingData {
     private Date shipDate;
     private Date estDate;
     private String tracking;
+    private double weight;
     private Boolean delivered;
     private Boolean isCancelled;
 
@@ -65,5 +66,13 @@ public class ShippingData {
 
     public void setCancelled(Boolean cancelled) {
         isCancelled = cancelled;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 }

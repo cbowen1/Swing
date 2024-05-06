@@ -73,6 +73,21 @@ public class ProductDA {
         return price;
     }
 
+    public Double getProductWeight(int id) {
+        Double weight = 0.0;
+        try{
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT weight FROM product where product_id = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                weight = rs.getDouble("weight");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return weight;
+    }
+
 
     public Product getProduct(int id) {
         Product prod = new Product();
