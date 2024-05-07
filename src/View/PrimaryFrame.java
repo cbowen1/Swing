@@ -1,5 +1,6 @@
 package View;
 
+import Database.DatabaseTools;
 import com.sun.tools.javac.Main;
 
 import javax.imageio.ImageIO;
@@ -37,6 +38,12 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         }
         parent = c;
         frame = new JFrame("Eclipse Collectibles LLC");
+
+        DatabaseTools dt = new DatabaseTools();
+        if(dt.GetConnection() == null) {
+            javax.swing.JOptionPane.showMessageDialog(frame.getGlassPane(),"ERROR! Could not connect to database");
+            System.exit(0);
+        }
         customerPanel = new CustomerUI(frame.getGlassPane());
         orderPanel = new OrderUI(frame.getGlassPane());
         productPanel = new ProductUI(frame.getGlassPane());

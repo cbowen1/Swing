@@ -1,6 +1,8 @@
 package Database;
 
 import javax.swing.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -22,8 +24,25 @@ public class DatabaseTools {
     public static void TowsonConnection() {
         String dbURL = "jdbc:mysql://triton.towson.edu:3360/cbowen3db";
         try {
-            String username = "cbowen3";
-            String password = "";
+            Scanner scan = new Scanner(System.in);
+            JTextField tf = new JTextField();
+
+            int okCxl = JOptionPane.showConfirmDialog(null, tf, "Enter your Towson username:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            String username;
+            if (okCxl == JOptionPane.OK_OPTION) {
+                username = new String(tf.getText());
+            } else {
+                return;
+            }
+
+            JPasswordField pf = new JPasswordField();
+            okCxl = JOptionPane.showConfirmDialog(null, pf, "Enter Towson Password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            String password = null;
+            if (okCxl == JOptionPane.OK_OPTION) {
+                password = new String(pf.getPassword());
+            } else {
+                return;
+            }
             conn = DriverManager.getConnection(dbURL, username, password);
         }catch (SQLException e) {
             e.printStackTrace();
@@ -31,20 +50,35 @@ public class DatabaseTools {
     }
 
     public static void OpenConnection() {
-        //TowsonConnection();
+        TowsonConnection();
         if (conn == null) {
-            System.out.println("COULD NOT CONNECT TO TOWSON, using LocalDB");
+            System.out.println("COULD NOT CONNECT TO TOWSON database, using Local");
             String dbURL = "jdbc:mysql://localhost:3306/" + schemaName;
             try {
                 Scanner scan = new Scanner(System.in);
-                var username = javax.swing.JOptionPane.showInputDialog("Please enter your username:");
-                //root
+
+                JTextField tf = new JTextField();
+                tf.addComponentListener(new ComponentAdapter() {
+                    public void componentShown(ComponentEvent ce) {
+
+                        tf.requestFocus();
+                    }
+                });
+                int okCxl = JOptionPane.showConfirmDialog(null, tf, "Enter your mysql username:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                String username;
+                if (okCxl == JOptionPane.OK_OPTION) {
+                    username = new String(tf.getText());
+                } else {
+                    return;
+                }
 
                 JPasswordField pf = new JPasswordField();
-                int okCxl = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                okCxl = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
                 String password = null;
                 if (okCxl == JOptionPane.OK_OPTION) {
                     password = new String(pf.getPassword());
+                } else {
+                    return;
                 }
                 conn = DriverManager.getConnection(dbURL, username, password);
             }catch (SQLException e) {
