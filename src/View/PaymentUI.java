@@ -138,26 +138,22 @@ public class PaymentUI {
         JButton markPaid = new JButton("Mark Paid");
         markPaid.setSize(25,25);
         editPanel.add(markPaid);
+
+        markPaid.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         /*
-
-
         addTracking = new JButton("Add Tracking");
         addTracking.setEnabled(false);
 
         orderDelivered = new JButton("Delivered");
         orderDelivered.setEnabled(false);
 
-        addTracking.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                var name = javax.swing.JOptionPane.showInputDialog("Tracking Number:");
-                if(!sda.shipIt(shippingID, name, orderId)) {
-                    error("ERROR! Tracking information not updated");
-                } else {
-                    success("Success! Tracking number added to order");
-                }
-            }
-        });
+
 
         orderDelivered.addActionListener(new ActionListener() {
             @Override

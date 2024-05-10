@@ -452,9 +452,10 @@ public class OrderUI {
     }
 
     private void deleteOrder(String id) {
-        if(!orderDA.removeOrder(Integer.valueOf(id))) {
+        String response = orderDA.removeOrder(Integer.valueOf(id));
+        if(response == "false") {
             JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Order not cancelled");
-        } else {
+        } else if(response == "true"){
             success("Success! Order successfully cancelled");
         }
     }
