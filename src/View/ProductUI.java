@@ -35,6 +35,7 @@ public class ProductUI {
         init();
         productDA = new ProductDA();
         prodLineDA = new ProductLineDA();
+        productDA.setParent(this.getRootComponent());
         table_update();
     }
 

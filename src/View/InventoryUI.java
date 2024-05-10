@@ -30,6 +30,7 @@ public class InventoryUI {
         this.parent = parent;
         init();
         inventoryDA = new InventoryDA();
+        inventoryDA.setParent(this.getRootComponent());
         table_update();
     }
 

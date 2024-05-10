@@ -25,6 +25,7 @@ public class CustomerUI {
         this.parent = parent;
         init();
         customerDA = new CustomerDA();
+        customerDA.setParent(this.getRootComponent());
         table_update();
     }
 

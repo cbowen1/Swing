@@ -52,6 +52,8 @@ public class OrderUI {
         orderDA.setParent(parent);
         custDA = new CustomerDA();
         prodDA = new ProductDA();
+        prodDA.setParent(this.getRootComponent());
+        custDA.setParent(this.getRootComponent());
         table_update();
     }
 

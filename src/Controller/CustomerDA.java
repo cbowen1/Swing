@@ -5,14 +5,20 @@ import Model.Customer;
 
 import javax.swing.*;
 import javax.xml.crypto.Data;
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class CustomerDA {
     private ArrayList<Customer> customerList;
 
+    Component parent;
     public CustomerDA() {
         //populateCustomerList();
+    }
+
+    public void setParent(Component parent) {
+        this.parent = parent;
     }
 
     public ArrayList<Customer> getCustomerList() {
@@ -118,7 +124,7 @@ public class CustomerDA {
 
     public String removeCustomer(int id) {
         try{
-            int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to delete the customer", "Warning", JOptionPane.YES_NO_OPTION);
+            int dialogResult = JOptionPane.showConfirmDialog(parent, "Do you want to delete the customer", "Warning", JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION) {
                 PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE customer set isActive = FALSE where customer_id = ?");
                 ps.setInt(1, id);

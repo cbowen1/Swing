@@ -4,16 +4,21 @@ import Database.DatabaseTools;
 import Model.Supplier;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class SupplierDA {
     private ArrayList<Supplier> supList;
+    Component parent;
 
     public SupplierDA() {
         //populateOrderList();
     }
 
+    public void setParent(Component parent) {
+        this.parent = parent;
+    }
     public ArrayList<Supplier> getSupList() {
         populateOrderList();
         return supList;
@@ -91,7 +96,7 @@ public class SupplierDA {
 
     public String removeSupplier(int id) {
         try {
-            int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to Delete the supplier","Warning",JOptionPane.YES_NO_OPTION);
+            int dialogResult = JOptionPane.showConfirmDialog (parent, "Do you want to Delete the supplier","Warning",JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION){
                 PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("DELETE FROM supplier where supplier_id = ?");
                 ps.setInt(1, id);

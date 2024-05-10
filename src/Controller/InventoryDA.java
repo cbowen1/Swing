@@ -4,11 +4,14 @@ import Database.DatabaseTools;
 import Model.Inventory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class InventoryDA {
     private ArrayList<Inventory> inventoryList;
+
+    Component parent;
 
     public InventoryDA() {
         //populateOrderList();
@@ -17,6 +20,10 @@ public class InventoryDA {
     public ArrayList<Inventory> getOrderList() {
         populateOrderList();
         return inventoryList;
+    }
+
+    public void setParent(Component parent) {
+        this.parent = parent;
     }
 
     private void populateOrderList() {
@@ -98,7 +105,7 @@ public class InventoryDA {
 
     public String removeInventory(int id) {
         try {
-            int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to delete the inventory","Warning",JOptionPane.YES_NO_OPTION);
+            int dialogResult = JOptionPane.showConfirmDialog (parent, "Do you want to delete the inventory","Warning",JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION){
                 PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("DELETE FROM inventory where inventory_id = ?");
                 ps.setInt(1, id);

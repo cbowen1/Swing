@@ -5,11 +5,14 @@ import Model.Inventory;
 import Model.Product;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class ProductDA {
     private ArrayList<Product> productList;
+
+    Component parent;
 
     public ProductDA() {
         //populateOrderList();
@@ -18,6 +21,10 @@ public class ProductDA {
     public ArrayList<Product> getOrderList() {
         populateOrderList();
         return productList;
+    }
+
+    public void setParent(Component parent) {
+        this.parent = parent;
     }
 
     public ArrayList<Product> getAvailableOrderList() {
@@ -177,7 +184,7 @@ public class ProductDA {
 
     public String removeProduct(int id) {
         try {
-            int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to delete the product","Warning",JOptionPane.YES_NO_OPTION);
+            int dialogResult = JOptionPane.showConfirmDialog (parent, "Do you want to delete the product","Warning",JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION){
                 PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("DELETE FROM product where product_id = ?");
                 ps.setInt(1, id);

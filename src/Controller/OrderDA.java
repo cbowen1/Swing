@@ -221,7 +221,7 @@ public class OrderDA {
 
         try{
             //TODO: Find all showConfirmDialog and see how CANCEL returns, should NOT be success/error. but just return
-            int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to cancel this order?","Warning",JOptionPane.YES_NO_OPTION);
+            int dialogResult = JOptionPane.showConfirmDialog (parent, "Do you want to cancel this order?","Warning",JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION){
                 Order ord = getOrder(id);
                 PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE orders set STATUS = ? where order_id = ?");

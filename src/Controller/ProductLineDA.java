@@ -6,15 +6,21 @@ import Model.Product_Line;
 import View.ProductLineUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class ProductLineDA {
     private ArrayList<Product_Line> plList;
 
+    Component parent;
+
     public ProductLineDA() {
     }
 
+    public void setParent(Component parent) {
+        this.parent = parent;
+    }
     public ArrayList<Product_Line> getProductLineList() {
         populateProductLineList();
         return plList;
@@ -103,7 +109,7 @@ public class ProductLineDA {
 
     public String removeProductLine(int id) {
         try {
-            int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to Delete the productLine","Warning",JOptionPane.YES_NO_OPTION);
+            int dialogResult = JOptionPane.showConfirmDialog (parent, "Do you want to Delete the productLine","Warning",JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION){
                 PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("DELETE FROM product_line where product_lineID = ?");
                 ps.setInt(1, id);
