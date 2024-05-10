@@ -190,9 +190,10 @@ public class SupplierUI {
     }
 
     private void deleteSupplier(String id) {
-        if(!supDA.removeSupplier(Integer.valueOf(id))) {
+        String response = supDA.removeSupplier(Integer.valueOf(id));
+        if(response == "false") {
             JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Supplier not removed");
-        } else {
+        } else if(response == "true") {
             success("Success! Supplier removed successfully");
         }
     }

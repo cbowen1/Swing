@@ -13,6 +13,7 @@ import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -119,6 +120,9 @@ public class ProductUI {
 
         NumberFormat curFormat = NumberFormat.getCurrencyInstance(new Locale("en", "US"));
         NumberFormatter curFormatter = new NumberFormatter(curFormat);
+        DecimalFormat decimal = new DecimalFormat();
+        decimal.setDecimalSeparatorAlwaysShown(true);
+        decimal.applyPattern("###,###.00");
 
         curFormatter.setMinimum(0.0);
         curFormatter.setAllowsInvalid(false);
@@ -127,17 +131,11 @@ public class ProductUI {
 
         NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);
-        NumberFormatter decimal = new NumberFormatter(format);
 
         formatter.setValueClass(Integer.class);
         formatter.setMinimum(0);
         formatter.setMaximum(Integer.MAX_VALUE);
         formatter.setAllowsInvalid(false);
-
-        decimal.setValueClass(Double.class);
-        decimal.setMinimum(0.1);
-        decimal.setMaximum(Double.MAX_VALUE);
-        decimal.setAllowsInvalid(false);
 
         JFormattedTextField txtQty = new JFormattedTextField(formatter);
         JFormattedTextField txtWeight = new JFormattedTextField(decimal);
@@ -165,6 +163,7 @@ public class ProductUI {
             //New Product Creation
             txtProdId.setEnabled(false);
             txtUnitPrice.setValue(0.00);
+            txtWeight.setValue(1.00);
         } else {
             txtProdId.setEnabled(false);
             Product prod = productDA.getProduct(productID);
@@ -220,9 +219,10 @@ public class ProductUI {
     }
 
     private void deleteProduct(String id) {
-        if(!productDA.removeProduct(Integer.valueOf(id))) {
+        String response = productDA.removeProduct(Integer.valueOf(id));
+        if(response == "false") {
             JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Product not removed");
-        } else {
+        } else if(response == "true") {
             success("Success! Product removed successfully");
         }
     }

@@ -194,9 +194,10 @@ public class ProductLineUI {
     }
 
     private void deleteProductLine(String id) {
-        if(!plDA.removeProductLine(Integer.valueOf(id))) {
+        String response = plDA.removeProductLine(Integer.valueOf(id));
+        if(response == "false") {
             JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Product Line not removed");
-        } else {
+        } else if(response == "true") {
             success("Success! Product Line removed successfully");
         }
     }

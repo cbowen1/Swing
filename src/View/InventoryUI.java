@@ -192,9 +192,10 @@ public class InventoryUI {
     }
 
     private void deleteInventory(String id) {
-        if(!inventoryDA.removeInventory(Integer.valueOf(id))) {
+        String response = inventoryDA.removeInventory(Integer.valueOf(id));
+        if(response == "false") {
             JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Inventory not removed");
-        } else {
+        } else if(response == "true") {
             success("Success! Inventory removed successfully");
         }
     }

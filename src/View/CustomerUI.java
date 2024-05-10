@@ -205,9 +205,10 @@ public class CustomerUI {
 
     private  boolean deleteCustomer(String id) {
         try{
-            if(!customerDA.removeCustomer(Integer.valueOf(id))) {
+            String response = customerDA.removeCustomer(Integer.valueOf(id));
+            if(response == "false") {
                 JOptionPane.showMessageDialog(this.getRootComponent(), "ERROR! Customer could not be deleted");
-            } else {
+            } else if(response =="true") {
                 success("Success! Customer has successfully disabled");
             }
         } catch (Exception e) {

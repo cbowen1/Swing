@@ -99,19 +99,21 @@ public class CustomerDA {
         return true;
     }
 
-    public boolean removeCustomer(int id) {
+    public String removeCustomer(int id) {
         try{
             int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to delete the customer", "Warning", JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION) {
                 PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE customer set isActive = FALSE where customer_id = ?");
                 ps.setInt(1, id);
                 ps.executeUpdate();
+            } else {
+                return null;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return "false";
         }
-        return true;
+        return "true";
     }
 
     public boolean updateCustomer(Customer cust) {

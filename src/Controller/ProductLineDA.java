@@ -101,19 +101,21 @@ public class ProductLineDA {
         return true;
     }
 
-    public boolean removeProductLine(int id) {
+    public String removeProductLine(int id) {
         try {
             int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to Delete the productLine","Warning",JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION){
                 PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("DELETE FROM product_line where product_lineID = ?");
                 ps.setInt(1, id);
                 ps.executeUpdate();
+            } else {
+                return null;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return "false";
         }
-        return true;
+        return "true";
     }
 
 
