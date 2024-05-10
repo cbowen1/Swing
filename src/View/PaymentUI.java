@@ -135,9 +135,12 @@ public class PaymentUI {
         gbc.fill = GridBagConstraints.BOTH;
         payPanel.add(editPanel, gbc);
 
-        JButton newProdLine = new JButton("Update Shipping Info");
-        newProdLine.setSize(25,25);
-/*
+        JButton markPaid = new JButton("Mark Paid");
+        markPaid.setSize(25,25);
+        editPanel.add(markPaid);
+        /*
+
+
         addTracking = new JButton("Add Tracking");
         addTracking.setEnabled(false);
 
