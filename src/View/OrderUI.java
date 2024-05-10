@@ -8,11 +8,9 @@ import Model.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -41,9 +39,13 @@ public class OrderUI {
     ArrayList<OrderDetails> detailList;
     private Boolean showDropdown = true;
     boolean newCustomer = false;
+    JTextField filterField;
+    DefaultTableModel tm;
 
     public OrderUI(Component parent) {
         this.parent = parent;
+        filterField = new JTextField();
+        filterField.setColumns(25);
         init();
 
         orderDA = new OrderDA();
@@ -56,7 +58,7 @@ public class OrderUI {
     protected void table_update() {
         ArrayList<Order> orderList = orderDA.getOrderList();
 
-        DefaultTableModel tm = new DefaultTableModel() {
+        tm = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -71,20 +73,42 @@ public class OrderUI {
             }
         };
         tm.addColumn("Order ID");
-        tm.addColumn("Customer ID");
+        tm.addColumn("Customer");
         tm.addColumn("Payment ID");
         tm.addColumn("Current Status");
         tm.addColumn("Order Date");
 
         orderTable.setModel(tm);
+        //Call this initially so we have data
+        filterTableByStatus(filterField.getText().trim(),orderList);
+        filterField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                filterTableByStatus(filterField.getText().trim(),orderList);
+            }
+        });
+    }
+
+    private void filterTableByStatus(String selectedStatus, ArrayList<Order> orderList) {
+        tm.setRowCount(0);
         for(Order o: orderList) {
-            Vector<Object> rowObj = new Vector<>(3);
-            rowObj.add(0, o.getOrderID());
-            rowObj.add(1, o.getCustomerID());
-            rowObj.add(2, o.getPaymentID());
-            rowObj.add(3, o.getStatus());
-            rowObj.add(4, o.getOrder_date());
-            tm.addRow(rowObj);
+            if (selectedStatus.isEmpty()
+                    || o.getStatus().toLowerCase().contains(selectedStatus.toLowerCase())
+                    || String.valueOf(o.getOrderID()).contains(selectedStatus.toLowerCase())
+            ) {
+                Vector<Object> rowObj = new Vector<>(3);
+                rowObj.add(0, o.getOrderID());
+                //rowObj.add(1, o.getCustomerID());
+                CustomerDA cda = new CustomerDA();
+                String customerName = cda.getCustomerName(o.getCustomerID());
+                if(customerName == null)
+                    customerName = String.valueOf(o.getCustomerID());
+                rowObj.add(1,customerName);
+                rowObj.add(2, o.getPaymentID());
+                rowObj.add(3, o.getStatus());
+                rowObj.add(4, o.getOrder_date());
+                tm.addRow(rowObj);
+            }
         }
     }
 
@@ -516,6 +540,8 @@ public class OrderUI {
         JButton newSupplier  = new JButton("New Order");
         newSupplier.setSize(25,25);
         newSupplier.addActionListener(e -> moreInfo(null));
+        //editPanel.add(filterField);
+        //gbc.gridx++;
         editPanel.add(newSupplier);
     }
 

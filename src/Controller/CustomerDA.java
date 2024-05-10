@@ -47,6 +47,23 @@ public class CustomerDA {
         }
     }
 
+    public String getCustomerName(int id) {
+        String name = null;
+        try{
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT customer_lName,customer_fName FROM customer where customer_id = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String lname = rs.getString("customer_lName");
+                String fName = rs.getString("customer_fName");
+                name = lname + ", " + fName;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return name;
+    }
+
     public Customer getCustomer(int id) {
         Customer cust = new Customer();
         try{
