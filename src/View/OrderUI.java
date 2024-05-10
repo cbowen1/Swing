@@ -291,6 +291,7 @@ public class OrderUI {
         JButton save = new JButton("Save");
         JButton delete = new JButton("Cancel Order");
         JButton editOrderDetails = new JButton("Edit Order Details");
+        editOrderDetails.setVisible(false);
 
         if(custCombobox == null) {
             save.addActionListener(e -> updateOrder(txtOrderId.getText(),cust,txtOrderDate.getText()));
@@ -476,9 +477,12 @@ public class OrderUI {
             DefaultTableModel m = (DefaultTableModel) detailTable.getModel();
             for (int i = 0; i < m.getRowCount(); i++) {
                 String qty = "1";
+                Object obj = m.getValueAt(i,1);
+
                 try{
-                    qty = (String) m.getValueAt(i, 1);
+                    qty = obj.toString();
                 } catch (Exception e) {
+                    System.out.println("ERROR....why");
                     //Ignore, default to 1
                 }
                 updatedList.add(new OrderDetails(id,detailList.get(i).getProductID(),Integer.valueOf(qty)));

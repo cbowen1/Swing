@@ -52,7 +52,7 @@ public class OrderDA {
         orderList = new ArrayList<>();
 
         try {
-            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM orders order by Order_Date desc");
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM orders order by Order_Date desc, Order_ID desc");
             ResultSet rs = ps.executeQuery();
 
             Order order;
@@ -177,7 +177,7 @@ public class OrderDA {
             while(rs.next()) { shippingID = rs.getInt("shipping_id"); }
 
             ps = DatabaseTools.GetConnection().prepareStatement(
-                    "INSERT INTO shipping(shipping_id,order_id,shipping_date,expected_arrival_date,tracking_number, weight)value(?,?,?,?,?,?)"
+                    "INSERT INTO shipping(shipping_id,order_id,shipping_date,expected_arrival_date,tracking_number,orderWeight)value(?,?,?,?,?,?)"
             );
             ps.setInt(1,shippingID);
             ps.setInt(2,newOrderID);
