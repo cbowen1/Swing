@@ -21,11 +21,13 @@ public class PaymentUI {
     private JScrollPane payScrollPane;
     private JTable payTable;
     PaymentDA pda;
-
+    JButton markPaid;
     Component parent;
+    int paymentID;
 
     public PaymentUI(Component parent) {
         this.parent = parent;
+        markPaid = new JButton("Mark Paid");
         init();
         pda = new PaymentDA();
         table_update();
@@ -86,21 +88,13 @@ public class PaymentUI {
 
                 JTable target = (JTable) e.getSource();
                 int row = target.getSelectedRow();
-                //String tracking = (String) target.getValueAt(row,4);
-                /*shippingID = (int) target.getValueAt(row, 0);
-                orderId = (int) target.getValueAt(row, 1);
-                if(tracking == null) {
-                    addTracking.setEnabled(true);
-                    orderDelivered.setEnabled(false);
+                String status = (String) target.getValueAt(row, 3);
+                paymentID = (int) target.getValueAt(row, 0);
+                if(status.equals("NEW")) {
+                    markPaid.setEnabled(true);
                 } else {
-                    addTracking.setEnabled(false);
-                    if((String) target.getValueAt(row,5) == "false") {
-                        orderDelivered.setEnabled(true);
-                    }
-
+                    markPaid.setEnabled(false);
                 }
-                //moreInfo((int) target.getValueAt(row,0));
-                 */
             }
         });
 
@@ -135,14 +129,20 @@ public class PaymentUI {
         gbc.fill = GridBagConstraints.BOTH;
         payPanel.add(editPanel, gbc);
 
-        JButton markPaid = new JButton("Mark Paid");
         markPaid.setSize(25,25);
         editPanel.add(markPaid);
 
         markPaid.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                int result = JOptionPane.showConfirmDialog(parent, "Do you want to mark this order as PAID", "Order Update",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(result == JOptionPane.YES_OPTION) {
+                    if(!pda.updatePaymentStatus("PAID", paymentID)) {
+                        error("ERROR! Payment Information Not Updated");
+                    } else {
+                        success("Success! Order Marked as PAID");
+                    }
+                }
             }
         });
 
@@ -159,11 +159,7 @@ public class PaymentUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //var name = javax.swing.JOptionPane.showInputDialog("Tracking Number:");
-                if(!sda.delivered(shippingID, orderId)) {
-                    error("ERROR! Delivery Status Updated");
-                } else {
-                    success("Success! Delivery Status Updated");
-                }
+
             }
         });
 

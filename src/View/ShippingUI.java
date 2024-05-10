@@ -1,6 +1,9 @@
 package View;
 
+import Controller.OrderDA;
+import Controller.PaymentDA;
 import Controller.ShipDA;
+import Model.Order;
 import Model.Product_Line;
 import Model.ShippingData;
 
@@ -23,11 +26,15 @@ public class ShippingUI {
     ShipDA sda;
     Component parent;
     int shippingID, orderId;
-
+    Order ord;
+    OrderDA oda;
     JButton addTracking, orderDelivered;
+    int paymentID;
 
     public ShippingUI(Component parent) {
         this.parent = parent;
+        ord = new Order();
+        oda = new OrderDA();
         init();
         sda = new ShipDA();
         table_update();
@@ -100,6 +107,8 @@ public class ShippingUI {
                 String tracking = (String) target.getValueAt(row,4);
                 shippingID = (int) target.getValueAt(row, 0);
                 orderId = (int) target.getValueAt(row, 1);
+                ord = oda.getOrder(orderId);
+                paymentID = ord.getPaymentID();
                 if(tracking == null) {
                     addTracking.setEnabled(true);
                     orderDelivered.setEnabled(false);
@@ -145,6 +154,12 @@ public class ShippingUI {
         addTracking.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                PaymentDA pda = new PaymentDA();
+                String status = pda.getPaymentStatus(paymentID);
+                if(!status.equals("PAID")) {
+                    JOptionPane.showMessageDialog(parent, "ERROR! Order has not been paid yet.\nCannot add shipping until payment is complete");
+                    return;
+                }
                 var name = javax.swing.JOptionPane.showInputDialog("Tracking Number:");
                 if(!sda.shipIt(shippingID, name, orderId)) {
                     error("ERROR! Tracking information not updated");
