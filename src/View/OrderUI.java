@@ -47,6 +47,7 @@ public class OrderUI {
         init();
 
         orderDA = new OrderDA();
+        orderDA.setParent(parent);
         custDA = new CustomerDA();
         prodDA = new ProductDA();
         table_update();
@@ -128,7 +129,7 @@ public class OrderUI {
         }
 
         infoFrame = new JFrame("Order Details");
-        infoFrame.setMinimumSize(new Dimension(800,600));
+        infoFrame.setMinimumSize(new Dimension(800,700));
         infoFrame.setResizable(false);
         infoFrame.setLayout(new GridBagLayout());
 
@@ -392,7 +393,7 @@ public class OrderUI {
         itemList.add(scrollPane);
 
         itemList.pack();
-        itemList.setLocationRelativeTo(null);
+        itemList.setLocationRelativeTo(this.getRootComponent());
         itemList.setVisible(true);
     }
 

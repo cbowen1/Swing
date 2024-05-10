@@ -9,6 +9,7 @@ import com.mysql.cj.x.protobuf.MysqlxCrud;
 import javax.swing.*;
 import javax.xml.crypto.Data;
 import javax.xml.transform.Result;
+import java.awt.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -19,8 +20,14 @@ public class OrderDA {
     private ArrayList<Order> orderList;
     private ArrayList<OrderDetails> orderDetails;
     private int recordCursor;
+    private Component parent;
 
     public OrderDA() {
+        parent = null;
+    }
+
+    public void setParent(Component parent) {
+        this.parent = parent;
     }
 
     public ArrayList<Order> getOrderList() {
@@ -141,9 +148,9 @@ public class OrderDA {
             System.out.println("Attempting to order " + odt.getQty() + " " + odt.getProductID());
             Product pr = pda.getProduct(odt.getProductID());
             if(pr.getQty() < odt.getQty()) {
+                String message = pr.getName() + ": Attempting to over-order, setting order quantity (" + odt.getQty() + ") to remaining inventory quantity (" + pr.getQty() + ")";
                 odt.setQty(pr.getQty());
-                String message = pr.getName() + ": Attempting to over-order, setting order quantity ("+odt.getQty()+") to remaining inventory quantity("+pr.getQty()+")";
-                JOptionPane.showMessageDialog(null, message);
+                JOptionPane.showMessageDialog(parent, message);
             }
             try {
                 orderWeight += odt.getQty() * (pda.getProductWeight(odt.getProductID()));
