@@ -20,6 +20,30 @@ public class ProductDA {
         return productList;
     }
 
+    public ArrayList<Product> getAvailableOrderList() {
+        ArrayList<Product> availableItems = new ArrayList<>();
+        try {
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM product where quantity > 0");
+            ResultSet rs = ps.executeQuery();
+
+            Product pro;
+            while(rs.next()) {
+                pro = new Product();
+                pro.setId(rs.getInt("Product_ID"));
+                pro.setProductLineId(rs.getInt("Product_Line_ID"));
+                pro.setName(rs.getString("Product_Name"));
+                pro.setUnitPrice(rs.getDouble("Unit_Price"));
+                pro.setQty(rs.getInt("Quantity"));
+                pro.setWeight(rs.getDouble("Weight"));
+                availableItems.add(pro);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return availableItems;
+    }
+
     private void populateOrderList() {
         productList = new ArrayList<Product>();
 

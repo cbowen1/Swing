@@ -342,7 +342,7 @@ public class OrderUI {
 
     private void showInventory() {
         prodDA = new ProductDA();
-        ArrayList<Product> prodList = prodDA.getOrderList();
+        ArrayList<Product> prodList = prodDA.getAvailableOrderList();
         JFrame itemList = new JFrame("Current Inventory");
         JScrollPane scrollPane;
         JTable itemListTable = new JTable();

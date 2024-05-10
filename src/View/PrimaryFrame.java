@@ -40,6 +40,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         frame = new JFrame("Eclipse Collectibles LLC");
 
         DatabaseTools dt = new DatabaseTools();
+        dt.setParent(c);
         if(dt.GetConnection() == null) {
             javax.swing.JOptionPane.showMessageDialog(frame.getGlassPane(),"ERROR! Could not connect to database");
             System.exit(0);

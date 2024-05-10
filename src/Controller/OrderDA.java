@@ -92,6 +92,7 @@ public class OrderDA {
 
     public boolean addOrder(Order o, ArrayList<OrderDetails> od) {
         //TODO: Most of these queries should be handled by TRIGGERS in the database to create rows
+        //TODO: We need a way to roll back changes if there's an issue
         PreparedStatement ps;
         int newOrderID = 0;
         int shippingID = 0;
@@ -137,6 +138,13 @@ public class OrderDA {
         double orderWeight = 0;
         ProductDA pda = new ProductDA();
         for(OrderDetails odt : od) {
+            System.out.println("Attempting to order " + odt.getQty() + " " + odt.getProductID());
+            Product pr = pda.getProduct(odt.getProductID());
+            if(pr.getQty() < odt.getQty()) {
+                odt.setQty(pr.getQty());
+                String message = pr.getName() + ": Attempting to over-order, setting order quantity ("+odt.getQty()+") to remaining inventory quantity("+pr.getQty()+")";
+                JOptionPane.showMessageDialog(null, message);
+            }
             try {
                 orderWeight += odt.getQty() * (pda.getProductWeight(odt.getProductID()));
                 orderPrice += odt.getQty() * (pda.getProductPrice(odt.getProductID()));

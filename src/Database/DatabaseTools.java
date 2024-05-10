@@ -1,6 +1,7 @@
 package Database;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.sql.Connection;
@@ -10,6 +11,8 @@ import java.util.Scanner;
 
 public class DatabaseTools {
     private static Connection conn =  null;
+
+    private static Component parent = null;
     private static final String schemaName = "Eclipse_Collectibles";
     public static void DatabaseTools() {
     }
@@ -21,13 +24,17 @@ public class DatabaseTools {
         return conn;
     }
 
+    public void setParent(Component parent){
+        this.parent = parent;
+    }
+
     public static void TowsonConnection() {
         String dbURL = "jdbc:mysql://triton.towson.edu:3360/cbowen3db";
         try {
             Scanner scan = new Scanner(System.in);
             JTextField tf = new JTextField();
 
-            int okCxl = JOptionPane.showConfirmDialog(null, tf, "Enter your Towson username:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            int okCxl = JOptionPane.showConfirmDialog(parent, tf, "Enter your Towson username:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             String username;
             if (okCxl == JOptionPane.OK_OPTION) {
                 username = new String(tf.getText());
@@ -36,7 +43,7 @@ public class DatabaseTools {
             }
 
             JPasswordField pf = new JPasswordField();
-            okCxl = JOptionPane.showConfirmDialog(null, pf, "Enter Towson Password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            okCxl = JOptionPane.showConfirmDialog(parent, pf, "Enter Towson Password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             String password = null;
             if (okCxl == JOptionPane.OK_OPTION) {
                 password = new String(pf.getPassword());
@@ -64,7 +71,7 @@ public class DatabaseTools {
                         tf.requestFocus();
                     }
                 });
-                int okCxl = JOptionPane.showConfirmDialog(null, tf, "Enter your mysql username:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                int okCxl = JOptionPane.showConfirmDialog(parent, tf, "Enter your mysql username:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
                 String username;
                 if (okCxl == JOptionPane.OK_OPTION) {
                     username = new String(tf.getText());
@@ -73,7 +80,7 @@ public class DatabaseTools {
                 }
 
                 JPasswordField pf = new JPasswordField();
-                okCxl = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                okCxl = JOptionPane.showConfirmDialog(parent, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
                 String password = null;
                 if (okCxl == JOptionPane.OK_OPTION) {
                     password = new String(pf.getPassword());
