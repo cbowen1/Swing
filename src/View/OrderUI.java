@@ -254,7 +254,7 @@ public class OrderUI {
         dtm.addColumn("Item Name");
         dtm.addColumn("Qty");
         dtm.addColumn("Price");
-
+        JButton delete = new JButton("Cancel Order");
         if(orderID == null) {
             /*
             toggleDropdown();
@@ -266,9 +266,10 @@ public class OrderUI {
 */
             existCustPanel.removeAll();
             CustomerDA customerDA = new CustomerDA();
-            ArrayList<Customer> custList = customerDA.getCustomerList();
+            ArrayList<Customer> custList = customerDA.getActiveCustomerList();
             custCombobox = new JComboBox<>(custList.toArray(new Customer[0]));
             existCustPanel.add(custCombobox);
+
 
             txtOrderId.setEnabled(false);
             txtOrderStatus.setEnabled(false);
@@ -289,6 +290,8 @@ public class OrderUI {
             tableGBC.gridy++;
             tablePanel.add(deleteItem, tableGBC);
             detailList = new ArrayList<>();
+            deleteItem.setEnabled(false);
+            delete.setEnabled(false);
         } else {
             custCombobox = null;
             //Existing order, grab information
@@ -316,7 +319,6 @@ public class OrderUI {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1,2));
         JButton save = new JButton("Save");
-        JButton delete = new JButton("Cancel Order");
         JButton editOrderDetails = new JButton("Edit Order Details");
         editOrderDetails.setVisible(false);
 

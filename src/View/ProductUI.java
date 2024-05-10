@@ -159,12 +159,13 @@ public class ProductUI {
         JComboBox<Product_Line> prodLineComboBox = new JComboBox<>(prodLineList.toArray(new Product_Line[0]));
         infoFrame.add(new JLabel("Product Line:"));
         infoFrame.add(prodLineComboBox);
-
+        JButton delete = new JButton("Delete");
         if(productID == null) {
             //New Product Creation
             txtProdId.setEnabled(false);
             txtUnitPrice.setValue(0.00);
             txtWeight.setValue(1.00);
+            delete.setEnabled(false);
         } else {
             txtProdId.setEnabled(false);
             Product prod = productDA.getProduct(productID);
@@ -182,7 +183,7 @@ public class ProductUI {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1,2));
         JButton save = new JButton("Save");
-        JButton delete = new JButton("Delete");
+
 
         save.addActionListener(e -> updateProduct(txtProdId.getText(), txtProdName.getText(),(double) txtUnitPrice.getValue(),(int)txtQty.getValue(), (Product_Line) prodLineComboBox.getSelectedItem(), (double) txtWeight.getValue()));
         delete.addActionListener(e -> deleteProduct(txtProdId.getText()));

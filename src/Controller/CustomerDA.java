@@ -26,11 +26,42 @@ public class CustomerDA {
         return customerList;
     }
 
-    private void populateCustomerList() {
+    public ArrayList<Customer> getActiveCustomerList() {
+        populateActiveCustomerList();
+        return customerList;
+    }
+
+    private void populateActiveCustomerList() {
         customerList = new ArrayList<Customer>();
 
         try {
             PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM customer WHERE isActive = TRUE order by Customer_lName");
+            ResultSet rs = ps.executeQuery();
+
+            Customer cust;
+            while(rs.next()) {
+                cust = new Customer();
+                cust.setCustomerID(rs.getInt("Customer_ID"));
+                cust.setCustomerName_first(rs.getString("Customer_fName"));
+                cust.setCustomerName_last(rs.getString("Customer_lName"));
+                cust.setEmail(rs.getString("email"));
+                cust.setStreet_address(rs.getString("street_address"));
+                cust.setCity(rs.getString("city"));
+                cust.setState(rs.getString("state"));
+                cust.setZip(rs.getString("zipCode"));
+                cust.setFavoriteTeam(rs.getString("favoriteTeam"));
+                customerList.add(cust);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void populateCustomerList() {
+        customerList = new ArrayList<Customer>();
+
+        try {
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM customer order by Customer_lName");
             ResultSet rs = ps.executeQuery();
 
             Customer cust;

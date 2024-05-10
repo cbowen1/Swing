@@ -116,6 +116,7 @@ public class CustomerUI {
         JTextField txtTeam = new JTextField();
 
         JLabel idLabel = new JLabel("ID:");
+        JLabel activeLabel = new JLabel("Active:");
         txtCustID.setEnabled(false);
         txtCustStreet.setColumns(25);
 
@@ -137,12 +138,14 @@ public class CustomerUI {
         infoFrame.add(txtCustZip);
         infoFrame.add(new JLabel("Favorite Team:"));
         infoFrame.add(txtTeam);
-        infoFrame.add(new JLabel("Active"));
+        infoFrame.add(activeLabel);
         infoFrame.add(txtCustActive);
-
+        JButton delete = new JButton("Delete");
         if(customerID == null) {
             //This is a new user
-            txtCustActive.setEnabled(false);
+            txtCustActive.setVisible(false);
+            activeLabel.setVisible(false);
+            delete.setEnabled(false);
         } else {
             //Get the current user and fill information in
             Customer cust = customerDA.getCustomer(customerID);
@@ -162,7 +165,7 @@ public class CustomerUI {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1,2));
         JButton save = new JButton("Save");
-        JButton delete = new JButton("Delete");
+
 
         save.addActionListener(e -> updateCustomer(txtCustID.getText(),txtCustFirst.getText(),txtCustLast.getText(), txtCustEmail.getText(),
                 txtCustStreet.getText(), txtCustCity.getText(),txtCustState.getText(), txtCustZip.getText(), txtTeam.getText()));

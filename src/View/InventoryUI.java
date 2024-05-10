@@ -160,9 +160,10 @@ public class InventoryUI {
         JComboBox<Supplier> optInventorySupplier = new JComboBox<>(supList.toArray(new Supplier[0]));
         infoFrame.add(new JLabel("Supplier:"));
         infoFrame.add(optInventorySupplier);
-
+        JButton delete = new JButton("Delete");
         if(inventoryID == null) {
             //This is a NEW inventory
+            delete.setEnabled(false);
         } else {
             //This is existing inventory
             Inventory inv = inventoryDA.getInventory(inventoryID);
@@ -176,7 +177,7 @@ public class InventoryUI {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1,2));
         JButton save = new JButton("Save");
-        JButton delete = new JButton("Delete");
+
 
         save.addActionListener(e -> updateInventory(txtInventoryID.getText(), txtInventoryName.getText(),(int) txtInventoryQty.getValue(),(Supplier) optInventorySupplier.getSelectedItem()));
         delete.addActionListener(e -> deleteInventory(txtInventoryID.getText()));

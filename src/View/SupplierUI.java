@@ -28,6 +28,7 @@ public class SupplierUI {
         this.parent = parent;
         init();
         supDA = new SupplierDA();
+        supDA.setParent(this.getRootComponent());
         table_update();
     }
 
@@ -124,12 +125,14 @@ public class SupplierUI {
         infoFrame.add(txtSupplierEmail);
         infoFrame.add(new JLabel("Phone:"));
         infoFrame.add(txtSupplierPhone);
+        JButton delete = new JButton("Delete");
 
         if(supplierID == null) {
             //Hide the ID tags so the user doesn't have to enter ID in, that will be done by the DB
             idLabel.setVisible(false);
             txtSupplierID.setVisible(false);
             txtSupplierID.setText(null);
+            delete.setEnabled(false);
         } else {
             Supplier sup = supDA.getSupplier(supplierID);
             txtSupplierID.setText(Integer.toString(sup.getId()));
@@ -143,7 +146,7 @@ public class SupplierUI {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1,2));
         JButton save = new JButton("Save");
-        JButton delete = new JButton("Delete");
+
 
         save.addActionListener(e -> updateSupplier(txtSupplierID.getText(), txtSupplierName.getText(),txtSupplierWebsite.getText(),txtSupplierAddress.getText(),
                 txtSupplierEmail.getText(), txtSupplierPhone.getText()));

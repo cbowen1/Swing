@@ -139,8 +139,9 @@ public class ProductLineUI {
         JComboBox<Supplier> optSupplier = new JComboBox<>(supList.toArray(new Supplier[0]));
         infoFrame.add(new JLabel("Supplier:"));
         infoFrame.add(optSupplier);
-
+        JButton delete = new JButton("Delete");
         if(plID == null) {
+            delete.setEnabled(false);
         } else {
             //This is existing product line, fill information
             Product_Line pl = plDA.getProdLine(plID);
@@ -155,7 +156,7 @@ public class ProductLineUI {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1,2));
         JButton save = new JButton("Save");
-        JButton delete = new JButton("Delete");
+
 
         save.addActionListener(e -> updateProductLine(txtProdLineID.getText(), txtProdLineName.getText(),txtProdLineDesc.getText(),(double)txtProdLinePrice.getValue(),(Supplier) optSupplier.getSelectedItem()));
         delete.addActionListener(e -> deleteProductLine(txtProdLineID.getText()));
