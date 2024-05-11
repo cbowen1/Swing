@@ -59,7 +59,7 @@ public class OrderDA {
         orderList = new ArrayList<>();
 
         try {
-            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM orders order by Order_Date desc, Order_ID desc");
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM `order` order by Order_Date desc, Order_ID desc");
             ResultSet rs = ps.executeQuery();
 
             Order order;
@@ -81,7 +81,7 @@ public class OrderDA {
     public Order getOrder(int id) {
         Order order = new Order();
         try{
-            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * from orders where order_id = ?");
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * from `order` where order_id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
@@ -123,11 +123,11 @@ public class OrderDA {
         }
 
         try{
-            ps = DatabaseTools.GetConnection().prepareStatement("Select (max(Order_ID) + 1) as Order_Id from orders");
+            ps = DatabaseTools.GetConnection().prepareStatement("Select (max(Order_ID) + 1) as Order_Id from order");
             ResultSet rs = ps.executeQuery();
             while(rs.next()) { newOrderID = rs.getInt("Order_Id"); }
             ps = DatabaseTools.GetConnection().prepareStatement(
-                    "INSERT INTO orders(order_id,customer_id,payment_id,status,order_date)value(?,?,?,?,?)"
+                    "INSERT INTO order(order_id,customer_id,payment_id,status,order_date)value(?,?,?,?,?)"
             );
             ps.setInt(1,newOrderID);
             ps.setInt(2,o.getCustomerID());
@@ -224,7 +224,7 @@ public class OrderDA {
             int dialogResult = JOptionPane.showConfirmDialog (parent, "Do you want to cancel this order?","Warning",JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION){
                 Order ord = getOrder(id);
-                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE orders set STATUS = ? where order_id = ?");
+                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE order set STATUS = ? where order_id = ?");
                 ps.setString(1, "CANCELLED");
                 ps.setInt(2, id);
                 ps.executeUpdate();

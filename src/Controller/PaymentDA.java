@@ -63,7 +63,7 @@ public class PaymentDA {
 
             //TODO: This should update order from NEW to PAID. That should allow SHIPPING TO BE tracked after the fact
             /*
-            ps = DatabaseTools.GetConnection().prepareStatement("UPDATE orders set Status = ? where order_id = ?");
+            ps = DatabaseTools.GetConnection().prepareStatement("UPDATE order set Status = ? where order_id = ?");
             ps.setString(1, "SHIPPED");
             ps.setInt(2, orderID);
             ps.executeUpdate();

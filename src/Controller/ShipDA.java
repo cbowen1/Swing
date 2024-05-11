@@ -53,7 +53,7 @@ public class ShipDA {
             ps.executeUpdate();
 
             //After tracking updated we need to update the order status to SHIPPED
-            ps = DatabaseTools.GetConnection().prepareStatement("UPDATE orders set Status = ? where order_id = ?");
+            ps = DatabaseTools.GetConnection().prepareStatement("UPDATE order set Status = ? where order_id = ?");
             ps.setString(1, "SHIPPED");
             ps.setInt(2, orderID);
             ps.executeUpdate();
@@ -68,7 +68,7 @@ public class ShipDA {
     public Boolean delivered(int id, int orderID) {
         try {
             //After tracking updated we need to update the order status to SHIPPED
-            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE orders set Status = ? where order_id = ?");
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE order set Status = ? where order_id = ?");
             ps.setString(1, "COMPLETED");
             ps.setInt(2, orderID);
             ps.executeUpdate();
