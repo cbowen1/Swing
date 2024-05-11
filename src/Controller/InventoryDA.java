@@ -30,7 +30,7 @@ public class InventoryDA {
         inventoryList = new ArrayList<Inventory>();
 
         try {
-            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM inventory");
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM supplies");
             ResultSet rs = ps.executeQuery();
 
             Inventory inv;
@@ -51,7 +51,7 @@ public class InventoryDA {
     public Inventory getInventory(int id) {
         Inventory inv = new Inventory();
         try {
-            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM inventory where inventory_id = ?");
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("SELECT * FROM supplies where inventory_id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -69,7 +69,7 @@ public class InventoryDA {
     public boolean updateInventory(Inventory inv) {
         try{
             PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement(
-                    "UPDATE inventory set inventory_name = ?, quantity = ?, supplier_id = ? where inventory_id = ?");
+                    "UPDATE supplies set inventory_name = ?, quantity = ?, supplier_id = ? where inventory_id = ?");
             ps.setString(4, String.valueOf(inv.getId()));
             ps.setString(1, inv.getName());
             ps.setString(2, String.valueOf(inv.getQty()));
@@ -89,7 +89,7 @@ public class InventoryDA {
             int newInvID = 0;
             while(rs.next()) { newInvID = rs.getInt("Supplier_ID"); }
             ps = DatabaseTools.GetConnection().prepareStatement(
-                    "INSERT INTO inventory(inventory_id,inventory_name,quantity,supplier_id)value(?,?,?,?)"
+                    "INSERT INTO supplies(inventory_id,inventory_name,quantity,supplier_id)value(?,?,?,?)"
             );
             ps.setInt(1, newInvID);
             ps.setString(2, inv.getName());
@@ -107,7 +107,7 @@ public class InventoryDA {
         try {
             int dialogResult = JOptionPane.showConfirmDialog (parent, "Do you want to delete the inventory","Warning",JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION){
-                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("DELETE FROM inventory where inventory_id = ?");
+                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("DELETE FROM supplies where inventory_id = ?");
                 ps.setInt(1, id);
                 ps.executeUpdate();
             } else{

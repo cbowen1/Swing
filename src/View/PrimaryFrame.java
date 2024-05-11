@@ -133,7 +133,7 @@ public class PrimaryFrame extends JFrame implements ActionListener {
         } else if (e.getSource() == btn3) {
             inventoryPanel.table_update();
             splitPane.setRightComponent(inventoryPanel.getRootComponent());
-            topLabel.setText("Inventory Information");
+            topLabel.setText("Supply Information");
         } else if (e.getSource() == btn4) {
             productPanel.table_update();
             splitPane.setRightComponent(productPanel.getRootComponent());
