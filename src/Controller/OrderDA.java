@@ -123,11 +123,11 @@ public class OrderDA {
         }
 
         try{
-            ps = DatabaseTools.GetConnection().prepareStatement("Select (max(Order_ID) + 1) as Order_Id from order");
+            ps = DatabaseTools.GetConnection().prepareStatement("Select (max(Order_ID) + 1) as Order_Id from `order`");
             ResultSet rs = ps.executeQuery();
             while(rs.next()) { newOrderID = rs.getInt("Order_Id"); }
             ps = DatabaseTools.GetConnection().prepareStatement(
-                    "INSERT INTO order(order_id,customer_id,payment_id,status,order_date)value(?,?,?,?,?)"
+                    "INSERT INTO `order`(order_id,customer_id,payment_id,status,order_date)value(?,?,?,?,?)"
             );
             ps.setInt(1,newOrderID);
             ps.setInt(2,o.getCustomerID());
@@ -145,7 +145,6 @@ public class OrderDA {
         double orderWeight = 0;
         ProductDA pda = new ProductDA();
         for(OrderDetails odt : od) {
-            System.out.println("Attempting to order " + odt.getQty() + " " + odt.getProductID());
             Product pr = pda.getProduct(odt.getProductID());
             if(pr.getQty() < odt.getQty()) {
                 String message = pr.getName() + ": Attempting to over-order, setting order quantity (" + odt.getQty() + ") to remaining inventory quantity (" + pr.getQty() + ")";

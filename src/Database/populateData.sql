@@ -56,10 +56,10 @@ INSERT INTO product VALUES (1, 1, '2022 Super Break Football Edition Box', 89.95
 INSERT INTO product VALUES (2, 3, '2024 Gold Rush Autographed Full-Size Helmet',499.95,27, 6.40);
 INSERT INTO product VALUES (3, 6, '2024 Sage High Series Football Hobby Box', 119.95, 16, .75);
 
--- Inserting data into `inventory`
-INSERT INTO inventory VALUES (1, 'Penny Sleeves', 843, 1);
-INSERT INTO inventory VALUES (2, 'Top Loaders', 341,  4);
-INSERT INTO inventory VALUES (3, 'Bubble Mailers', 100, 4);
+-- Inserting data into `supplies`
+INSERT INTO supplies VALUES (1, 'Penny Sleeves', 843, 1);
+INSERT INTO supplies VALUES (2, 'Top Loaders', 341,  4);
+INSERT INTO supplies VALUES (3, 'Bubble Mailers', 100, 4);
 
 -- Inserting data into `shipping`
 INSERT INTO shipping VALUES 
