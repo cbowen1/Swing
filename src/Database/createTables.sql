@@ -86,7 +86,7 @@ CREATE TABLE `order_details` (
      Order_ID INT,
      Product_ID INT,
      Quantity INT,
-     FOREIGN KEY (Order_ID) REFERENCES order(Order_ID),
+     FOREIGN KEY (Order_ID) REFERENCES `order`(Order_ID),
      FOREIGN KEY (Product_ID) REFERENCES product(Product_ID)
 );
 
