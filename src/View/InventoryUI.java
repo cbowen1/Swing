@@ -115,7 +115,7 @@ public class InventoryUI {
         gbc.fill = GridBagConstraints.BOTH;
         invPanel.add(editPanel, gbc);
 
-        JButton newSupplier  = new JButton("New Inventory");
+        JButton newSupplier  = new JButton("New Supplies");
         newSupplier.setSize(25,25);
         newSupplier.addActionListener(e -> moreInfo(null));
         editPanel.add(newSupplier);

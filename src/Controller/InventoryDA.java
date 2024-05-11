@@ -84,7 +84,7 @@ public class InventoryDA {
 
     public boolean addInventory(Inventory inv) {
         try{
-            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("Select (max(inventory_id) + 1) as Supplier_ID from inventory");
+            PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("Select (max(inventory_id) + 1) as Supplier_ID from supplies");
             ResultSet rs = ps.executeQuery();
             int newInvID = 0;
             while(rs.next()) { newInvID = rs.getInt("Supplier_ID"); }

@@ -47,7 +47,7 @@ public class CustomSplash {
 
         frame.getContentPane().setBackground(Color.WHITE);
 
-        frame.setMinimumSize(new Dimension(1000,500));
+        frame.setMinimumSize(new Dimension(1250,600));
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
