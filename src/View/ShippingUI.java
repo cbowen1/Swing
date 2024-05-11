@@ -156,12 +156,19 @@ public class ShippingUI {
             public void actionPerformed(ActionEvent e) {
                 PaymentDA pda = new PaymentDA();
                 String status = pda.getPaymentStatus(paymentID);
+                String tracking;
                 if(!status.equals("PAID")) {
                     JOptionPane.showMessageDialog(parent, "ERROR! Order has not been paid yet.\nCannot add shipping until payment is complete");
                     return;
                 }
-                var name = javax.swing.JOptionPane.showInputDialog("Tracking Number:");
-                if(!sda.shipIt(shippingID, name, orderId)) {
+                JTextField tf = new JTextField();
+                int okCxl = JOptionPane.showConfirmDialog(parent, tf, "Tracking Number:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                if (okCxl == JOptionPane.OK_OPTION) {
+                    tracking = new String(tf.getText());
+                } else {
+                    return;
+                }
+                if(!sda.shipIt(shippingID, tracking, orderId)) {
                     error("ERROR! Tracking information not updated");
                 } else {
                     success("Success! Tracking number added to order");
