@@ -6,8 +6,8 @@ CREATE TABLE customer (
     Customer_ID INT PRIMARY KEY,
     Customer_fName VARCHAR(50),
     Customer_lName VARCHAR(50),
-    Email VARCHAR(255),
-    Street_Address VARCHAR(255),
+    Email VARCHAR(100),
+    Street_Address VARCHAR(100),
     City VARCHAR(50),
     State VARCHAR(2),
     ZipCode VARCHAR(5),
@@ -40,18 +40,18 @@ CREATE TABLE `order` (
 DROP TABLE IF EXISTS supplier;
 CREATE TABLE supplier (
     Supplier_ID INT PRIMARY KEY,
-    Supplier_Name VARCHAR(255),
+    Supplier_Name VARCHAR(100),
     Phone VARCHAR(20),
-    Email VARCHAR(255),
+    Email VARCHAR(100),
     Address VARCHAR(255),
-    Website VARCHAR(255)
+    Website VARCHAR(100)
 );
 
 -- Drop and create `product_line` table
 DROP TABLE IF EXISTS product_line;
 CREATE TABLE product_line (
     Product_LineID INT PRIMARY KEY,
-    Product_Line_Name VARCHAR(255),
+    Product_Line_Name VARCHAR(100),
     Product_Description TEXT,
     Unit_Price DECIMAL(10, 2),
     Supplier_ID INT,
@@ -63,7 +63,7 @@ DROP TABLE IF EXISTS product;
 CREATE TABLE product (
     Product_ID INT PRIMARY KEY,
     Product_Line_ID INT,
-    Product_Name VARCHAR(255),
+    Product_Name VARCHAR(100),
     Unit_Price DECIMAL(10, 2),
     Quantity INT,
     Weight DECIMAL(5,2),
@@ -74,7 +74,7 @@ CREATE TABLE product (
 DROP TABLE IF EXISTS supplies;
 CREATE TABLE supplies (
     Inventory_ID INT PRIMARY KEY,
-    Inventory_Name VARCHAR(255),
+    Inventory_Name VARCHAR(100),
     Quantity INT,
     Supplier_ID INT,
     FOREIGN KEY (Supplier_ID) REFERENCES supplier(Supplier_ID)
