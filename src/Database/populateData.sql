@@ -40,7 +40,7 @@ INSERT INTO supplier VALUES (5, 'Dave & Adams Cardworld', '716-626-0000', NULL, 
 INSERT INTO supplier VALUES (6, 'Blowout Cards', NULL, NULL, NULL, NULL);
 
 -- Inserting  data into `orders`
-INSERT INTO `order` VALUES (1, 13, null, 'COMPLETED', '2024-03-14');
+INSERT INTO `order` VALUES (1, 13, 1, 'COMPLETED', '2024-03-14');
 INSERT INTO `order` VALUES (2, 4, 2, 'SHIPPED', '2024-04-18');
 
 -- Inserting data into `product_line`
@@ -62,8 +62,8 @@ INSERT INTO supplies VALUES (2, 'Top Loaders', 341,  4);
 INSERT INTO supplies VALUES (3, 'Bubble Mailers', 100, 4);
 
 -- Inserting data into `shipping`
-INSERT INTO shipping VALUES 
-(1, 2, '2024-04-18', DATE_ADD(CURDATE(), INTERVAL 5 DAY), 'TRACK123',1.25, false, false);
+INSERT INTO shipping VALUES  (1, 1, '2024-03-15', '2024-03-20', 'TRACK123',1.25, true, false);
+INSERT INTO shipping VALUES  (2, 2, '2024-04-18', '2024-04-23', 'TRACK123ABC',1.25, false, false);
 
 INSERT INTO order_details VALUES (1,1,2);
 INSERT INTO order_details VALUES (1,2,2);
