@@ -173,7 +173,7 @@ public class CustomerDA {
     public boolean updateCustomer(Customer cust) {
         try{
             PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement(
-                    "UPDATE customer set Customer_fName=?, Customer_lName=?,email=?,street_address=?,city=?,state=?,zipCode=?,favoriteTeam=? where Customer_ID = ?"
+                    "UPDATE customer set Customer_fName=?, Customer_lName=?,email=?,street_address=?,city=?,state=?,zipCode=?,favoriteTeam=?,isActive=true where Customer_ID = ?"
             );
             ps.setInt(9, cust.getCustomerID());
             ps.setString(1, cust.getCustomerName_first());
