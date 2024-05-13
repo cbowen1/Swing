@@ -40,8 +40,8 @@ INSERT INTO supplier VALUES (5, 'Dave & Adams Cardworld', '716-626-0000', NULL, 
 INSERT INTO supplier VALUES (6, 'Blowout Cards', NULL, NULL, NULL, NULL);
 
 -- Inserting  data into `orders`
-INSERT INTO `order` VALUES (1, 13, null, 'Completed', '2024-03-14');
-INSERT INTO `order` VALUES (2, 4, 2, 'Shipped', '2024-04-18');
+INSERT INTO `order` VALUES (1, 13, null, 'COMPLETED', '2024-03-14');
+INSERT INTO `order` VALUES (2, 4, 2, 'SHIPPED', '2024-04-18');
 
 -- Inserting data into `product_line`
 INSERT INTO product_line VALUES (1, '2022 Super Break Football Edition 10-Box Case', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 849.95,2);

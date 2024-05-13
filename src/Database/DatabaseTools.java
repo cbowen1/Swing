@@ -29,7 +29,7 @@ public class DatabaseTools {
     }
 
     public static void TowsonConnection() {
-        String dbURL = "jdbc:mysql://triton.towson.edu:3360/cbowen3db";
+        String dbURL = "jdbc:mysql://triton.towson.edu:3360/";
         try {
             Scanner scan = new Scanner(System.in);
             JTextField tf = new JTextField();
@@ -50,6 +50,15 @@ public class DatabaseTools {
             } else {
                 return;
             }
+            tf.setText("");
+            okCxl = JOptionPane.showConfirmDialog(parent, tf, "Enter your Towson database:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            String database;
+            if (okCxl == JOptionPane.OK_OPTION) {
+                database = new String(tf.getText());
+            } else {
+                return;
+            }
+            dbURL = dbURL + database;
             conn = DriverManager.getConnection(dbURL, username, password);
         }catch (SQLException e) {
             e.printStackTrace();
