@@ -223,7 +223,7 @@ public class OrderDA {
             int dialogResult = JOptionPane.showConfirmDialog (parent, "Do you want to cancel this order?","Warning",JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION){
                 Order ord = getOrder(id);
-                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE order set STATUS = ? where order_id = ?");
+                PreparedStatement ps = DatabaseTools.GetConnection().prepareStatement("UPDATE `order` set STATUS = ? where order_id = ?");
                 ps.setString(1, "CANCELLED");
                 ps.setInt(2, id);
                 ps.executeUpdate();
